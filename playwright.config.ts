@@ -42,7 +42,7 @@ const config: PlaywrightTestConfig = {
 
   webServer: [
     {
-      command: 'yarn dev',
+      command: 'yarn workspace @rich-data/viewer-docs build && yarn workspace @rich-data/viewer-docs start',
       port: 3000,
       timeout: 120 * 1000,
       reuseExistingServer: !process.env.CI
