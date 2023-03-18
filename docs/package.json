@@ -1,5 +1,5 @@
 {
-  "name": "@textea/json-viewer-docs",
+  "name": "@rich-data/viewer-docs",
   "private": true,
   "engines": {
     "node": ">=16.0.0 <18.13.0"
@@ -10,7 +10,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@textea/json-viewer": "workspace:^",
+    "@rich-data/viewer": "workspace:^",
     "gray-matter": "^4.0.3",
     "next": "^13.2.3",
     "nextra": "^2.2.17",
