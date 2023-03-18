@@ -1,15 +1,15 @@
 {
-  "name": "@textea/json-viewer",
-  "description": "Interactive Json Viewer, but not only a json viewer",
+  "name": "@rich-data/viewer",
+  "description": "Interactive Data Viewer",
   "version": "2.14.1",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TexteaInc/json-viewer.git"
+    "url": "git+https://github.com/himself65/data-viewer.git"
   },
   "author": "himself65 <himself65@outlook.com>",
-  "bugs": "https://github.com/TexteaInc/json-viewer/issues",
-  "homepage": "https://github.com/TexteaInc/json-viewer#readme",
+  "bugs": "https://github.com/himself65/data-viewer/issues",
+  "homepage": "https://github.com/himself65/data-viewer#readme",
   "keywords": [
     "react-18",
     "react",

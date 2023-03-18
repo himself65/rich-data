@@ -1651,6 +1651,82 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rich-data/viewer-docs@workspace:docs":
+  version: 0.0.0-use.local
+  resolution: "@rich-data/viewer-docs@workspace:docs"
+  dependencies:
+    "@rich-data/viewer": "workspace:^"
+    "@types/node": ^18.14.6
+    "@types/react": ^18.0.28
+    "@types/react-dom": ^18.0.11
+    gray-matter: ^4.0.3
+    next: ^13.2.3
+    next-transpile-modules: ^10.0.0
+    nextra: ^2.2.17
+    nextra-theme-docs: ^2.2.17
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    typescript: ^4.9.5
+  languageName: unknown
+  linkType: soft
+
+"@rich-data/viewer@workspace:., @rich-data/viewer@workspace:^":
+  version: 0.0.0-use.local
+  resolution: "@rich-data/viewer@workspace:."
+  dependencies:
+    "@commitlint/cli": ^17.4.4
+    "@commitlint/config-angular": ^17.4.4
+    "@emotion/react": ^11.10.6
+    "@emotion/styled": ^11.10.6
+    "@mui/material": ^5.11.12
+    "@rollup/plugin-alias": ^4.0.3
+    "@rollup/plugin-commonjs": ^24.0.1
+    "@rollup/plugin-node-resolve": ^15.0.1
+    "@rollup/plugin-replace": ^5.0.2
+    "@swc/core": ^1.3.38
+    "@testing-library/react": ^14.0.0
+    "@types/node": ^18.14.6
+    "@types/react": ^18.0.28
+    "@types/react-dom": ^18.0.11
+    "@types/web": ^0.0.96
+    "@typescript-eslint/eslint-plugin": ^5.54.1
+    "@typescript-eslint/parser": ^5.54.1
+    "@vitejs/plugin-react": ^3.1.0
+    "@vitest/coverage-c8": ^0.29.2
+    "@vitest/ui": ^0.29.2
+    copy-to-clipboard: ^3.3.3
+    eslint: ^8.35.0
+    eslint-config-standard: ^17.0.0
+    eslint-plugin-cypress: ^2.12.1
+    eslint-plugin-import: ^2.27.5
+    eslint-plugin-n: ^15.6.1
+    eslint-plugin-promise: ^6.1.1
+    eslint-plugin-react: ^7.32.2
+    eslint-plugin-react-hooks: ^4.6.0
+    eslint-plugin-simple-import-sort: ^10.0.0
+    eslint-plugin-unused-imports: ^2.0.0
+    expect-type: ^0.15.0
+    husky: ^8.0.3
+    jsdom: ^21.1.0
+    lint-staged: ^13.1.2
+    pinst: ^3.0.0
+    prettier: ^2.8.4
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    rollup: ^3.18.0
+    rollup-plugin-dts: ^5.2.0
+    rollup-plugin-swc3: ^0.8.0
+    ts-node: ^10.9.1
+    typescript: ^4.9.5
+    vite: ^4.1.4
+    vitest: ^0.29.2
+    zustand: ^4.3.6
+  peerDependencies:
+    react: ^17 || ^18
+    react-dom: ^17 || ^18
+  languageName: unknown
+  linkType: soft
+
 "@rollup/plugin-alias@npm:^4.0.3":
   version: 4.0.3
   resolution: "@rollup/plugin-alias@npm:4.0.3"
@@ -1891,82 +1967,6 @@ __metadata:
   checksum: 4a54c8f56cc4a39b50803205f84f06280bb76521d6d5d4b3b36651d760c7c7752ef142d857d52aaf4fad4848ed7a8be49afc793a5dda105955d2f8bef24901ac
   languageName: node
   linkType: hard
-
-"@textea/json-viewer-docs@workspace:docs":
-  version: 0.0.0-use.local
-  resolution: "@textea/json-viewer-docs@workspace:docs"
-  dependencies:
-    "@textea/json-viewer": "workspace:^"
-    "@types/node": ^18.14.6
-    "@types/react": ^18.0.28
-    "@types/react-dom": ^18.0.11
-    gray-matter: ^4.0.3
-    next: ^13.2.3
-    next-transpile-modules: ^10.0.0
-    nextra: ^2.2.17
-    nextra-theme-docs: ^2.2.17
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    typescript: ^4.9.5
-  languageName: unknown
-  linkType: soft
-
-"@textea/json-viewer@workspace:., @textea/json-viewer@workspace:^":
-  version: 0.0.0-use.local
-  resolution: "@textea/json-viewer@workspace:."
-  dependencies:
-    "@commitlint/cli": ^17.4.4
-    "@commitlint/config-angular": ^17.4.4
-    "@emotion/react": ^11.10.6
-    "@emotion/styled": ^11.10.6
-    "@mui/material": ^5.11.12
-    "@rollup/plugin-alias": ^4.0.3
-    "@rollup/plugin-commonjs": ^24.0.1
-    "@rollup/plugin-node-resolve": ^15.0.1
-    "@rollup/plugin-replace": ^5.0.2
-    "@swc/core": ^1.3.38
-    "@testing-library/react": ^14.0.0
-    "@types/node": ^18.14.6
-    "@types/react": ^18.0.28
-    "@types/react-dom": ^18.0.11
-    "@types/web": ^0.0.96
-    "@typescript-eslint/eslint-plugin": ^5.54.1
-    "@typescript-eslint/parser": ^5.54.1
-    "@vitejs/plugin-react": ^3.1.0
-    "@vitest/coverage-c8": ^0.29.2
-    "@vitest/ui": ^0.29.2
-    copy-to-clipboard: ^3.3.3
-    eslint: ^8.35.0
-    eslint-config-standard: ^17.0.0
-    eslint-plugin-cypress: ^2.12.1
-    eslint-plugin-import: ^2.27.5
-    eslint-plugin-n: ^15.6.1
-    eslint-plugin-promise: ^6.1.1
-    eslint-plugin-react: ^7.32.2
-    eslint-plugin-react-hooks: ^4.6.0
-    eslint-plugin-simple-import-sort: ^10.0.0
-    eslint-plugin-unused-imports: ^2.0.0
-    expect-type: ^0.15.0
-    husky: ^8.0.3
-    jsdom: ^21.1.0
-    lint-staged: ^13.1.2
-    pinst: ^3.0.0
-    prettier: ^2.8.4
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    rollup: ^3.18.0
-    rollup-plugin-dts: ^5.2.0
-    rollup-plugin-swc3: ^0.8.0
-    ts-node: ^10.9.1
-    typescript: ^4.9.5
-    vite: ^4.1.4
-    vitest: ^0.29.2
-    zustand: ^4.3.6
-  peerDependencies:
-    react: ^17 || ^18
-    react-dom: ^17 || ^18
-  languageName: unknown
-  linkType: soft
 
 "@tootallnate/once@npm:2":
   version: 2.0.0

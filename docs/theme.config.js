@@ -1,7 +1,7 @@
 export default {
-  logo: '@textea/json-viewer',
+  logo: '@rich-data/viewer',
   project: {
-    link: 'https://github.com/TexteaInc/json-viewer'
+    link: 'https://github.com/himself65/data-viewer'
   },
   navigation: {
     prev: true,
@@ -11,6 +11,6 @@ export default {
     text: 'Edit this page on GitHub'
   },
   footer: {
-    text: `MIT ${new Date().getFullYear()} © Textea, Inc.`
+    text: `MIT ${new Date().getFullYear()} © Himself65.`
   }
 }

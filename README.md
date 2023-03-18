@@ -1,36 +1,27 @@
-# @textea/json-viewer
+# @rich-data/viewer
 
-[![npm](https://img.shields.io/npm/v/@textea/json-viewer)](https://www.npmjs.com/package/@textea/json-viewer)
-[![npm](https://img.shields.io/npm/dm/@textea/json-viewer.svg)](https://www.npmjs.com/package/@textea/json-viewer)
-[![npm](https://img.shields.io/npm/l/@textea/json-viewer)](https://github.com/TexteaInc/json-viewer/blob/main/LICENSE)
-[![codecov](https://codecov.io/gh/TexteaInc/json-viewer/branch/main/graph/badge.svg?token=r32mzVhrRl)](https://codecov.io/gh/TexteaInc/json-viewer)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/4fab3ed5-7084-449d-9fc9-12df09108301/deploy-status)](https://viewer.textea.io)
+[![npm](https://img.shields.io/npm/v/@rich-data/viewer)](https://www.npmjs.com/package/@rich-data/viewer)
+[![npm](https://img.shields.io/npm/dm/@rich-data/viewer.svg)](https://www.npmjs.com/package/@rich-data/viewer)
+[![npm](https://img.shields.io/npm/l/@rich-data/viewer)](https://github.com/himself65/data-viewer/blob/main/LICENSE)
+
+[//]: # ([![codecov]&#40;https://codecov.io/gh/TexteaInc/json-viewer/branch/main/graph/badge.svg?token=r32mzVhrRl&#41;]&#40;https://codecov.io/gh/TexteaInc/json-viewer&#41;)
+[//]: # ([![Netlify Status]&#40;https://api.netlify.com/api/v1/badges/4fab3ed5-7084-449d-9fc9-12df09108301/deploy-status&#41;]&#40;https://viewer.textea.io&#41;)
 
 This is a React component for JSON viewer, but not only a JSON viewer.
-
-~~Json Viewer?~~
-**ANY Data Viewer** ✅
-
-> This is v2 branch with fancy features like 100% TypeScript, lightly code and customizable component support.
->
-> If you are looking for v1 version based on [mac-s-g/react-json-view](https://github.com/mac-s-g/react-json-view),
-> Please see [v1.x](https://github.com/TexteaInc/json-viewer/tree/v1.x).
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/textea-json-viewer-v2?file=pages%2Findex.js)
 
 ## Usage
 
 ### NPM
 ```shell
-npm install @textea/json-viewer
+npm install @rich-data/viewer
 ```
 ### Yarn
 ```shell
-yarn add @textea/json-viewer
+yarn add @rich-data/viewer
 ```
 ### PNPM
 ```shell
-pnpm add @textea/json-viewer
+pnpm add @rich-data/viewer
 ```
 
 ### Type Declaration
@@ -40,7 +31,7 @@ see [src/type.ts](src/type.ts)
 ### Basic Example
 
 ```tsx
-import { JsonViewer } from '@textea/json-viewer'
+import { JsonViewer } from '@rich-data/viewer'
 
 const object = { /* my json object */ }
 const Component = () => (<JsonViewer value={object}/>)
@@ -49,7 +40,7 @@ const Component = () => (<JsonViewer value={object}/>)
 ### Customizable data type
 
 ```tsx
-import { JsonViewer, createDataType } from '@textea/json-viewer'
+import { JsonViewer, createDataType } from '@rich-data/viewer'
 
 const object = {
   // what if I want to inspect a image?
@@ -148,7 +139,7 @@ const Component = () => (
 
 ## Contributors
 
-<a href="https://github.com/TexteaInc/json-viewer/graphs/contributors"><img src="https://opencollective.com/json-viewer/contributors.svg?width=890&button=false" /></a>
+<a href="https://github.com/himself65/json-viewer/graphs/contributors"><img src="https://opencollective.com/json-viewer/contributors.svg?width=890&button=false" /></a>
 
 ## Acknowledge
 

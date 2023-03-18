@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
-      "@textea/json-viewer": ["../src/index"]
+      "@rich-data/viewer": ["../src/index"]
     },
     "jsx": "preserve",
     "incremental": true,
