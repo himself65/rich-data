@@ -12,8 +12,8 @@ on:
       - main
 
 jobs:
-  test:
-    name: Running vitest
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -38,6 +38,40 @@ jobs:
         run: yarn install
       - name: Build
         run: yarn build
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact
+          path: ./dist
+  test:
+    name: Running vitest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Use Node.js LTS
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      - uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install Dependencies
+        run: yarn install
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: artifact
+          path: ./dist
       - name: Test with Coverage
         run: yarn coverage
       - uses: codecov/codecov-action@v2
