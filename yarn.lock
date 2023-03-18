@@ -1656,7 +1656,7 @@ __metadata:
   resolution: "@rich-data/viewer-docs@workspace:docs"
   dependencies:
     "@rich-data/viewer": "workspace:^"
-    "@types/node": ^18.14.6
+    "@types/node": ^18.15.3
     "@types/react": ^18.0.28
     "@types/react-dom": ^18.0.11
     gray-matter: ^4.0.3
@@ -1685,7 +1685,7 @@ __metadata:
     "@rollup/plugin-replace": ^5.0.2
     "@swc/core": ^1.3.38
     "@testing-library/react": ^14.0.0
-    "@types/node": ^18.14.6
+    "@types/node": ^18.15.3
     "@types/react": ^18.0.28
     "@types/react-dom": ^18.0.11
     "@types/web": ^0.0.96
@@ -2155,10 +2155,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.14.6":
-  version: 18.14.6
-  resolution: "@types/node@npm:18.14.6"
-  checksum: 2f88f482cabadc6dbddd627a1674239e68c3c9beab56eb4ae2309fb96fd17fc3a509d99b0309bafe13b58529574f49ecf3a583f2ebe2896dd32fe4be436dc96e
+"@types/node@npm:^18.15.3":
+  version: 18.15.3
+  resolution: "@types/node@npm:18.15.3"
+  checksum: 31b1d92475a82c30de29aa6c0771b18a276552d191283b4423ba2d61b3f01159bf0d02576c0b7cc834b043997893800db6bb47f246083ed85aa45e79c80875d7
   languageName: node
   linkType: hard
 
