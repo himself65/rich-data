@@ -7,9 +7,6 @@ on:
     paths:
       - '**.tsx?'
       - '**.jsx?'
-  pull_request:
-    branches:
-      - main
 
 jobs:
   analyze:
