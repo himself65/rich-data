@@ -59,8 +59,6 @@
     "build": "rollup -c rollup.config.ts --configPlugin swc3"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.11.13",
     "copy-to-clipboard": "^3.3.3",
     "zustand": "^4.3.6"
@@ -70,12 +68,16 @@
     "*.{ts,tsx,js,jsx}": "npx eslint --cache --fix"
   },
   "peerDependencies": {
+    "@emotion/react": "^11.10",
+    "@emotion/styled": "^11.10",
     "react": "^17 || ^18",
     "react-dom": "^17 || ^18"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-angular": "^17.4.4",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@rollup/plugin-alias": "^4.0.3",
     "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
