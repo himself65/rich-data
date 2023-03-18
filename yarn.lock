@@ -1693,7 +1693,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.54.1
     "@vitejs/plugin-react": ^3.1.0
     "@vitest/coverage-c8": ^0.29.2
-    "@vitest/ui": ^0.29.2
+    "@vitest/ui": ^0.29.3
     copy-to-clipboard: ^3.3.3
     eslint: ^8.35.0
     eslint-config-standard: ^17.0.0
@@ -2467,16 +2467,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/ui@npm:^0.29.2":
-  version: 0.29.2
-  resolution: "@vitest/ui@npm:0.29.2"
+"@vitest/ui@npm:^0.29.3":
+  version: 0.29.3
+  resolution: "@vitest/ui@npm:0.29.3"
   dependencies:
     fast-glob: ^3.2.12
     flatted: ^3.2.7
     pathe: ^1.1.0
     picocolors: ^1.0.0
     sirv: ^2.0.2
-  checksum: f9a50a7fc0900a6775334efc347af0e7ecb8c1b027c161291e68a08db93c81907bf52b3a4a710f7ea5f69f94520f2af40f5b3cce49dd0043a603198891b86e3d
+  checksum: 5c4cbd6484e06b46f24f7512fce668c3738c7d7933e5f5fc04b059abca3668898c6febd20714782a674942b4869769213ace35afb6b95b10210d1dabdab5c678
   languageName: node
   linkType: hard
 
