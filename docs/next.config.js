@@ -11,14 +11,12 @@ const nextConfig = {
   images: {
     domains: ['i.imgur.com', 'www.netlify.com']
   },
+  transpilePackages: [
+    '@rich-data/viewer'
+  ],
   experimental: {
     externalDir: true
   }
 }
 
-const withTM = require('next-transpile-modules')([], {
-  resolveSymlinks: true,
-  debug: false
-})
-
-module.exports = withNextra(withTM(nextConfig))
+module.exports = withNextra(nextConfig)
