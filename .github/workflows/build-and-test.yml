@@ -118,7 +118,7 @@ jobs:
       - name: Test with Coverage
         run: yarn e2e
       - name: Collect code coverage report
-        run: pnpm exec nyc report -t .nyc_output --report-dir .coverage --reporter=lcov
+        run: yarn exec nyc report -t .nyc_output --report-dir .coverage --reporter=lcov
       - name: Upload e2e test coverage results
         uses: codecov/codecov-action@v3
         with:
