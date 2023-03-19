@@ -106,7 +106,14 @@ describe('clipboard', () => {
     })
 
     await act(async () => {
+      const fn = vi.fn((...args: unknown[]) => {
+        expect(args[0]).toBe('error when copy src[a]')
+      })
+      vi.stubGlobal('console', {
+        error: fn
+      })
       await clipboardHook.result.current.copy(['a'], value.a)
+      expect(fn).toBeCalledTimes(1)
     })
 
     expect(fn).toBeCalledTimes(1)
