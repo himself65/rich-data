@@ -16,6 +16,21 @@ beforeAll(() => {
 })
 
 describe('clipboard', () => {
+  it('should reset copied', async () => {
+    const clipboardHook = renderHook(() => useClipboard(), {
+      wrapper: createWrapper(1)
+    })
+    expect(clipboardHook.result.current.copied).toBe(false)
+    await act(async () => {
+      await clipboardHook.result.current.copy([], 1)
+    })
+    expect(clipboardHook.result.current.copied).toBe(true)
+    act(() => {
+      clipboardHook.result.current.reset()
+    })
+    expect(clipboardHook.result.current.copied).toBe(false)
+  })
+
   it('should copy success for circular object', async () => {
     const value = {
       a: 1,
