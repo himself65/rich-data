@@ -177,6 +177,7 @@ describe('render <JsonViewer/> with props', () => {
 
   it('render with theme', () => {
     const selection = [
+      'auto',
       'light',
       'dark',
       {
