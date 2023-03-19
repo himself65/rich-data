@@ -3,9 +3,7 @@
 [![npm](https://img.shields.io/npm/v/@rich-data/viewer)](https://www.npmjs.com/package/@rich-data/viewer)
 [![npm](https://img.shields.io/npm/dm/@rich-data/viewer.svg)](https://www.npmjs.com/package/@rich-data/viewer)
 [![npm](https://img.shields.io/npm/l/@rich-data/viewer)](https://github.com/himself65/data-viewer/blob/main/LICENSE)
-
-[//]: # ([![codecov]&#40;https://codecov.io/gh/TexteaInc/json-viewer/branch/main/graph/badge.svg?token=r32mzVhrRl&#41;]&#40;https://codecov.io/gh/TexteaInc/json-viewer&#41;)
-[//]: # ([![Netlify Status]&#40;https://api.netlify.com/api/v1/badges/4fab3ed5-7084-449d-9fc9-12df09108301/deploy-status&#41;]&#40;https://viewer.textea.io&#41;)
+[![codecov](https://codecov.io/gh/Himself65/data-viewer/branch/main/graph/badge.svg?token=zt7W58WWVp)](https://codecov.io/gh/Himself65/data-viewer)
 
 This is a React component for JSON viewer, but not only a JSON viewer.
 
