@@ -114,3 +114,9 @@ jobs:
         run: npx playwright install chromium
       - name: Test with Coverage
         run: yarn e2e
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report
+          path: playwright-report
