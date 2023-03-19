@@ -6,33 +6,25 @@ module.exports = {
     }
   },
   env: {
-    browser: true, es6: true
+    browser: true,
+    es6: true
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react/jsx-runtime',
-    'standard'
-  ],
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:react/jsx-runtime', 'standard'],
   globals: {
-    Atomics: 'readonly', SharedArrayBuffer: 'readonly'
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly'
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
-      globalReturn: false, impliedStrict: true, jsx: true
+      globalReturn: false,
+      impliedStrict: true,
+      jsx: true
     },
     ecmaVersion: 'latest',
     sourceType: 'module'
   },
-  plugins: [
-    'react',
-    'react-hooks',
-    '@typescript-eslint',
-    'simple-import-sort',
-    'import',
-    'unused-imports'
-  ],
+  plugins: ['react', 'react-hooks', '@typescript-eslint', 'simple-import-sort', 'import', 'unused-imports'],
   rules: {
     eqeqeq: 'error',
     'no-eval': 'error',
@@ -47,22 +39,20 @@ module.exports = {
     'import/no-duplicates': 'error',
     'no-unused-vars': 'off',
     'unused-imports/no-unused-imports': 'error',
-    'unused-imports/no-unused-vars': [
-      'warn', {
-        vars: 'all',
-        varsIgnorePattern: '^_',
-        args: 'after-used',
-        argsIgnorePattern: '^_'
-      }],
+    'unused-imports/no-unused-vars': ['warn', {
+      vars: 'all',
+      varsIgnorePattern: '^_',
+      args: 'after-used',
+      argsIgnorePattern: '^_'
+    }],
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
     'no-redeclare': 'off',
     '@typescript-eslint/no-redeclare': ['error'],
     'no-unused-expressions': 'warn',
-    'react/jsx-filename-extension': [
-      1, {
-        extensions: ['.js', '.jsx', '.ts', '.tsx']
-      }],
+    'react/jsx-filename-extension': [1, {
+      extensions: ['.js', '.jsx', '.ts', '.tsx']
+    }],
     'import/prefer-default-export': 'off',
     'jsx-quotes': ['error', 'prefer-single'],
     camelcase: 'off',
@@ -71,42 +61,36 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/ban-ts-ignore': 'off',
-    '@typescript-eslint/member-delimiter-style': [
-      'error', {
-        multiline: {
-          delimiter: 'none', requireLast: true
-        },
-        singleline: {
-          delimiter: 'semi', requireLast: false
-        }
-      }],
-    '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports', disallowTypeAnnotations: false }],
+    '@typescript-eslint/member-delimiter-style': ['error', {
+      multiline: {
+        delimiter: 'none',
+        requireLast: true
+      },
+      singleline: {
+        delimiter: 'semi',
+        requireLast: false
+      }
+    }],
+    '@typescript-eslint/consistent-type-imports': ['error', {
+      prefer: 'type-imports',
+      disallowTypeAnnotations: false
+    }],
     '@typescript-eslint/explicit-function-return-type': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'no-restricted-imports': 'off',
-    '@typescript-eslint/no-restricted-imports': [
-      'error',
-      {
-        patterns: [
-          {
-            group: ['**/dist'],
-            message: 'Don\'t import from dist',
-            allowTypeImports: false
-          }
-        ]
-      }
-    ]
+    '@typescript-eslint/no-restricted-imports': ['error', {
+      patterns: [{
+        group: ['**/dist'],
+        message: 'Don\'t import from dist',
+        allowTypeImports: false
+      }]
+    }]
   },
-  overrides: [
-    {
-      files: ['*.d.ts'],
-      rules: {
-        'no-undef': 'off'
-      }
-    },
-    {
-      files: ['*.test.ts', '*.test.tsx'], env: { jest: true }
+  overrides: [{
+    files: ['*.d.ts'],
+    rules: {
+      'no-undef': 'off'
     }
-  ]
+  }]
 }
