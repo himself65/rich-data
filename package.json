@@ -95,6 +95,7 @@
     "@typescript-eslint/parser": "^5.55.0",
     "@vitejs/plugin-react": "^3.1.0",
     "@vitest/coverage-c8": "^0.29.3",
+    "@vitest/coverage-istanbul": "^0.29.3",
     "@vitest/ui": "^0.29.3",
     "eslint": "^8.36.0",
     "eslint-config-standard": "^17.0.0",
@@ -110,6 +111,7 @@
     "husky": "^8.0.3",
     "jsdom": "^21.1.1",
     "lint-staged": "^13.2.0",
+    "nyc": "^15.1.0",
     "pinst": "^3.0.0",
     "prettier": "^2.8.4",
     "react": "^18.2.0",
@@ -124,6 +126,7 @@
   },
   "packageManager": "yarn@3.2.4",
   "workspaces": [
-    "docs"
+    "docs",
+    "playground"
   ]
 }
