@@ -51,8 +51,8 @@
   "scripts": {
     "dev": "yarn workspace @rich-data/viewer-docs dev",
     "test": "vitest",
-    "e2e": "playwright test",
-    "coverage": "COVERAGE=true vitest run --coverage",
+    "e2e": "COVERAGE=true playwright test",
+    "coverage": "vitest run --coverage",
     "postinstall": "husky install",
     "prepack": "pinst --disable",
     "postpack": "pinst --enable",
