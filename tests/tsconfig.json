@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "paths": {
-      "@rich-data/viewer": ["../src/index"]
+      "@rich-data/viewer": [".."],
+      "@rich-data/viewer/*": ["../*"]
     },
     "jsx": "preserve",
     "incremental": true,
