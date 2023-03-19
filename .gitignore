@@ -18,6 +18,8 @@ node_modules
 .next
 .vercel
 coverage
+.nyc_output
+.coverage
 
 .idea
 .vscode

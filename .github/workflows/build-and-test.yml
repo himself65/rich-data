@@ -87,6 +87,8 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./.coverage/viewer/lcov.info
+          flags: unittest
   test-e2e:
     name: Running E2E
     runs-on: ubuntu-latest
@@ -115,6 +117,14 @@ jobs:
         run: npx playwright install chromium
       - name: Test with Coverage
         run: yarn e2e
+      - name: Collect code coverage report
+        run: yarn exec nyc report -t .nyc_output --report-dir .coverage --reporter=lcov
+      - name: Upload e2e test coverage results
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./.coverage/lcov.info
+          flags: e2etest
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v3
