@@ -7,6 +7,6 @@ export const DataBox: FC<DataBoxProps> = props => (
   <Box
     component='div'
     {...props}
-    className={'data-box' + props.className}
+    className={'data-box ' + props.className}
   />
 )
