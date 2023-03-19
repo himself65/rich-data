@@ -4,7 +4,7 @@ import type { FC } from 'react'
 
 const BaseIcon: FC<SvgIconProps> = ({ d, ...props }) => {
   return (
-    <SvgIcon {...props}>
+    <SvgIcon data-testid='icon' {...props}>
       <path d={d}/>
     </SvgIcon>
   )
@@ -23,7 +23,7 @@ export const CheckIcon: FC<SvgIconProps> = (props) => {
 }
 
 export const ChevronRightIcon: FC<SvgIconProps> = (props) => {
-  return <BaseIcon d={ChevronRight} {...props} />
+  return <BaseIcon data-testid='chevron-right-icon' d={ChevronRight} {...props} />
 }
 
 export const CircularArrowsIcon: FC<SvgIconProps> = (props) => {
@@ -43,5 +43,5 @@ export const EditIcon: FC<SvgIconProps> = (props) => {
 }
 
 export const ExpandMoreIcon: FC<SvgIconProps> = (props) => {
-  return <BaseIcon d={ExpandMore} {...props} />
+  return <BaseIcon data-testid='expand-more-icon' d={ExpandMore} {...props} />
 }
