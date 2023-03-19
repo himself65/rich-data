@@ -126,6 +126,11 @@ const build: RollupOptions[] = [
     browser: false,
     dts: true
   }),
+  buildMatrix('./src/next.tsx', 'index', {
+    format: ['es', 'umd'],
+    browser: false,
+    dts: true
+  }),
   buildMatrix('./src/browser.tsx', 'browser', {
     format: ['es', 'umd'],
     browser: true,
