@@ -30,7 +30,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@rich-data/viewer': path.resolve(
-        fileURLToPath(new URL('../src', import.meta.url))
+        fileURLToPath(new URL('..', import.meta.url))
       )
     }
   }

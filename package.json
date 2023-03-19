@@ -39,17 +39,19 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "exports": {
+    "./package.json": "./package.json",
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
-    }
+    },
+    "./theme/*.css": "./theme/*.css"
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "dev": "yarn workspace @rich-data/viewer-docs dev",
+    "dev": "yarn workspace @rich-data/playground dev",
     "test": "vitest",
     "e2e": "COVERAGE=true playwright test",
     "coverage": "vitest run --coverage",

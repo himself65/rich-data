@@ -1,3 +1,5 @@
+import '@rich-data/viewer/theme/base.css'
+
 import type { JsonViewerKeyRenderer } from '@rich-data/viewer'
 import { JsonViewer } from '@rich-data/viewer'
 import { createRoot } from 'react-dom/client'
