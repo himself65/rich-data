@@ -1,15 +1,17 @@
 import { Box } from '@mui/material'
 import type { FC } from 'react'
-import { useMemo, useState } from 'react'
+import { lazy, useMemo, useState } from 'react'
 
 import { useTextColor } from '../../hooks/useColor'
 import { useIsCycleReference } from '../../hooks/useIsCycleReference'
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
 import type { DataItemProps } from '../../type'
 import { getValueSize, segmentArray } from '../../utils'
-import { DataKeyPair } from '../DataKeyPair'
 import { CircularArrowsIcon } from '../Icons'
 import { DataBox } from '../mui/DataBox'
+
+// There will have the cyclic dependency
+const DataKeyPair = lazy(async () => import('../DataKeyPair').then(module => ({ default: module.DataKeyPair })))
 
 const objectLb = '{'
 const arrayLb = '['
