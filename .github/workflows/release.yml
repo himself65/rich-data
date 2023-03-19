@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+# Pending until other workflows done
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  release:
+    name: Try publishing npm@latest release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Use Node.js LTS
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      - uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install Dependencies
+        run: yarn install
+      - name: Try publishing to NPM
+        run: ./scripts/publish.sh
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
