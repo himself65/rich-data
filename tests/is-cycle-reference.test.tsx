@@ -1,12 +1,9 @@
-import type { JsonViewerProps, Path } from '@rich-data/viewer'
+import type { Path } from '@rich-data/viewer'
 import { renderHook } from '@testing-library/react'
 import { describe, expect, test } from 'vitest'
 
 import { useIsCycleReference } from '../src/hooks/useIsCycleReference'
-import {
-  createJsonViewerStore,
-  JsonViewerProvider
-} from '../src/stores/JsonViewerStore'
+import { createWrapper } from './utils'
 
 describe('isCycleReference', () => {
   test('should return path if the reference is a cycle', () => {
@@ -19,16 +16,11 @@ describe('isCycleReference', () => {
       c: value
     }
     value.b = ref
-    const store = createJsonViewerStore(
-      { value } satisfies JsonViewerProps<any>)
     const referenceHook = renderHook(({
       path,
       value
     }) => useIsCycleReference(path, value), {
-      wrapper: ({ children }) =>
-        <JsonViewerProvider value={store}>
-          {children}
-        </JsonViewerProvider>,
+      wrapper: createWrapper(value),
       initialProps: {
         path: ['b', 'c'] as Path,
         value: ref
