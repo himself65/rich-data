@@ -1,4 +1,6 @@
-import { expect, test } from '@playwright/test'
+import { expect } from '@playwright/test'
+
+import { test } from './lib/playwright'
 
 test('click to hide', async ({ page }) => {
   await page.goto('http://localhost:3000/full')
