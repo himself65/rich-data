@@ -145,12 +145,6 @@ This package is originally based on [mac-s-g/react-json-view](https://github.com
 
 Also thanks open source projects that make this possible.
 
-## Sponsoring services
-
-![Netlify](https://www.netlify.com/v3/img/components/full-logo-light.svg)
-
-[Netlify](https://www.netlify.com/) lets us distribute the [site](https://viewer.textea.io).
-
 ## LICENSE
 
 This project is licensed under the terms of the [MIT license](LICENSE).
