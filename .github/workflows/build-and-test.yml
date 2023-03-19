@@ -83,7 +83,8 @@ jobs:
           path: ./dist
       - name: Test with Coverage
         run: yarn coverage
-      - uses: codecov/codecov-action@v2
+      - name: Upload unit test coverage results
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
   test-e2e:
