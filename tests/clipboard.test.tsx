@@ -25,9 +25,11 @@ describe('clipboard', () => {
     const clipboardHook = renderHook(() => useClipboard(), {
       wrapper: createWrapper(value)
     })
+    expect(clipboardHook.result.current.copied).toBe(false)
     await act(async () => {
       await clipboardHook.result.current.copy([], value)
     })
+    expect(clipboardHook.result.current.copied).toBe(true)
     expect(clipboardContent).toBe('{"a":1,"b":"###_Circular_###"}')
   })
 
@@ -38,9 +40,13 @@ describe('clipboard', () => {
     const clipboardHook = renderHook(() => useClipboard(), {
       wrapper: createWrapper(value)
     })
+
+    expect(clipboardHook.result.current.copied).toBe(false)
     await act(async () => {
       await clipboardHook.result.current.copy([], value)
     })
+    expect(clipboardHook.result.current.copied).toBe(true)
+
     expect(clipboardContent).toBe('{"a":1}')
   })
 
@@ -60,9 +66,11 @@ describe('clipboard', () => {
       })
     })
 
+    expect(clipboardHook.result.current.copied).toBe(false)
     await act(async () => {
       await clipboardHook.result.current.copy(['a'], value.a)
     })
+    expect(clipboardHook.result.current.copied).toBe(true)
 
     expect(fn).toBeCalledTimes(1)
   })
@@ -83,9 +91,42 @@ describe('clipboard', () => {
       })
     })
 
+    expect(clipboardHook.result.current.copied).toBe(false)
     await act(async () => {
       await clipboardHook.result.current.copy(['a'], value.a)
     })
+    expect(clipboardHook.result.current.copied).toBe(true)
+
+    expect(fn).toBeCalledTimes(1)
+  })
+
+  it('should copy success for custom onCopy error', async () => {
+    const value = {
+      a: 1
+    }
+
+    const fn = vi.fn(() => {
+      throw new Error()
+    })
+
+    const clipboardHook = renderHook(() => useClipboard(), {
+      wrapper: createWrapper(value, {
+        onCopy: fn
+      })
+    })
+
+    expect(clipboardHook.result.current.copied).toBe(false)
+    act(() => {
+      const fn = vi.fn((...args: unknown[]) => {
+        expect(args[0]).toBe('error when copy src[a]')
+      })
+      vi.stubGlobal('console', {
+        error: fn
+      })
+      clipboardHook.result.current.copy(['a'], value.a)
+      expect(fn).toBeCalledTimes(1)
+    })
+    expect(clipboardHook.result.current.copied).toBe(false)
 
     expect(fn).toBeCalledTimes(1)
   })
@@ -105,6 +146,7 @@ describe('clipboard', () => {
       })
     })
 
+    expect(clipboardHook.result.current.copied).toBe(false)
     await act(async () => {
       const fn = vi.fn((...args: unknown[]) => {
         expect(args[0]).toBe('error when copy src[a]')
@@ -115,6 +157,7 @@ describe('clipboard', () => {
       await clipboardHook.result.current.copy(['a'], value.a)
       expect(fn).toBeCalledTimes(1)
     })
+    expect(clipboardHook.result.current.copied).toBe(false)
 
     expect(fn).toBeCalledTimes(1)
   })
