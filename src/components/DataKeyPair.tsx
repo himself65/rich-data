@@ -1,5 +1,7 @@
 import { Box } from '@mui/material'
-import type { ComponentProps, FC, MouseEvent } from 'react'
+import clsx from 'clsx'
+import type { FC, MouseEvent } from 'react'
+import type React from 'react'
 import { useCallback, useMemo, useState } from 'react'
 
 import { useTextColor } from '../hooks/useColor'
@@ -26,17 +28,10 @@ export type DataKeyPairProps = {
   path: (string | number)[]
 }
 
-type IconBoxProps = ComponentProps<typeof Box>
-
-const IconBox: FC<IconBoxProps> = (props) => (
-  <Box
-    component='span'
+const IconBox: FC<React.DetailedHTMLProps<React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>> = (props) => (
+  <span
     {...props}
-    sx={{
-      cursor: 'pointer',
-      paddingLeft: '0.7rem',
-      ...props.sx
-    }}
+    className={clsx(props.className, 'data-viewer-icon-box')}
   />
 )
 
@@ -88,9 +83,6 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
           <>
             <IconBox>
               <CloseIcon
-                sx={{
-                  fontSize: '.8rem'
-                }}
                 onClick={() => {
                   // abort editing
                   setEditing(false)
@@ -100,9 +92,6 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
             </IconBox>
             <IconBox>
               <CheckIcon
-                sx={{
-                  fontSize: '.8rem'
-                }}
                 onClick={() => {
                   // finish editing, save data
                   setEditing(false)
@@ -135,18 +124,10 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
               {
                 copied
                   ? (
-                    <CheckIcon
-                      sx={{
-                        fontSize: '.8rem'
-                      }}
-                    />
+                    <CheckIcon/>
                     )
                   : (
-                    <ContentCopyIcon
-                      sx={{
-                        fontSize: '.8rem'
-                      }}
-                    />
+                    <ContentCopyIcon/>
                     )
               }
             </IconBox>
@@ -160,11 +141,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
                   setEditing(true)
                 }}
               >
-                <EditIcon
-                  sx={{
-                    fontSize: '.8rem'
-                  }}
-                />
+                <EditIcon/>
               </IconBox>
             )
           }
@@ -227,14 +204,8 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
         {
           expandable
             ? (inspect
-                ? <ExpandMoreIcon sx={{
-                  fontSize: '.8rem',
-                  '&:hover': { cursor: 'pointer' }
-                }}/>
-                : <ChevronRightIcon sx={{
-                  fontSize: '.8rem',
-                  '&:hover': { cursor: 'pointer' }
-                }}/>
+                ? <ExpandMoreIcon className='data-viewer-cursor-icon' />
+                : <ChevronRightIcon className='data-viewer-cursor-icon' />
               )
             : null
         }
@@ -249,7 +220,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
               ? <KeyRenderer {...downstreamProps} />
               : nestedIndex === undefined && (
                 isNumberKey
-                  ? <Box component='span' style={{ color: numberKeyColor }}>{key}</Box>
+                  ? <span style={{ color: numberKeyColor }}>{key}</span>
                   : quotesOnKeys ? <>&quot;{key}&quot;</> : <>{key}</>
               )
           )

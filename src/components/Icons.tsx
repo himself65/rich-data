@@ -1,12 +1,17 @@
 import type { SvgIconProps } from '@mui/material'
-import { SvgIcon } from '@mui/material'
+import clsx from 'clsx'
 import type { FC } from 'react'
 
 const BaseIcon: FC<SvgIconProps> = ({ d, ...props }) => {
   return (
-    <SvgIcon data-testid='icon' {...props}>
+    <svg
+      data-testid='base-icon'
+      viewBox='0 0 24 24'
+      {...props}
+      className={clsx(props.className, 'data-viewer-base-icon')}
+    >
       <path d={d}/>
-    </SvgIcon>
+    </svg>
   )
 }
 
