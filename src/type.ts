@@ -81,7 +81,7 @@ export type JsonViewerProps<T = unknown> = {
    * Customize a key, if `keyRenderer.when` returns `true`.
    */
   keyRenderer?: JsonViewerKeyRenderer
-  valueTypes?: DataType<any>[]
+  valueTypes?: DataType[]
   onChange?: JsonViewerOnChange
   onCopy?: JsonViewerOnCopy
   onSelect?: JsonViewerOnSelect

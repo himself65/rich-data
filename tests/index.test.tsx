@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import { expectTypeOf } from 'expect-type'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, expectTypeOf, it } from 'vitest'
 
-import { createDataType, JsonViewer } from '../src'
+import type { DataType } from '../src'
+import { JsonViewer } from '../src'
 
 function aPlusB (a: number, b: number) {
   return a + b
@@ -141,6 +141,7 @@ describe('render <JsonViewer/> with multiple instances', () => {
           valueTypes={[
             {
               is: () => true,
+              serialize: () => 'first viewer',
               Component: () => {
                 return <>first viewer</>
               }
@@ -153,6 +154,7 @@ describe('render <JsonViewer/> with multiple instances', () => {
           valueTypes={[
             {
               is: () => true,
+              serialize: () => 'second viewer',
               Component: () => {
                 return <>second viewer</>
               }
@@ -241,18 +243,20 @@ describe('render <JsonViewer/> with props', () => {
     render(<JsonViewer value={undefined} valueTypes={[
       {
         is: (value) => typeof value === 'string',
+        serialize: (value) => `#${value}`,
         Component: (props) => {
-          expectTypeOf(props.value).toMatchTypeOf<unknown>()
+          expectTypeOf(props.value).toBeUnknown()
           return null
         }
       },
-      createDataType<string>(
-        (value) => typeof value === 'string',
-        (props) => {
+      ({
+        is: (value) => typeof value === 'string',
+        serialize: (value) => `$${value}`,
+        Component: (props) => {
           expectTypeOf(props.value).toMatchTypeOf<string>()
           return null
         }
-      )
+      } satisfies DataType<string>)
     ]}/>)
   })
 })
@@ -328,9 +332,8 @@ describe('test functions', () => {
   `
     ],
     [
-      // eslint-disable-next-line unused-imports/no-unused-vars
-      (...args: any) => console.log('555'),
-      '(...args) => {',
+      (..._: any) => console.log('555'),
+      '(..._) => {',
       ' console.log("555")'
     ],
     [
@@ -346,10 +349,10 @@ describe('test functions', () => {
     ],
     [
       // eslint-disable-next-line unused-imports/no-unused-vars
-      function (a: number, b: number) {
+      function (_a: number, _b: number) {
         throw Error('Be careful to use the function just as value in useState() hook')
       },
-      '(a, b) {',
+      '(_a, _b) {',
       `
         throw Error("Be careful to use the function just as value in useState() hook");
       `
