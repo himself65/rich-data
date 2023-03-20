@@ -4,7 +4,7 @@ import { useCallback, useRef, useState } from 'react'
 import { useJsonViewerStore } from '../stores/JsonViewerStore'
 import type { JsonViewerOnCopy } from '../type'
 
-function cleanStringify (object: unknown): string {
+export function cleanStringify (object: unknown): string {
   function copyWithoutCircularReferences (references: object[], object: object) {
     const cleanObject = {}
     Object.keys(object).forEach(function (key) {

@@ -2,6 +2,7 @@ import { InputBase } from '@mui/material'
 import type { ChangeEventHandler, ComponentType, FC } from 'react'
 import { memo, useCallback } from 'react'
 
+import { cleanStringify } from '../../hooks/useCopyToClipboard'
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
 import type { Colorspace } from '../../theme/base16'
 import type { DataItemProps, DataType, EditorProps } from '../../type'
@@ -38,6 +39,7 @@ export function createEasyType<Value> (
 
   if (!fromString) {
     return {
+      serialize: (value) => cleanStringify(value),
       Component: EasyType
     }
   }
@@ -73,6 +75,7 @@ export function createEasyType<Value> (
   EasyTypeEditor.displayName = `easy-${type}-type-editor`
 
   return {
+    serialize: (value) => cleanStringify(value),
     Component: EasyType,
     Editor: EasyTypeEditor
   }

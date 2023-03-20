@@ -15,6 +15,7 @@ import {
   PostObjectType,
   PreObjectType
 } from '../components/DataTypes/Object'
+import { cleanStringify } from '../hooks/useCopyToClipboard'
 import type { DataItemProps, DataType, Path } from '../type'
 import { useJsonViewerStore } from './JsonViewerStore'
 
@@ -50,6 +51,7 @@ export const useTypeRegistryStore = <U extends unknown>(selector: (state: TypeRe
 
 const objectType: DataType<object> = {
   is: (value) => typeof value === 'object',
+  serialize: (value) => cleanStringify(value),
   Component: ObjectType,
   PreComponent: PreObjectType,
   PostComponent: PostObjectType
@@ -241,6 +243,7 @@ export function predefined (): DataType<any>[] {
   registerType<Function>(
     {
       is: (value) => typeof value === 'function',
+      serialize: (value) => value.toString(),
       Component: FunctionType,
       PreComponent: PreFunctionType,
       PostComponent: PostFunctionType

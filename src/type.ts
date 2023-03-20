@@ -48,6 +48,7 @@ export type DataType<ValueType = unknown> = {
    * Whether the value belongs to the data type
    */
   is: (value: unknown, path: Path) => boolean
+  serialize: (value: ValueType) => string
   Component: ComponentType<DataItemProps<ValueType>>
   Editor?: ComponentType<EditorProps<ValueType>>
   PreComponent?: ComponentType<DataItemProps<ValueType>>
