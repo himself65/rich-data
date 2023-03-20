@@ -229,10 +229,10 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
           (
             isRoot
               ? (rootName !== false
-                  ? <DataBox sx={{ mr: 0.5 }}>:</DataBox>
+                  ? <DataBox>:</DataBox>
                   : null)
               : nestedIndex === undefined && (
-               <DataBox sx={{ mr: 0.5 }}>:</DataBox>
+               <DataBox>:</DataBox>
               )
           )
         }
@@ -244,8 +244,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
           ? (Editor && <Editor value={tempValue} setValue={setTempValue}/>)
           : (Component)
               ? <Component {...downstreamProps} />
-              : <Box component='span'
-                   className='data-value-fallback'>{`fallback: ${value}`}</Box>
+              : <span className='data-value-fallback'>{`fallback: ${value}`}</span>
       }
       {PostComponent && <PostComponent {...downstreamProps} />}
       {(isHover && expandable && !inspect) && actionIcons}
