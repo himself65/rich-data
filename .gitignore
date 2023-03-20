@@ -20,6 +20,7 @@ node_modules
 coverage
 .nyc_output
 .coverage
+storybook-static
 
 .idea
 .vscode

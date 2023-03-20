@@ -1,0 +1,7 @@
+{
+  "root": false,
+  "extends": [
+    "../../.eslintrc.js",
+    "plugin:storybook/recommended"
+  ]
+}

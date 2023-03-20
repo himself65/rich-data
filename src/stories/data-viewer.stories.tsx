@@ -1,6 +1,31 @@
-import type { JsonViewerKeyRenderer } from '@rich-data/viewer'
-import { JsonViewer } from '@rich-data/viewer'
-import { createRoot } from 'react-dom/client'
+import { expect } from '@storybook/jest'
+// Button.stories.ts|tsx
+import type { Meta, StoryObj } from '@storybook/react'
+import { userEvent, within } from '@storybook/testing-library'
+
+import { JsonViewer } from '..'
+
+const meta: Meta<typeof JsonViewer> = {
+  title: 'Example/JsonViewer',
+  component: JsonViewer
+}
+
+export default meta
+
+type Story = StoryObj<typeof JsonViewer>;
+
+export const Simple: Story = {
+  render: () => <JsonViewer value={{ foo: 'bar' }} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const root = canvas.getByTestId('data-key-pair')
+    expect(root.querySelector('[data-testid="data-key-pairfoo"]')).toBeDefined()
+    await userEvent.click(root.querySelector('[data-testid="expand-more-icon"]'))
+    expect(root.querySelector('[data-testid="data-key-pairfoo"]')).toBeNull()
+    await userEvent.click(root.querySelector('[data-testid="chevron-right-icon"]'))
+    expect(root.querySelector('[data-testid="data-key-pairfoo"]')).toBeDefined()
+  }
+}
 
 // this url is copied from: https://beta.reactjs.org/learn/passing-props-to-a-component
 const avatar = 'https://i.imgur.com/1bX5QH6.jpg'
@@ -77,17 +102,15 @@ const value = {
   bigint: 123456789087654321n
 }
 
-const KeyRenderer: JsonViewerKeyRenderer = ({ path }) => {
-  return <del aria-label='I dont like this number'>&quot;{path.slice(
-    -1)}&quot;</del>
+export const Heavy: Story = {
+  render: () => <JsonViewer value={value} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const root = canvas.getByTestId('data-key-pair')
+    expect(root.querySelector('[data-testid="data-key-pairlongArray"]')).toBeDefined()
+    await userEvent.click(root.querySelector('[data-testid="expand-more-icon"]'))
+    expect(root.querySelector('[data-testid="data-key-pairlongArray"]')).toBeNull()
+    await userEvent.click(root.querySelector('[data-testid="chevron-right-icon"]'))
+    expect(root.querySelector('[data-testid="data-key-pairlongArray"]')).toBeDefined()
+  }
 }
-KeyRenderer.when = (props) => props.value === 114.514
-
-createRoot(document.getElementById('app')).render(
-  <div>
-    <h1>Playground</h1>
-    <div className='container'>
-      <JsonViewer value={value}/>
-    </div>
-  </div>
-)

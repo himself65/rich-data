@@ -29,6 +29,8 @@ see [src/type.ts](src/type.ts)
 ### Basic Example
 
 ```tsx
+import '@rich-data/viewer/theme/base.css'
+
 import { JsonViewer } from '@rich-data/viewer'
 
 const object = { /* my json object */ }
@@ -38,6 +40,8 @@ const Component = () => (<JsonViewer value={object}/>)
 ### Customizable data type
 
 ```tsx
+import '@rich-data/viewer/theme/base.css'
+
 import { JsonViewer, createDataType } from '@rich-data/viewer'
 
 const object = {

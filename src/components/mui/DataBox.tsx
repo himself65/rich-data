@@ -7,9 +7,6 @@ export const DataBox: FC<DataBoxProps> = props => (
   <Box
     component='div'
     {...props}
-    sx={{
-      display: 'inline-block',
-      ...props.sx
-    }}
+    className={'data-box ' + props.className}
   />
 )
