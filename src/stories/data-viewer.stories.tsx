@@ -27,7 +27,6 @@ export const Simple: Story = {
   }
 }
 
-
 // this url is copied from: https://beta.reactjs.org/learn/passing-props-to-a-component
 const avatar = 'https://i.imgur.com/1bX5QH6.jpg'
 
