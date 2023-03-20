@@ -3,7 +3,7 @@ name: Compressed Size
 on:
   pull_request_target:
     branches:
-      - master
+      - main
 
 jobs:
   build:
