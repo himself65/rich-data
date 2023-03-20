@@ -1,3 +1,18 @@
 .data-box {
   display: inline-block;
 }
+
+.data-viewer-icon-box {
+  cursor: pointer;
+  padding-left: 0.7rem
+}
+
+.data-viewer-base-icon {
+  width: 1em;
+  height: 1em;
+  font-size: .8rem;
+}
+
+.data-viewer-cursor-icon:hover {
+  cursor: pointer;
+}

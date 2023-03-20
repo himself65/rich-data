@@ -3635,6 +3635,7 @@ __metadata:
     "@vitest/coverage-c8": ^0.29.3
     "@vitest/coverage-istanbul": ^0.29.3
     "@vitest/ui": ^0.29.3
+    clsx: ^1.2.1
     copy-to-clipboard: ^3.3.3
     eslint: ^8.36.0
     eslint-config-standard: ^17.0.0
