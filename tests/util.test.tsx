@@ -4,7 +4,7 @@ import { describe, expect, test } from 'vitest'
 
 import type { DataItemProps, Path } from '../src'
 import { applyValue, createDataType, isCycleReference } from '../src'
-import { segmentArray } from '../src/utils'
+import { getValueSize, segmentArray } from '../src/utils'
 
 describe('function applyValue', () => {
   const patches: any[] = [{}, undefined, 1, '2', 3n, 0.4]
@@ -233,5 +233,11 @@ describe('function segmentArray', () => {
     expect(result).to.deep.eq([
       [1, 2, 3, 4, 5]
     ])
+  })
+})
+
+describe('function getValueSize', () => {
+  test('should return 0 for undefined', () => {
+    expect(getValueSize(undefined)).to.eq(0)
   })
 })

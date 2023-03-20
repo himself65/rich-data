@@ -125,7 +125,7 @@ export const isCycleReference = (
 }
 
 export function getValueSize (value: any): number {
-  if (value === null || undefined) {
+  if (value === null || value === undefined) {
     return 0
   } else if (Array.isArray(value)) {
     return value.length
