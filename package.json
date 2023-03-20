@@ -124,7 +124,7 @@
     "vite": "^4.2.0",
     "vitest": "^0.29.3"
   },
-  "packageManager": "yarn@3.2.4",
+  "packageManager": "yarn@3.5.0",
   "workspaces": [
     "docs",
     "playground"
