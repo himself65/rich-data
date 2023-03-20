@@ -149,6 +149,10 @@ This package is originally based on [mac-s-g/react-json-view](https://github.com
 
 Also thanks open source projects that make this possible.
 
+## Services
+
+![Powered by Vercel](./public/vercel-banner.png)
+
 ## LICENSE
 
 This project is licensed under the terms of the [MIT license](LICENSE).

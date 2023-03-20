@@ -47,11 +47,9 @@ export function useInspect (path: (string | number)[], value: any, nestedIndex?:
       : depth < defaultInspectDepth
   })
   const setInspect = useCallback<Dispatch<SetStateAction<boolean>>>((apply) => {
-    set((oldState) => {
-      const newState = typeof apply === 'boolean' ? apply : apply(oldState)
-      setInspectCache(path, newState, nestedIndex)
-      return newState
-    })
-  }, [nestedIndex, path, setInspectCache])
+    const newState = typeof apply === 'boolean' ? apply : apply(inspect)
+    setInspectCache(path, newState, nestedIndex)
+    set(newState)
+  }, [inspect, nestedIndex, path, setInspectCache])
   return [inspect, setInspect] as const
 }
