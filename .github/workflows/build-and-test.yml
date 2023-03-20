@@ -117,12 +117,10 @@ jobs:
         run: npx playwright install chromium
       - name: Build Storybook
         run: yarn build-storybook
-      - name: Test with Coverage
-        run: yarn e2e
       - name: Serve Storybook and run tests
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "npx http-server storybook-static --port 6006 --silent" \
+            "npx serve storybook-static -p 6006" \
             "npx wait-on tcp:6006 && yarn test-storybook:coverage"
       - name: Collect code coverage report
         run: yarn exec nyc report -t coverage/storybook --report-dir .coverage/storybook --reporter=lcov

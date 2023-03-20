@@ -62,7 +62,6 @@
   "scripts": {
     "dev": "yarn workspace @rich-data/playground dev",
     "test": "vitest",
-    "e2e": "COVERAGE=true playwright test",
     "coverage": "vitest run --coverage",
     "postinstall": "husky install",
     "prepack": "pinst --disable",
@@ -95,7 +94,6 @@
     "@commitlint/config-angular": "^17.4.4",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "@playwright/test": "^1.31.2",
     "@rollup/plugin-alias": "^4.0.3",
     "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
@@ -154,7 +152,6 @@
   },
   "packageManager": "yarn@3.5.0",
   "workspaces": [
-    "docs",
-    "playground"
+    "docs"
   ]
 }
