@@ -141,7 +141,7 @@ const Component = () => (
 
 ## Contributors
 
-<a href="https://github.com/himself65/json-viewer/graphs/contributors"><img src="https://opencollective.com/json-viewer/contributors.svg?width=890&button=false" /></a>
+<a href="https://github.com/himself65/data-viewer/graphs/contributors"><img src="https://opencollective.com/data-viewer/contributors.svg?width=890&button=false" /></a>
 
 ## Acknowledge
 
