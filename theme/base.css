@@ -32,8 +32,22 @@
   width: 1em;
   height: 1em;
   font-size: .8rem;
+  display: inline-block;
 }
 
 .data-viewer-cursor-icon:hover {
+  cursor: pointer;
+}
+
+.data-viewer-data-function-body {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+.data-viewer-data-function-body:hover {
+  cursor: pointer;
+}
+
+.data-viewer-data-object-body:hover {
   cursor: pointer;
 }

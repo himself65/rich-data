@@ -1,4 +1,3 @@
-import { InputBase } from '@mui/material'
 import type { ChangeEventHandler, ComponentType, FC } from 'react'
 import { memo, useCallback } from 'react'
 
@@ -45,8 +44,8 @@ export function createEasyType<Value> (
   const EasyTypeEditor: FC<EditorProps<Value>> = ({ value, setValue }) => {
     const color = useJsonViewerStore(store => store.colorspace[colorKey])
     return (
-      <InputBase
-        value={value}
+      <textarea
+        value={`${value}`}
         onChange={
           useCallback<ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>>(
             (event) => {
@@ -55,9 +54,7 @@ export function createEasyType<Value> (
             }, [setValue]
           )
         }
-        size='small'
-        multiline
-        sx={{
+        style={{
           color,
           padding: 0.5,
           borderStyle: 'solid',

@@ -1,7 +1,3 @@
-import {
-  createTheme, Paper,
-  ThemeProvider
-} from '@mui/material'
 import type { FC, ReactElement } from 'react'
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react'
 
@@ -95,14 +91,13 @@ const JsonViewerInner: FC<JsonViewerProps> = (props) => {
   const setHover = useJsonViewerStore(store => store.setHover)
   const onMouseLeave = useCallback(() => setHover(null), [setHover])
   return (
-    <Paper
-      elevation={0}
+    <div
       className={props.className}
-      style={props.style}
-      sx={{
+      style={{
         fontFamily: 'monospace',
         userSelect: 'none',
-        contentVisibility: 'auto'
+        contentVisibility: 'auto',
+        ...(props.style ?? {})
       }}
       onMouseLeave={ onMouseLeave }
     >
@@ -110,7 +105,7 @@ const JsonViewerInner: FC<JsonViewerProps> = (props) => {
         value={value}
         path={useMemo(() => [], [])}
       />
-    </Paper>
+    </div>
   )
 }
 
@@ -119,30 +114,6 @@ export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Val
   const themeType = useMemo(() => props.theme === 'auto'
     ? (isAutoDarkTheme ? 'light' : 'dark')
     : props.theme ?? 'light', [isAutoDarkTheme, props.theme])
-  const theme = useMemo(() => {
-    const backgroundColor = typeof themeType === 'object'
-      ? themeType.base00
-      : themeType === 'dark'
-        ? darkColorspace.base00
-        : lightColorspace.base00
-    return createTheme({
-      components: {
-        MuiPaper: {
-          styleOverrides: {
-            root: {
-              backgroundColor
-            }
-          }
-        }
-      },
-      palette: {
-        mode: themeType === 'dark' ? 'dark' : 'light',
-        background: {
-          default: backgroundColor
-        }
-      }
-    })
-  }, [themeType])
   const mixedProps = { ...props, theme: themeType }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -150,13 +121,11 @@ export const JsonViewer = function JsonViewer<Value> (props: JsonViewerProps<Val
   const typeRegistryStore = useMemo(() => createTypeRegistryStore(), [])
 
   return (
-    <ThemeProvider theme={theme}>
-      <TypeRegistryStoreContext.Provider value={typeRegistryStore}>
-        <JsonViewerStoreContext.Provider value={jsonViewerStore}>
-          <JsonViewerInner {...mixedProps}/>
-        </JsonViewerStoreContext.Provider>
-      </TypeRegistryStoreContext.Provider>
-    </ThemeProvider>
+    <TypeRegistryStoreContext.Provider value={typeRegistryStore}>
+      <JsonViewerStoreContext.Provider value={jsonViewerStore}>
+        <JsonViewerInner {...mixedProps}/>
+      </JsonViewerStoreContext.Provider>
+    </TypeRegistryStoreContext.Provider>
   )
 }
 

@@ -2,12 +2,12 @@
  * Use NoSsr on function value.
  *  Because in Next.js SSR, the function will be translated to other type
  */
-import { Box, NoSsr } from '@mui/material'
 import type { FC } from 'react'
 
 import { useJsonViewerStore } from '../../stores/JsonViewerStore'
 import type { DataItemProps } from '../../type'
 import { DataTypeLabel } from '../DataTypeLabel'
+import { NoSsr } from '../mui/NoSsr'
 
 const functionBody = (func: Function) => {
   const funcString = func.toString()
@@ -45,15 +45,15 @@ export const PreFunctionType: FC<DataItemProps<Function>> = (props) => {
   return (
     <NoSsr>
       <DataTypeLabel dataType='function'/>
-      <Box
-        component='span' className='data-function-start'
-        sx={{
+      <span
+        className='data-function-start'
+        style={{
           letterSpacing: 0.5
         }}
       >
         {functionName(props.value)}
         {' '}{lb}
-      </Box>
+      </span>
     </NoSsr>
   )
 }
@@ -61,9 +61,9 @@ export const PreFunctionType: FC<DataItemProps<Function>> = (props) => {
 export const PostFunctionType: FC<DataItemProps<Function>> = () => {
   return (
     <NoSsr>
-      <Box component='span' className='data-function-end'>
+      <span className='data-function-end'>
         {rb}
-      </Box>
+      </span>
     </NoSsr>
   )
 }
@@ -72,29 +72,23 @@ export const FunctionType: FC<DataItemProps<Function>> = (props) => {
   const functionColor = useJsonViewerStore(store => store.colorspace.base05)
   return (
     <NoSsr>
-      <Box
+      <div
         className='data-function'
-        sx={{
+        style={{
           display: props.inspect ? 'block' : 'inline-block',
-          pl: props.inspect ? 2 : 0,
+          paddingLeft: props.inspect ? 2 : 0,
           color: functionColor
         }}
       >
         {props.inspect
           ? functionBody(props.value)
           : (
-            <Box component='span' className='data-function-body'
-                 onClick={() => props.setInspect(true)}
-                 sx={{
-                   '&:hover': { cursor: 'pointer' },
-                   padding: 0.5
-                 }}
-            >
+            <span className='data-viewer-data-function-body' onClick={() => props.setInspect(true)}>
               …
-            </Box>
+            </span>
             )
         }
-      </Box>
+      </div>
     </NoSsr>
   )
 }

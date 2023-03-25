@@ -1,4 +1,3 @@
-import { Box } from '@mui/material'
 import clsx from 'clsx'
 import type { FC, MouseEvent } from 'react'
 import type React from 'react'
@@ -171,9 +170,9 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
     value
   }), [inspect, path, setInspect, value])
   return (
-    <Box className='data-key-pair'
+    <div className='data-key-pair'
          data-testid={'data-key-pair' + path.join('.')}
-         sx={{
+         style={{
            userSelect: 'text'
          }}
          onMouseEnter={
@@ -245,6 +244,6 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
       {PostComponent && <PostComponent {...downstreamProps} />}
       {(isHover && expandable && !inspect) && actionIcons}
       {(isHover && !expandable) && actionIcons}
-    </Box>
+    </div>
   )
 }
