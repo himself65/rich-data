@@ -15,14 +15,6 @@ export const DataTypeLabel: FC<DataLabelProps> = ({
     return null
   }
   return (
-    <DataBox
-      className='data-type-label'
-      sx={{
-        mx: 0.5,
-        fontSize: '0.7rem',
-        opacity: 0.8,
-        userSelect: 'none'
-      }}
-    >{dataType}</DataBox>
+    <DataBox className='data-type-label data-viewer-data-type-label'>{dataType}</DataBox>
   )
 }

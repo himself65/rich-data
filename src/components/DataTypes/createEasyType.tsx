@@ -26,7 +26,7 @@ export function createEasyType<Value> (
     const onSelect = useJsonViewerStore(store => store.onSelect)
 
     return (
-      <DataBox onClick={() => onSelect?.(props.path, props.value)} sx={{ color }} >
+      <DataBox onClick={() => onSelect?.(props.path, props.value)} style={{ color }} >
         {(displayTypeLabel && storeDisplayDataTypes) && <DataTypeLabel dataType={type}/>}
         <DataBox className={`${type}-value`}>
           <Render value={props.value}/>

@@ -162,13 +162,9 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
           const rest = value.length - displayLength
           elements.push(
             <DataBox
-              sx={{
-                cursor: 'pointer',
-                lineHeight: 1.5,
-                color: keyColor,
-                letterSpacing: 0.5,
-                opacity: 0.8,
-                userSelect: 'none'
+              className='data-viewer-object-item'
+              style={{
+                color: keyColor
               }}
               key='last'
               onClick={() => setDisplayLength(length => length * 2)}
@@ -207,13 +203,9 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
       const rest = entries.length - displayLength
       elements.push(
         <DataBox
-          sx={{
-            cursor: 'pointer',
-            lineHeight: 1.5,
-            color: keyColor,
-            letterSpacing: 0.5,
-            opacity: 0.8,
-            userSelect: 'none'
+          className='data-viewer-object-item'
+          style={{
+            color: keyColor
           }}
           key='last'
           onClick={() => setDisplayLength(length => length * 2)}

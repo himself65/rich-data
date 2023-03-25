@@ -7,6 +7,27 @@
   padding-left: 0.7rem
 }
 
+.data-viewer-expand-box {
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+.data-viewer-data-type-label {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  font-size: 0.7rem;
+  opacity: 0.8;
+  user-select: none
+}
+
+.data-viewer-object-item {
+  cursor: pointer;
+  line-height: 1.5rem;
+  letter-spacing: 0.5rem;
+  opacity: 0.8;
+  user-select: none;
+}
+
 .data-viewer-base-icon {
   width: 1em;
   height: 1em;
