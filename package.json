@@ -57,7 +57,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "theme"
   ],
   "scripts": {
     "dev": "yarn workspace @rich-data/viewer-docs dev",
