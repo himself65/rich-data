@@ -1,4 +1,3 @@
-import { Box } from '@mui/material'
 import type { SetStateAction } from 'react'
 import { createContext, memo, useContext, useMemo, useState } from 'react'
 import type { StoreApi } from 'zustand'
@@ -152,7 +151,7 @@ export function predefined (): DataType<any>[] {
           const backgroundColor = useJsonViewerStore(
             store => store.colorspace.base02)
           return (
-            <Box sx={{
+            <div style={{
               fontSize: '0.8rem',
               backgroundColor,
               fontWeight: 'bold',
@@ -160,7 +159,7 @@ export function predefined (): DataType<any>[] {
               padding: '0.5px 2px'
             }}>
               NULL
-            </Box>
+            </div>
           )
         },
         {
@@ -180,14 +179,16 @@ export function predefined (): DataType<any>[] {
           const backgroundColor = useJsonViewerStore(
             store => store.colorspace.base02)
           return (
-            <Box sx={{
-              fontSize: '0.7rem',
-              backgroundColor,
-              borderRadius: '3px',
-              padding: '0.5px 2px'
-            }}>
+            <div
+              style={{
+                fontSize: '0.7rem',
+                backgroundColor,
+                borderRadius: '3px',
+                padding: '0.5px 2px'
+              }}
+            >
               undefined
-            </Box>
+            </div>
           )
         },
         {
@@ -211,9 +212,8 @@ export function predefined (): DataType<any>[] {
             : props.value.slice(0, collapseStringsAfterLength)
           const hasRest = props.value.length > collapseStringsAfterLength
           return (
-            <Box
-              component='span'
-              sx={{
+            <span
+              style={{
                 overflowWrap: 'anywhere',
                 cursor: hasRest ? 'pointer' : 'inherit'
               }}
@@ -225,9 +225,9 @@ export function predefined (): DataType<any>[] {
             >
               &quot;
               {value}
-              {hasRest && !showRest && (<Box component='span' sx={{ padding: 0.5 }}>…</Box>)}
+              {hasRest && !showRest && (<span style={{ padding: 0.5 }}>…</span>)}
               &quot;
-            </Box>
+            </span>
           )
         },
         {
@@ -258,14 +258,14 @@ export function predefined (): DataType<any>[] {
           const backgroundColor = useJsonViewerStore(
             store => store.colorspace.base02)
           return (
-            <Box sx={{
+            <div style={{
               backgroundColor,
               fontSize: '0.8rem',
               fontWeight: 'bold',
               borderRadius: '3px'
             }}>
               NaN
-            </Box>
+            </div>
           )
         },
         {
@@ -299,7 +299,7 @@ export function predefined (): DataType<any>[] {
         ({ value }) => <>{value}</>,
         {
           colorKey: 'base0F',
-          fromString: value => parseInt(value)
+          fromString: value => value ? parseInt(value) : 0
         }
       )
     }

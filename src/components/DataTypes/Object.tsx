@@ -1,4 +1,3 @@
-import { Box } from '@mui/material'
 import type { FC } from 'react'
 import { lazy, useMemo, useState } from 'react'
 
@@ -40,40 +39,39 @@ export const PreObjectType: FC<DataItemProps<object>> = (props) => {
   const displayObjectSize = useJsonViewerStore(store => store.displayObjectSize)
   const isTrap = useIsCycleReference(props.path, props.value)
   return (
-    <Box
-      component='span' className='data-object-start'
-      sx={{
+    <span className='data-object-start'
+      style={{
         letterSpacing: 0.5
       }}
     >
       {isArray ? arrayLb : objectLb}
       {displayObjectSize && props.inspect && !isEmptyValue && (
-        <Box
-          component='span'
-          sx={{
-            pl: 0.5,
+        <span
+          style={{
+            paddingLeft: 0.5,
             fontStyle: 'italic',
             color: metadataColor,
             userSelect: 'none'
           }}
         >
           {sizeOfValue}
-        </Box>
+        </span>
       )}
 
       {isTrap && !props.inspect
         ? (
           <>
-            <CircularArrowsIcon sx={{
+            <CircularArrowsIcon style={{
               fontSize: 12,
               color: textColor,
-              mx: 0.5
+              marginLeft: 0.5,
+              marginRight: 0.5
             }}/>
             {isTrap}
           </>
           )
         : null}
-    </Box>
+    </span>
   )
 }
 
@@ -85,25 +83,24 @@ export const PostObjectType: FC<DataItemProps<object>> = (props) => {
   const sizeOfValue = useMemo(() => inspectMetadata(props.value), [props.value])
 
   return (
-    <Box component='span' className='data-object-end'>
+    <span className='data-object-end'>
       {isArray ? arrayRb : objectRb}
       {displayObjectSize && (isEmptyValue || !props.inspect)
         ? (
-          <Box
-            component='span'
-            sx={{
-              pl: 0.5,
+          <span
+            style={{
+              paddingLeft: 0.5,
               fontStyle: 'italic',
               color: metadataColor,
               userSelect: 'none'
             }}
           >
             {sizeOfValue}
-          </Box>
+          </span>
           )
         : null
       }
-    </Box>
+    </span>
   )
 }
 
@@ -232,11 +229,11 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
     return null
   }
   return (
-    <Box
+    <span
       className='data-object'
-      sx={{
+      style={{
         display: props.inspect ? 'block' : 'inline-block',
-        pl: props.inspect ? indentWidth - 0.6 : 0,
+        paddingLeft: props.inspect ? indentWidth - 0.6 : 0,
         marginLeft,
         color: keyColor,
         borderLeft: props.inspect ? `1px solid ${borderColor}` : 'none'
@@ -247,19 +244,18 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
           ? elements
           : !isTrap
               ? (
-              <Box component='span' className='data-object-body'
+              <span className='data-object-body'
                  onClick={() => props.setInspect(true)}
-                 sx={{
-                   '&:hover': { cursor: 'pointer' },
+                 style={{
                    padding: 0.5,
                    userSelect: 'none'
                  }}
               >
                 …
-              </Box>
+              </span>
                 )
               : null
       }
-    </Box>
+    </span>
   )
 }
