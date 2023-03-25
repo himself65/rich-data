@@ -53,7 +53,7 @@
         "import": "./dist/index.mjs",
         "require": "./dist/index.js"
       },
-      "./theme/*.css": "./theme/*.css"
+      "./theme/*": "./theme/*"
     }
   },
   "files": [
