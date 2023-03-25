@@ -244,7 +244,7 @@ export const ObjectType: FC<DataItemProps<object>> = (props) => {
           ? elements
           : !isTrap
               ? (
-              <span className='data-object-body data-viewer-data-object-body'
+              <span className='data-object-body'
                  onClick={() => props.setInspect(true)}
                  style={{
                    padding: 0.5,

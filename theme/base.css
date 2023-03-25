@@ -39,15 +39,15 @@
   cursor: pointer;
 }
 
-.data-viewer-data-function-body {
+.data-function-body {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
 }
 
-.data-viewer-data-function-body:hover {
+.data-function-body:hover {
   cursor: pointer;
 }
 
-.data-viewer-data-object-body:hover {
+.data-object-body:hover {
   cursor: pointer;
 }

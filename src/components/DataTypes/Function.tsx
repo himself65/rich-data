@@ -83,7 +83,7 @@ export const FunctionType: FC<DataItemProps<Function>> = (props) => {
         {props.inspect
           ? functionBody(props.value)
           : (
-            <span className='data-viewer-data-function-body' onClick={() => props.setInspect(true)}>
+            <span className='data-function-body' onClick={() => props.setInspect(true)}>
               …
             </span>
             )
