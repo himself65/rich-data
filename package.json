@@ -60,7 +60,7 @@
     "dist"
   ],
   "scripts": {
-    "dev": "yarn workspace @rich-data/playground dev",
+    "dev": "yarn workspace @rich-data/viewer-docs dev",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "postinstall": "husky install",
