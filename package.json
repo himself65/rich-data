@@ -1,7 +1,7 @@
 {
   "name": "@rich-data/viewer",
   "description": "Interactive Data Viewer",
-  "version": "2.2.4",
+  "version": "2.3.0",
   "license": "MIT",
   "repository": {
     "type": "git",
