@@ -1,7 +1,7 @@
 {
   "name": "@rich-data/viewer",
   "description": "Interactive Data Viewer",
-  "version": "2.15.0",
+  "version": "2.15.2",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -31,30 +31,21 @@
     "tree-view",
     "treeview"
   ],
-  "main": "./src/index.tsx",
-  "module": "./src/index.mjs",
-  "exports": {
-    ".": "./src/index.tsx",
-    "./package.json": "./package.json",
-    "./theme/*.css": "./theme/*.css"
+  "types": "dist/index.d.ts",
+  "jsdelivr": "dist/browser.js",
+  "browser": {
+    "vanilla": "dist/browser.js"
   },
-  "publishConfig": {
-    "types": "dist/index.d.ts",
-    "jsdelivr": "dist/browser.js",
-    "browser": {
-      "vanilla": "dist/browser.js"
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
     },
-    "main": "dist/index.js",
-    "module": "dist/index.mjs",
-    "exports": {
-      "./package.json": "./package.json",
-      ".": {
-        "types": "./dist/index.d.ts",
-        "import": "./dist/index.mjs",
-        "require": "./dist/index.js"
-      },
-      "./theme/*": "./theme/*"
-    }
+    "./theme/*": "./theme/*"
   },
   "files": [
     "dist",
