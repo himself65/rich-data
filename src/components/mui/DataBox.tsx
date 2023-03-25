@@ -1,12 +1,11 @@
-import { Box } from '@mui/material'
 import clsx from 'clsx'
 import type { ComponentProps, FC } from 'react'
 
-type DataBoxProps = ComponentProps<typeof Box>
+// get HTMLDivElement
+type DataBoxProps = ComponentProps<'div'>
 
 export const DataBox: FC<DataBoxProps> = props => (
-  <Box
-    component='div'
+  <div
     {...props}
     className={clsx('data-box', props.className)}
   />

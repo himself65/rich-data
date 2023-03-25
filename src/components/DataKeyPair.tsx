@@ -181,14 +181,10 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
              [setHover, path, nestedIndex])
          }
     >
-      <DataBox
-        component='span'
-        className='data-key'
-        sx={{
-          lineHeight: 1.5,
-          color: keyColor,
-          letterSpacing: 0.5,
-          opacity: 0.8
+      <span
+        className='data-key data-viewer-expand-box'
+        style={{
+          color: keyColor
         }}
         onClick={
           useCallback((event: MouseEvent<HTMLSpanElement>) => {
@@ -238,7 +234,7 @@ export const DataKeyPair: FC<DataKeyPairProps> = (props) => {
         }
         {PreComponent && <PreComponent {...downstreamProps} />}
         {(isHover && expandable && inspect) && actionIcons}
-      </DataBox>
+      </span>
       {
         (editing && editable)
           ? (Editor && <Editor value={tempValue} setValue={setTempValue}/>)
