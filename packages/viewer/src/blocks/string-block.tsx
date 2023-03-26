@@ -7,7 +7,7 @@ import { defineBlock } from '../vanilla'
 export function StringBlock (props: DataValueProps<string>): ReactElement {
   return (
     <Metadata flavour="official:string">
-      <span>
+      <span className='string-block'>
         {props.value}
       </span>
     </Metadata>

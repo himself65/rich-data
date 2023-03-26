@@ -17,6 +17,7 @@
     "./hooks/*": "./src/hooks/*.ts",
     "./components/*": "./src/components/*.tsx",
     "./middleware/*": "./src/middleware/*.ts",
+    "./theme/*": "./src/theme/*",
     "./package.json": "./package.json"
   },
   "publishConfig": {
@@ -64,7 +65,8 @@
         "types": "./dist/components/*.d.ts",
         "import": "./dist/components/*.mjs",
         "require": "./dist/components/*.js"
-      }
+      },
+      "./theme/*": "./src/theme/*"
     }
   },
   "files": [

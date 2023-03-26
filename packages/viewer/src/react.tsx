@@ -195,7 +195,7 @@ export function useBlankViewer<
           setRoot(props.value)
         }
         return (
-          <div data-is-root="true">
+          <div data-is-root="true" className='rich-data--viewer'>
             <Suspense fallback='loading...'>
               <ViewerImpl {...props}/>
             </Suspense>

@@ -1,3 +1,5 @@
+import '@rich-data/viewer/theme/basic.css'
+
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
