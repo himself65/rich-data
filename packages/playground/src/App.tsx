@@ -8,6 +8,7 @@ import { Metadata } from '@rich-data/viewer/components/metadata'
 import { usePath } from '@rich-data/viewer/hooks/use-path'
 import { useTheme } from '@rich-data/viewer/hooks/use-theme'
 import { ThemeMode, ThemePlugin } from '@rich-data/viewer/middleware/theme'
+import { DevTools } from 'jotai-devtools'
 import useSWR, { SWRConfig } from 'swr'
 
 type MyPluginMiddleware<C, A> = {
@@ -54,7 +55,7 @@ const MyNumberPlugin = defineBlock(
 const MyImageBlock = defineBlock(
   'my_image',
   (value): value is string => {
-    if (typeof value === 'string')  {
+    if (typeof value === 'string') {
       try {
         new URL(value)
         return true
@@ -135,7 +136,8 @@ const TestPlugin = {
 const {
   useViewer,
   useContext,
-  Provider
+  Provider,
+  getStore
 } = createViewerHook({
   plugins: [
     MyImageBlock,
@@ -155,10 +157,13 @@ function Example () {
   const context = useContext()
   return (
     <>
+      <DevTools store={getStore()}/>
       <button
         onClick={() => {
           context.setTheme(
-            context.getTheme().mode === 'light' ? ThemeMode.Dark : ThemeMode.Light)
+            context.getTheme().mode === 'light'
+              ? ThemeMode.Dark
+              : ThemeMode.Light)
         }}
       >change theme
       </button>
@@ -170,7 +175,7 @@ function Example () {
           foo: 'bar',
           baz: 123,
           nested: {
-            qux: -1,
+            qux: -1
           }
         }
       ]}/>

@@ -11,8 +11,9 @@ import type {
 } from 'react'
 import {
   Suspense,
-  useDebugValue, useEffect,
-  useMemo, useRef
+  useDebugValue,
+  useEffect,
+  useMemo,
 } from 'react'
 
 import {
@@ -93,17 +94,19 @@ export function createViewerHook<
   Plugins extends readonly Plugin[]
 > (config: { plugins: Plugins }) {
   const plugins = new Array<Plugin>(...config.plugins) as unknown as Plugins
-  let viewerStore: Store | null = null
+  const storeRef = {
+    current: null as Store | null
+  }
   const getStore = () => {
-    if (!viewerStore) {
+    if (!storeRef.current) {
       throw new Error('Store is not set')
     }
-    return viewerStore
+    return storeRef.current
   }
 
   function createStoreImpl () {
     const store = createJotaiStore()
-    viewerStore = store
+    storeRef.current = store
     let context = createContext(store) as InterPluginContext<Context, Plugins>
     const blocks = plugins.map(
       (plugin) => {
@@ -145,11 +148,9 @@ export function createViewerHook<
     Provider: function Provider (props: PropsWithChildren<{
       store?: Store
     }>): ReactElement {
-      const storeRef = useRef<Store | null>(null)
       if (storeRef.current === null) {
         storeRef.current = props.store ?? createStoreImpl()
-        const store = storeRef.current
-        store.set(internalViewerAtom, () => ViewerImpl)
+        storeRef.current.set(internalViewerAtom, () => ViewerImpl)
       }
       return (
         <ViewerProvider store={storeRef.current}>
@@ -164,7 +165,8 @@ export function createViewerHook<
       }
       return context as InterPluginContext<Context, Plugins>
     },
-    createStore: createStoreImpl
+    createStore: createStoreImpl,
+    getStore
   } as const
 }
 

@@ -23,6 +23,25 @@
   background-color: var(--viewer-base00);
 }
 
+[data-theme='dark'] {
+  --viewer-base00: #181818;
+  --viewer-base01: #282828;
+  --viewer-base02: #383838;
+  --viewer-base03: #585858;
+  --viewer-base04: #b8b8b8;
+  --viewer-base05: #d8d8d8;
+  --viewer-base06: #e8e8e8;
+  --viewer-base07: #f8f8f8;
+  --viewer-base08: #ab4642;
+  --viewer-base09: #dc9656;
+  --viewer-base0A: #f7ca88;
+  --viewer-base0B: #a1b56c;
+  --viewer-base0C: #86c1b9;
+  --viewer-base0D: #7cafc2;
+  --viewer-base0E: #ba8baf;
+  --viewer-base0F: #a16946;
+}
+
 .rich-data--viewer .string-block {
   color: var(--viewer-base0B)
 }

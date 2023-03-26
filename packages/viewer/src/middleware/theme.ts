@@ -29,17 +29,19 @@ export const ThemePlugin = (
 ) => ({
   id: 'rich-data/theme',
   effect: (store) => {
-    if (config?.preferSystem) {
+    const preferSystem = config?.preferSystem ?? true
+    if (preferSystem) {
       const darkThemeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-      if (darkThemeMediaQuery) {
+      if (darkThemeMediaQuery.matches) {
         store.set(internalThemeAtom, theme => ({
           ...theme,
-          mode: config?.defaultMode ?? ThemeMode.Light
+          mode: ThemeMode.Dark
         }))
+        console.log('theme', store.get(internalThemeAtom))
       } else {
         store.set(internalThemeAtom, theme => ({
           ...theme,
-          mode: config?.defaultMode ?? ThemeMode.Dark
+          mode: ThemeMode.Light
         }))
       }
       const callback = (e: MediaQueryListEvent) => {
