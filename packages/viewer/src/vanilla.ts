@@ -73,9 +73,7 @@ export interface Middleware<
   middleware(store: Store): ContextMutators<Context, unknown>[Id]
 }
 
-export type Plugin = {
-  block: Block
-} | Middleware
+export type Plugin = Block | Middleware
 
 export type ViewerProps<Value = unknown> = {
   value: Value

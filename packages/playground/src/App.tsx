@@ -1,16 +1,11 @@
 import type { Plugin } from '@rich-data/viewer'
-import { createViewerHook, defineBlock } from '@rich-data/viewer'
+import {
+  createViewerHook,
+  defineBlock
+} from '@rich-data/viewer'
 import { StringBlockPlugin } from '@rich-data/viewer/blocks/string-block'
 import { Metadata } from '@rich-data/viewer/components/metadata'
-import { useContext as useViewerContext } from '@rich-data/viewer/hooks/use-context'
 import { ThemePlugin } from '@rich-data/viewer/middleware/theme'
-
-const useContext = useViewerContext<
-  [
-    ['rich-data/theme', unknown],
-    ['my-plugin', unknown]
-  ]
->;
 
 type MyPluginMiddleware<C, A> = {
   ping: () => void
@@ -27,15 +22,14 @@ declare module '@rich-data/viewer' {
   }
 }
 
-const MyNumberPlugin: Plugin = {
-  block: defineBlock(
-    'my_number',
-    value => typeof value === 'number',
-    function MyNumber ({ value }) {
-      const context = useContext()
-      const theme = context.useTheme()
-      return (
-        <Metadata flavour="my_number">
+const MyNumberPlugin: Plugin = defineBlock(
+  'my_number',
+  value => typeof value === 'number',
+  function MyNumber ({ value }) {
+    const context = useContext()
+    const theme = context.useTheme()
+    return (
+      <Metadata flavour="my_number">
           <span>
             this is number {value}
             <br/>
@@ -48,35 +42,32 @@ const MyNumberPlugin: Plugin = {
               click me
             </button>
           </span>
-        </Metadata>
-      )
-    }
-  )
-}
+      </Metadata>
+    )
+  }
+)
 
-const MyArrayPlugin: Plugin = {
-  block: defineBlock(
-    'my_array',
-    value => Array.isArray(value),
-    function MyArray ({ value }) {
-      const context = useContext()
-      const Viewer = context.getViewer()
-      return (
-        <ul>
-          {value.map((item, index) => {
-            return (
-              <li key={index}>
-                <Viewer value={item}/>
-              </li>
-            )
-          })}
-        </ul>
-      )
-    }
-  )
-}
+const MyArrayPlugin: Plugin = defineBlock(
+  'my_array',
+  value => Array.isArray(value),
+  function MyArray ({ value }) {
+    const context = useContext()
+    const Viewer = context.getViewer()
+    return (
+      <ul>
+        {value.map((item, index) => {
+          return (
+            <li key={index}>
+              <Viewer value={item}/>
+            </li>
+          )
+        })}
+      </ul>
+    )
+  }
+)
 
-const TestPlugin: Plugin = {
+const TestPlugin = {
   id: 'my-plugin',
   middleware: (_store) => {
     return {
@@ -85,27 +76,35 @@ const TestPlugin: Plugin = {
       }
     }
   }
-}
+} satisfies Plugin
 
-const useViewer = createViewerHook<[['rich-data/theme', unknown]]>({
+const {
+  useViewer,
+  useContext
+} = createViewerHook({
   plugins: [
     StringBlockPlugin,
     MyNumberPlugin,
     MyArrayPlugin,
     TestPlugin,
     ThemePlugin
-  ]
+  ] as const
 })
 
 export function App () {
-  const { Viewer, context } = useViewer()
+  const { Viewer, getContext } = useViewer<
+    (string | number)[]
+  >()
   return (
     <>
       <button
         onClick={() => {
-          context.setTheme(context.getTheme().mode === 'light' ? 'dark' : 'light')
+          const context = getContext()
+          context.setTheme(
+            context.getTheme().mode === 'light' ? 'dark' : 'light')
         }}
-      >change theme</button>
+      >change theme
+      </button>
       <Viewer value={[1, '2']}/>
     </>
   )

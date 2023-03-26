@@ -22,7 +22,7 @@ const themeAtom = atom<Theme>({
   mode: 'light'
 })
 
-export const ThemePlugin: Plugin = {
+export const ThemePlugin = {
   id: 'rich-data/theme',
   middleware: (
     store: Store
@@ -40,4 +40,4 @@ export const ThemePlugin: Plugin = {
       }
     }
   }
-}
+} satisfies Plugin

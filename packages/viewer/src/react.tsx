@@ -12,11 +12,13 @@ import {
 import { contextAtom, typeRenderersAtom, viewerAtom } from './atom'
 import type {
   Block,
-  Context, ContextMutatorIdentifier, Middleware,
-Mutate,  Plugin,
+  Context,
+  ContextMutators,
+  Middleware,
+  Plugin,
   Store,
-  ViewerProps
- } from './vanilla'
+  ViewerProps, Write
+} from './vanilla'
 import { createContext } from './vanilla'
 
 function ViewerProvider (props: PropsWithChildren<{
@@ -53,17 +55,26 @@ function ViewerImpl<Value = unknown> (props: ViewerProps<Value>): ReactElement {
 ViewerImpl.displayName = 'Viewer'
 
 interface ViewerHookConfig<
-  Value = unknown,
-  Cms extends [ContextMutatorIdentifier, unknown][] = []
+  Value,
+  Plugins extends readonly Plugin[]
 > {
   store: Store
-  context: Mutate<Context, Cms>
+  context: InterPluginContext<Context, Plugins>
 }
 
-interface CreateViewerHookConfig<Value = unknown> {
-  plugins?: Plugin[]
-  store?: Store
-}
+export type InterPluginContext<
+  C,
+  Plugins extends readonly Plugin[]
+> =
+  Plugins extends readonly [infer Current, ...infer Rest]
+    ? Current extends Middleware<infer Id>
+      ? Rest extends Plugin[]
+        ? InterPluginContext<Write<C, ContextMutators<C, unknown>[Id]>, Rest>
+        : Write<C, ContextMutators<C, unknown>[Id]>
+      : Rest extends Plugin[]
+        ? InterPluginContext<C, Rest>
+        : never
+    : Plugins extends [] ? C : C
 
 declare module './vanilla' {
   interface ContextMutators<C, A> {
@@ -74,16 +85,19 @@ declare module './vanilla' {
 }
 
 export function createViewerHook<
-  Cms extends [ContextMutatorIdentifier, unknown][] = []
-> (config: CreateViewerHookConfig) {
+  Plugins extends readonly Plugin[]
+> (config: {
+  plugins: Plugins
+  store?: Store
+}) {
   const store = config.store ?? getDefaultStore()
-  let context = createContext(store)
+  let context = createContext(store) as InterPluginContext<Context, Plugins>
   if (config.plugins) {
     const plugins = [...config.plugins].reverse()
     const blocks = plugins.map(
       (plugin) => {
-        if ('block' in plugin) {
-          return plugin.block
+        if ('flavour' in plugin) {
+          return plugin satisfies Block
         }
         return null
       }
@@ -104,21 +118,30 @@ export function createViewerHook<
 
   store.set(contextAtom, context)
 
-  return function useViewer<
-    Value = unknown
-  > (config?: Omit<ViewerHookConfig<Value>, 'context' | 'store'>) {
-    return useBlankViewer<Value, Cms>({
-      context: context as Mutate<Context, Cms>,
-      store,
-      ...config
-    })
+  return {
+    useViewer: function useViewer<
+      Value
+    > (config?: Omit<ViewerHookConfig<Value, Plugins>, 'context' | 'store'>) {
+      return useBlankViewer<Value, Plugins>({
+        context,
+        store,
+        ...config
+      } as const)
+    },
+    useContext: function useContext(): InterPluginContext<Context, Plugins> {
+      const context = useAtomValue(contextAtom)
+      if (!context) {
+        throw new Error('Context is not set')
+      }
+      return context
+    }
   }
 }
 
 export function useBlankViewer<
-  Value = unknown,
-  Cms extends [ContextMutatorIdentifier, unknown][] = []
-> (config: ViewerHookConfig<Value, Cms>) {
+  Value,
+  Plugins extends readonly Plugin[],
+> (config: ViewerHookConfig<Value, Plugins>) {
   const store = config.store
   const Provider = useMemo(() => function Provider (props: PropsWithChildren) {
     return (
@@ -152,6 +175,6 @@ export function useBlankViewer<
   return useMemo(() => ({
     Viewer,
     Provider,
-    context: config.context as Mutate<Context, Cms>
-  }), [Provider, Viewer, config.context])
+    getContext: () => (config.context as InterPluginContext<Context, Plugins>)
+  } as const), [Provider, Viewer, config.context])
 }
