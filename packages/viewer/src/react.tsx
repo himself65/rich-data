@@ -1,17 +1,21 @@
-import { Provider, createStore, useAtomValue } from 'jotai'
-import {
+import { createStore, Provider, useAtomValue } from 'jotai'
+import type {
   ComponentType,
   PropsWithChildren,
-  ReactElement,
-  useEffect,
-  useMemo, useRef, useState
+  ReactElement
 } from 'react'
-import { typeRenderersAtom } from './atom'
 import {
-  Store,
-  ViewerProps,
-  Context,
-  Plugin, createContext, TypeRenderer
+  useMemo
+} from 'react'
+
+import { typeRenderersAtom } from './atom'
+import type {
+  Context, Plugin, Store,
+  TypeRenderer,
+  ViewerProps
+} from './vanilla'
+import {
+  createContext
 } from './vanilla'
 
 function ViewerProvider (props: PropsWithChildren<{
@@ -29,7 +33,7 @@ function useTypeRenderer<Value = unknown> (value: Value): TypeRenderer | undefin
   return useMemo(
     () => typeRenderers.find(
       typeRenderer => typeRenderer.is(value)),
-    []
+    [typeRenderers, value]
   )
 }
 
@@ -40,7 +44,7 @@ function ViewerImpl<Value = unknown> (props: ViewerProps<Value>): ReactElement {
   }
   const Component = typeRenderer.Component as ComponentType<ViewerProps<Value>>
   return (
-    <div data-flavour={typeRenderer.flavour}>
+    <div data-is-root="true" data-root-flavour={typeRenderer.flavour}>
       <Component value={props.value}/>
     </div>
   )
@@ -82,10 +86,10 @@ export function useBlankViewer<Value = unknown> (config?: ViewerHookConfig<Value
           </ViewerProvider>
         )
       }
-    , []
+    , [config.store]
   )
 
   return useMemo(() => ({
     Viewer
-  }), [])
+  }), [Viewer])
 }

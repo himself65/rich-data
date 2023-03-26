@@ -1,9 +1,9 @@
-import { createStore } from 'jotai'
-import {
+import type { createStore } from 'jotai'
+import type {
   ComponentType
 } from 'react'
-import { typeRenderersAtom } from './atom'
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface FlavourRegistry {
   // [flavour]: Value
 }
@@ -18,9 +18,8 @@ export type TypeRenderer<Flavour extends keyof FlavourRegistry = keyof FlavourRe
   Component: ComponentType<DataValueProps<FlavourRegistry[Flavour]>>
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export type Context = {}
-
-type UnRegisterCallback = () => void
 
 export type Plugin<Flavour extends keyof FlavourRegistry = keyof FlavourRegistry> = {
   flavour: Flavour
@@ -33,6 +32,6 @@ export type ViewerProps<Value = unknown> = {
 
 export type Store = ReturnType<typeof createStore>
 
-export function createContext (store: Store): Context {
+export function createContext (_store: Store): Context {
   return {}
 }
