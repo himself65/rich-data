@@ -1,14 +1,17 @@
-import { atom, useAtomValue } from 'jotai'
-
+import { internalThemeAtom } from '../atom'
 import type { Plugin, Store } from '../vanilla'
 
+export const enum ThemeMode {
+  Dark = 'dark',
+  Light = 'light'
+}
+
 export interface Theme {
-  mode: 'dark' | 'light'
+  mode: ThemeMode
 }
 
 type ThemePluginMiddleware<C, A> = {
-  setTheme: (mode: 'light' | 'dark') => void
-  useTheme (): Theme
+  setTheme: (mode: ThemeMode) => void
   getTheme (): Theme
 }
 
@@ -18,26 +21,26 @@ declare module '../vanilla' {
   }
 }
 
-const themeAtom = atom<Theme>({
-  mode: 'light'
-})
-
-export const ThemePlugin = {
+export const ThemePlugin = (
+  config?: {
+    defaultMode?: ThemeMode,
+  }
+) => ({
   id: 'rich-data/theme',
   middleware: (
     store: Store
   ) => {
+    store.set(internalThemeAtom, {
+      mode: config?.defaultMode ?? ThemeMode.Light
+    })
     return {
-      useTheme: (): Theme => {
-        return useAtomValue(themeAtom)
-      },
-      setTheme: (mode: 'light' | 'dark') => {
-        store.set(themeAtom, theme => ({ ...theme, mode }))
-        console.log('theme', store.get(themeAtom))
+      setTheme: (mode: ThemeMode) => {
+        store.set(internalThemeAtom, theme => ({ ...theme, mode }))
+        console.log('theme', store.get(internalThemeAtom))
       },
       getTheme (): Theme {
-        return store.get(themeAtom)
+        return store.get(internalThemeAtom)
       }
     }
   }
-} satisfies Plugin
+} satisfies Plugin)

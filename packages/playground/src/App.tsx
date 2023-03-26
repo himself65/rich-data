@@ -5,7 +5,8 @@ import {
 } from '@rich-data/viewer'
 import { StringBlockPlugin } from '@rich-data/viewer/blocks/string-block'
 import { Metadata } from '@rich-data/viewer/components/metadata'
-import { ThemePlugin } from '@rich-data/viewer/middleware/theme'
+import { useTheme } from '@rich-data/viewer/hooks/use-theme'
+import { ThemeMode, ThemePlugin } from '@rich-data/viewer/middleware/theme'
 
 type MyPluginMiddleware<C, A> = {
   ping: () => void
@@ -27,7 +28,7 @@ const MyNumberPlugin = defineBlock(
   (value): value is number => typeof value === 'number',
   function MyNumber ({ value }) {
     const context = useContext()
-    const theme = context.useTheme()
+    const theme = useTheme()
     return (
       <Metadata flavour="my_number">
           <span>
@@ -81,14 +82,16 @@ const TestPlugin = {
 const {
   useViewer,
   useContext,
-  createStore
+  Provider
 } = createViewerHook({
   plugins: [
     StringBlockPlugin,
     MyNumberPlugin,
     MyArrayPlugin,
     TestPlugin,
-    ThemePlugin
+    ThemePlugin({
+      defaultMode: ThemeMode.Light
+    })
   ] as const
 })
 
@@ -100,7 +103,7 @@ function Example () {
       <button
         onClick={() => {
           context.setTheme(
-            context.getTheme().mode === 'light' ? 'dark' : 'light')
+            context.getTheme().mode === 'light' ? ThemeMode.Dark : ThemeMode.Light)
         }}
       >change theme
       </button>
@@ -109,18 +112,13 @@ function Example () {
   )
 }
 
-const store1 = createStore()
-const store2 = createStore()
-
 export function App () {
-  const { Provider } = useViewer()
-
   return (
     <>
-      <Provider store={store1}>
+      <Provider>
         <Example/>
       </Provider>
-      <Provider store={store2}>
+      <Provider>
         <Example/>
       </Provider>
     </>

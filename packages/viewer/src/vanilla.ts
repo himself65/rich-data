@@ -1,7 +1,7 @@
 import type { createStore } from 'jotai'
 import type { FC } from 'react'
 
-import { viewerAtom } from './atom'
+import { internalViewerAtom } from './atom'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface BlockFlavourMap {}
@@ -50,7 +50,7 @@ export interface Context {
 export function createContext (store: Store) {
   return {
     getViewer: () => {
-      const Viewer = store.get(viewerAtom)
+      const Viewer = store.get(internalViewerAtom)
       if (!Viewer) {
         throw new Error('no viewer found')
       }
