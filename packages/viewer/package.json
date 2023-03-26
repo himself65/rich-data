@@ -14,6 +14,8 @@
     "./vanilla": "./src/index.ts",
     "./react": "./src/index.tsx",
     "./blocks/*": "./src/blocks/*.tsx",
+    "./hooks/*": "./src/hooks/*.ts",
+    "./components/*": "./src/components/*.tsx",
     "./package.json": "./package.json"
   },
   "publishConfig": {
@@ -46,6 +48,16 @@
         "types": "./dist/blocks/*.d.ts",
         "import": "./dist/blocks/*.mjs",
         "require": "./dist/blocks/*.js"
+      },
+      "./hooks/*": {
+        "types": "./dist/hooks/*.d.ts",
+        "import": "./dist/hooks/*.mjs",
+        "require": "./dist/hooks/*.js"
+      },
+      "./components/*": {
+        "types": "./dist/components/*.d.ts",
+        "import": "./dist/components/*.mjs",
+        "require": "./dist/components/*.js"
       }
     }
   },

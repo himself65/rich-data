@@ -19,8 +19,8 @@ export type TypeRenderer<Flavour extends string = string> = {
       : FC<DataValueProps>
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export type Context = {}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface Context {}
 
 export type Plugin<Flavour extends string> = {
   flavour: Flavour
@@ -32,7 +32,3 @@ export type ViewerProps<Value = unknown> = {
 }
 
 export type Store = ReturnType<typeof createStore>
-
-export function createContext (_store: Store): Context {
-  return {}
-}

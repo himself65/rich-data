@@ -1,15 +1,23 @@
+import type { ReactElement } from 'react';
 import * as React from 'react'
+import { cloneElement } from 'react'
 
 import type { FlavourRegistry } from '../vanilla'
 
 export type MetadataProps = {
   flavour: keyof FlavourRegistry
+  children: ReactElement
 }
 
-export const Metadata = React.memo<React.PropsWithChildren<MetadataProps>>(
+export const Metadata = React.memo<MetadataProps>(
   function Metadata (props) {
-    return (
-      <div data-flavour={props.flavour}>{props.children}</div>
-    )
+    if (!props.children) {
+      return null
+    }
+    return cloneElement(props.children, {
+      'data-flavour': props.flavour
+    })
   }
 )
+
+Metadata.displayName = 'Metadata'

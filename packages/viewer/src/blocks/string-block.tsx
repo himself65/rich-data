@@ -6,7 +6,9 @@ import type { DataValueProps, Plugin } from '../vanilla'
 export function StringBlock (props: DataValueProps<string>): ReactElement {
   return (
     <Metadata flavour="official:string">
-      {props.value}
+      <span>
+        {props.value}
+      </span>
     </Metadata>
   )
 }
