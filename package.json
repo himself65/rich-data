@@ -31,21 +31,31 @@
     "tree-view",
     "treeview"
   ],
-  "types": "dist/index.d.ts",
-  "jsdelivr": "dist/browser.js",
-  "browser": {
-    "vanilla": "dist/browser.js"
-  },
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "main": "./src/index.tsx",
+  "module": "./src/index.mjs",
   "exports": {
+    ".": "./src/index.tsx",
     "./package.json": "./package.json",
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+    "./theme/*.css": "./theme/*.css"
+  },
+  "publishConfig": {
+    "access": "public",
+    "types": "dist/index.d.ts",
+    "jsdelivr": "dist/browser.js",
+    "browser": {
+      "vanilla": "dist/browser.js"
     },
-    "./theme/*": "./theme/*"
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "exports": {
+      "./package.json": "./package.json",
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.js"
+      },
+      "./theme/*": "./theme/*"
+    }
   },
   "files": [
     "dist",
