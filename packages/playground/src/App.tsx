@@ -2,8 +2,19 @@ import type { Plugin } from '@rich-data/viewer'
 import { createViewerHook, defineBlock } from '@rich-data/viewer'
 import { StringBlockPlugin } from '@rich-data/viewer/blocks/string-block'
 import { Metadata } from '@rich-data/viewer/components/metadata'
-import { useContext } from '@rich-data/viewer/hooks/use-context'
+import { useContext as useViewerContext } from '@rich-data/viewer/hooks/use-context'
 import { ThemePlugin } from '@rich-data/viewer/middleware/theme'
+
+const useContext = useViewerContext<
+  [
+    ['rich-data/theme', unknown],
+    ['my-plugin', unknown]
+  ]
+>;
+
+type MyPluginMiddleware<C, A> = {
+  ping: () => void
+}
 
 declare module '@rich-data/viewer' {
   interface FlavourRegistry {
@@ -11,8 +22,8 @@ declare module '@rich-data/viewer' {
     my_array: unknown[]
   }
 
-  interface Context {
-    ping: () => void
+  interface ContextMutators<C, A> {
+    ['my-plugin']: MyPluginMiddleware<C, A>
   }
 }
 
@@ -66,6 +77,7 @@ const MyArrayPlugin: Plugin = {
 }
 
 const TestPlugin: Plugin = {
+  id: 'my-plugin',
   middleware: (_store) => {
     return {
       ping: () => {
@@ -75,7 +87,7 @@ const TestPlugin: Plugin = {
   }
 }
 
-const useViewer = createViewerHook({
+const useViewer = createViewerHook<[['rich-data/theme', unknown]]>({
   plugins: [
     StringBlockPlugin,
     MyNumberPlugin,

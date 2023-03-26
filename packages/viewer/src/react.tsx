@@ -12,11 +12,11 @@ import {
 import { contextAtom, typeRenderersAtom, viewerAtom } from './atom'
 import type {
   Block,
-  Context, Middleware,
-  Plugin,
+  Context, ContextMutatorIdentifier, Middleware,
+Mutate,  Plugin,
   Store,
   ViewerProps
-} from './vanilla'
+ } from './vanilla'
 import { createContext } from './vanilla'
 
 function ViewerProvider (props: PropsWithChildren<{
@@ -52,9 +52,12 @@ function ViewerImpl<Value = unknown> (props: ViewerProps<Value>): ReactElement {
 
 ViewerImpl.displayName = 'Viewer'
 
-interface ViewerHookConfig<Value = unknown> {
+interface ViewerHookConfig<
+  Value = unknown,
+  Cms extends [ContextMutatorIdentifier, unknown][] = []
+> {
   store: Store
-  context: Context
+  context: Mutate<Context, Cms>
 }
 
 interface CreateViewerHookConfig<Value = unknown> {
@@ -70,7 +73,9 @@ declare module './vanilla' {
   }
 }
 
-export function createViewerHook (config: CreateViewerHookConfig) {
+export function createViewerHook<
+  Cms extends [ContextMutatorIdentifier, unknown][] = []
+> (config: CreateViewerHookConfig) {
   const store = config.store ?? getDefaultStore()
   let context = createContext(store)
   if (config.plugins) {
@@ -87,28 +92,33 @@ export function createViewerHook (config: CreateViewerHookConfig) {
 
     const middleware = plugins.map(
       (plugin) => {
-        if ('middleware' in plugin) {
+        if ('id' in plugin) {
           return plugin.middleware
         }
         return null
       }
-    ).filter(Boolean) as Middleware[]
+    ).filter(Boolean) as Middleware['middleware'][]
     context = middleware.reduce(
       (context, middleware) => ({ ...context, ...middleware(store) }), context)
   }
 
   store.set(contextAtom, context)
 
-  return function useViewer<Value = unknown> (config?: Omit<ViewerHookConfig<Value>, 'context' | 'store'>) {
-    return useBlankViewer({
-      context: context,
+  return function useViewer<
+    Value = unknown
+  > (config?: Omit<ViewerHookConfig<Value>, 'context' | 'store'>) {
+    return useBlankViewer<Value, Cms>({
+      context: context as Mutate<Context, Cms>,
       store,
       ...config
     })
   }
 }
 
-export function useBlankViewer<Value = unknown> (config: ViewerHookConfig<Value>) {
+export function useBlankViewer<
+  Value = unknown,
+  Cms extends [ContextMutatorIdentifier, unknown][] = []
+> (config: ViewerHookConfig<Value, Cms>) {
   const store = config.store
   const Provider = useMemo(() => function Provider (props: PropsWithChildren) {
     return (
@@ -142,6 +152,6 @@ export function useBlankViewer<Value = unknown> (config: ViewerHookConfig<Value>
   return useMemo(() => ({
     Viewer,
     Provider,
-    context: config.context
+    context: config.context as Mutate<Context, Cms>
   }), [Provider, Viewer, config.context])
 }

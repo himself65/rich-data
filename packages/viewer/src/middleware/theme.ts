@@ -6,11 +6,15 @@ export interface Theme {
   mode: 'dark' | 'light'
 }
 
+type ThemePluginMiddleware<C, A> = {
+  setTheme: (mode: 'light' | 'dark') => void
+  useTheme (): Theme
+  getTheme (): Theme
+}
+
 declare module '../vanilla' {
-  interface Context {
-    setTheme: (mode: 'light' | 'dark') => void
-    useTheme (): Theme
-    getTheme (): Theme
+  interface ContextMutators<C, A> {
+    ['rich-data/theme']: ThemePluginMiddleware<C, A>
   }
 }
 
@@ -19,6 +23,7 @@ const themeAtom = atom<Theme>({
 })
 
 export const ThemePlugin: Plugin = {
+  id: 'rich-data/theme',
   middleware: (
     store: Store
   ) => {

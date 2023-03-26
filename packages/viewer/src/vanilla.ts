@@ -23,7 +23,7 @@ export type Block<Flavour extends string = any> = {
       : FC<DataValueProps>
 }
 
-export function defineBlock<Flavour extends string>(
+export function defineBlock<Flavour extends string> (
   flavour: Flavour,
   is: (value: unknown) => boolean,
   Component: Block<Flavour>['Component']
@@ -35,11 +35,26 @@ export function defineBlock<Flavour extends string>(
   }
 }
 
+export type Write<T, U> = Omit<T, keyof U> & U
+
+export type Mutate<C, Cm> = number extends Cm['length' & keyof Cm]
+  ? C
+  : Cm extends []
+    ? C
+    : Cm extends [[infer Id, infer Ca], ...infer Rest]
+      ? Mutate<Write<C, ContextMutators<C, Ca>[Id & ContextMutatorIdentifier]>, Rest>
+      : never
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface ContextMutators<C, A> {}
+
+export type ContextMutatorIdentifier = keyof ContextMutators<unknown, unknown>
+
 export interface Context {
   getViewer: () => FC<ViewerProps>
 }
 
-export function createContext(store: Store) {
+export function createContext (store: Store) {
   return {
     getViewer: () => {
       const Viewer = store.get(viewerAtom)
@@ -51,15 +66,16 @@ export function createContext(store: Store) {
   } as Context
 }
 
-export interface Middleware {
-  (store: Store): Partial<Context>
+export interface Middleware<
+  Id extends ContextMutatorIdentifier = ContextMutatorIdentifier
+> {
+  id: Id
+  middleware(store: Store): ContextMutators<Context, unknown>[Id]
 }
 
 export type Plugin = {
   block: Block
-} | {
-  middleware: Middleware
-}
+} | Middleware
 
 export type ViewerProps<Value = unknown> = {
   value: Value
