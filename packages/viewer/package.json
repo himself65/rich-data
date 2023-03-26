@@ -7,12 +7,13 @@
     "react",
     "data-viewer"
   ],
-  "main": "./src/index.tsx",
-  "module": "./src/index.mjs",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
   "exports": {
-    ".": "./src/index.tsx",
-    "./package.json": "./package.json",
-    "./theme/*.css": "./theme/*.css"
+    ".": "./src/index.ts",
+    "./vanilla": "./src/index.ts",
+    "./react": "./src/index.tsx",
+    "./package.json": "./package.json"
   },
   "publishConfig": {
     "access": "public",
@@ -30,7 +31,16 @@
         "import": "./dist/index.mjs",
         "require": "./dist/index.js"
       },
-      "./theme/*": "./theme/*"
+      "./react": {
+        "types": "./dist/react.d.ts",
+        "import": "./dist/react.mjs",
+        "require": "./dist/react.js"
+      },
+      "./vanilla": {
+        "types": "./dist/vanilla.d.ts",
+        "import": "./dist/vanilla.mjs",
+        "require": "./dist/vanilla.js"
+      }
     }
   },
   "files": [

@@ -18,15 +18,13 @@ export type TypeRenderer<Flavour extends keyof FlavourRegistry = keyof FlavourRe
   Component: ComponentType<DataValueProps<FlavourRegistry[Flavour]>>
 }
 
-export type Context = {
-  addDataTypeRenderer: <Flavour extends keyof FlavourRegistry>(renderer: TypeRenderer<Flavour>) => void
-  removeDataTypeRenderer: (flavour: keyof FlavourRegistry) => void
-}
+export type Context = {}
 
 type UnRegisterCallback = () => void
 
-export type Plugin = {
-  register: (context: Context) => UnRegisterCallback
+export type Plugin<Flavour extends keyof FlavourRegistry = keyof FlavourRegistry> = {
+  flavour: Flavour
+  typeRenderer: TypeRenderer<Flavour>
 }
 
 export type ViewerProps<Value = unknown> = {
@@ -35,16 +33,6 @@ export type ViewerProps<Value = unknown> = {
 
 export type Store = ReturnType<typeof createStore>
 
-export function createContext() {
-  const store = createStore()
-  return {
-    addDataTypeRenderer: (renderer: TypeRenderer) => {
-      store.set(typeRenderersAtom, (prev) => [...prev, renderer])
-    },
-    removeDataTypeRenderer: (flavour: keyof FlavourRegistry) => {
-      store.set(typeRenderersAtom,
-        (prev) => prev.filter((renderer) => renderer.flavour !== flavour)
-      )
-    }
-  }
+export function createContext (store: Store): Context {
+  return {}
 }

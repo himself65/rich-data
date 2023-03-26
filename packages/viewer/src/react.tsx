@@ -1,16 +1,17 @@
 import { Provider, createStore, useAtomValue } from 'jotai'
 import {
+  ComponentType,
   PropsWithChildren,
   ReactElement,
   useEffect,
-  useMemo, useRef
+  useMemo, useRef, useState
 } from 'react'
 import { typeRenderersAtom } from './atom'
 import {
   Store,
   ViewerProps,
   Context,
-  Plugin, createContext
+  Plugin, createContext, TypeRenderer
 } from './vanilla'
 
 function ViewerProvider (props: PropsWithChildren<{
@@ -23,71 +24,60 @@ function ViewerProvider (props: PropsWithChildren<{
   )
 }
 
-function useTypeRenderer (value: unknown) {
+function useTypeRenderer<Value = unknown> (value: Value): TypeRenderer | undefined {
   const typeRenderers = useAtomValue(typeRenderersAtom)
   return useMemo(
-    () => typeRenderers.find(typeRenderer => typeRenderer.is(value)),
+    () => typeRenderers.find(
+      typeRenderer => typeRenderer.is(value)),
     []
   )
 }
 
 function ViewerImpl<Value = unknown> (props: ViewerProps<Value>): ReactElement {
   const typeRenderer = useTypeRenderer(props.value)
+  if (!typeRenderer) {
+    throw new Error('no type renderer found')
+  }
+  const Component = typeRenderer.Component as ComponentType<ViewerProps<Value>>
   return (
     <div data-flavour={typeRenderer.flavour}>
+      <Component value={props.value}/>
     </div>
   )
 }
 
-
-declare module './vanilla' {
-  interface FlavourRegistry {
-    unknown: unknown
-  }
-}
-
-const fallbackPlugin: Plugin = {
-  register (context) {
-    context.addDataTypeRenderer({
-      flavour: 'unknown',
-      is: () => true,
-      Component: ({ value }) => <span data-flavour="unknown">{JSON.stringify(
-        value)}</span>
-    })
-    return () => {
-      context.removeDataTypeRenderer('unknown')
-    }
-  }
-}
-
 interface ViewerHookConfig<Value = unknown> {
+  store: Store
+  context: Context
+}
+
+interface CreateViewerHookConfig<Value = unknown> {
   plugins?: Plugin[]
 }
 
-export function useBlankViewer<Value = unknown> (config?: ViewerHookConfig<Value>) {
-  const storeRef = useRef<Store>(undefined)
-  if (!storeRef.current) {
-    storeRef.current = createStore()
-  }
-  const contextRef = useRef<Context>(undefined)
-  if (!contextRef.current) {
-    contextRef.current = createContext()
+export function createViewerHook (config: CreateViewerHookConfig) {
+  const store = createStore()
+  const context = createContext(store)
+  if (config.plugins) {
+    const plugins = [...config.plugins].reverse()
+    store.set(typeRenderersAtom, plugins.map(plugin => plugin.typeRenderer))
   }
 
-  useEffect(() => {
-    if (config.plugins) {
-      const plugins = [fallbackPlugin, ...config.plugins].reverse()
-      const dispose = plugins.map(plugin => plugin.register(contextRef.current))
-      return () => {
-        dispose.forEach(fn => fn())
-      }
-    }
-  }, [config.plugins])
+  return function useViewer<Value = unknown> (config?: Omit<ViewerHookConfig<Value>, 'context' | 'store'>) {
+    return useBlankViewer({
+      context,
+      store,
+      ...config
+    })
+  }
+}
+
+export function useBlankViewer<Value = unknown> (config?: ViewerHookConfig<Value>) {
 
   const Viewer = useMemo(() =>
       function Viewer (props: ViewerProps<Value>): ReactElement {
         return (
-          <ViewerProvider store={storeRef.current}>
+          <ViewerProvider store={config.store}>
             <ViewerImpl {...props}/>
           </ViewerProvider>
         )
@@ -98,13 +88,4 @@ export function useBlankViewer<Value = unknown> (config?: ViewerHookConfig<Value
   return useMemo(() => ({
     Viewer
   }), [])
-}
-
-const internalPlugins: Plugin[] = []
-
-export function useViewer<Value = unknown> (config?: ViewerHookConfig<Value>) {
-  return useBlankViewer({
-    ...config,
-    plugins: [...internalPlugins, ...(config?.plugins ?? [])]
-  })
 }
