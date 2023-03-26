@@ -63,6 +63,7 @@ export interface Middleware<
   Id extends ContextMutatorIdentifier = ContextMutatorIdentifier
 > {
   id: Id
+  effect: (store: Store) => () => void
 
   middleware (store: Store): ContextMutators<Context, unknown>[Id]
 }

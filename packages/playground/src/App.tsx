@@ -5,8 +5,10 @@ import {
 } from '@rich-data/viewer'
 import { StringBlockPlugin } from '@rich-data/viewer/blocks/string-block'
 import { Metadata } from '@rich-data/viewer/components/metadata'
+import { usePath } from '@rich-data/viewer/hooks/use-path'
 import { useTheme } from '@rich-data/viewer/hooks/use-theme'
 import { ThemeMode, ThemePlugin } from '@rich-data/viewer/middleware/theme'
+import useSWR, { SWRConfig } from 'swr'
 
 type MyPluginMiddleware<C, A> = {
   ping: () => void
@@ -15,7 +17,8 @@ type MyPluginMiddleware<C, A> = {
 declare module '@rich-data/viewer' {
   interface BlockFlavourMap {
     my_number: typeof MyNumberPlugin
-    my_array: typeof MyArrayPlugin
+    my_array: typeof MyArrayBlock
+    my_object: typeof MyObjectBlock
   }
 
   interface ContextMutators<C, A> {
@@ -48,7 +51,56 @@ const MyNumberPlugin = defineBlock(
   }
 )
 
-const MyArrayPlugin = defineBlock(
+const MyImageBlock = defineBlock(
+  'my_image',
+  (value): value is string => {
+    if (typeof value === 'string')  {
+      try {
+        new URL(value)
+        return true
+      } catch (e) {
+        return false
+      }
+    }
+    return false
+  },
+  function MyImage ({ value }) {
+    const { data } = useSWR(value, {
+      fetcher: url => fetch(url).then(res => res.blob()),
+      suspense: true
+    })
+    const url = data ? URL.createObjectURL(data) : ''
+    return (
+      <img alt={value} height={50} width={50} src={url}/>
+    )
+  }
+)
+
+const MyObjectBlock = defineBlock(
+  'my_object',
+  (value): value is object => {
+    return typeof value === 'object' && value !== null
+  },
+  function MyObject ({ value }) {
+    const context = useContext()
+    const Viewer = context.getViewer()
+    const currentPath = usePath(value)
+    console.log('currentPath', currentPath)
+    return (
+      <ul>
+        {Object.entries(value).map(([key, item]) => {
+          return (
+            <li key={key} data-object-path={currentPath.join('.')}>
+              <span>{key}</span> : <Viewer value={item}/>
+            </li>
+          )
+        })}
+      </ul>
+    )
+  }
+)
+
+const MyArrayBlock = defineBlock(
   'my_array',
   (value): value is unknown[] => Array.isArray(value),
   function MyArray ({ value }) {
@@ -59,7 +111,7 @@ const MyArrayPlugin = defineBlock(
         {value.map((item, index) => {
           return (
             <li key={index}>
-              <Viewer value={item}/>
+              <span>{index}</span> : <Viewer value={item}/>
             </li>
           )
         })}
@@ -70,6 +122,7 @@ const MyArrayPlugin = defineBlock(
 
 const TestPlugin = {
   id: 'my-plugin',
+  effect: () => () => void 0,
   middleware: (_store) => {
     return {
       ping: () => {
@@ -85,9 +138,11 @@ const {
   Provider
 } = createViewerHook({
   plugins: [
+    MyImageBlock,
     StringBlockPlugin,
     MyNumberPlugin,
-    MyArrayPlugin,
+    MyArrayBlock,
+    MyObjectBlock,
     TestPlugin,
     ThemePlugin({
       defaultMode: ThemeMode.Light
@@ -107,20 +162,33 @@ function Example () {
         }}
       >change theme
       </button>
-      <Viewer value={[1, '2']}/>
+      <Viewer value={[
+        1,
+        '2',
+        'https://i.imgur.com/Mx7dA2Y.jpg',
+        {
+          foo: 'bar',
+          baz: 123,
+          nested: {
+            qux: -1,
+          }
+        }
+      ]}/>
     </>
   )
 }
 
 export function App () {
   return (
-    <>
+    <SWRConfig value={{
+      suspense: true
+    }}>
       <Provider>
         <Example/>
       </Provider>
       <Provider>
         <Example/>
       </Provider>
-    </>
+    </SWRConfig>
   )
 }

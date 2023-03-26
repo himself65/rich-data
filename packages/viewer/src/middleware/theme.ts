@@ -24,15 +24,44 @@ declare module '../vanilla' {
 export const ThemePlugin = (
   config?: {
     defaultMode?: ThemeMode,
+    preferSystem?: boolean
   }
 ) => ({
   id: 'rich-data/theme',
+  effect: (store) => {
+    if (config?.preferSystem) {
+      const darkThemeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      if (darkThemeMediaQuery) {
+        store.set(internalThemeAtom, theme => ({
+          ...theme,
+          mode: config?.defaultMode ?? ThemeMode.Light
+        }))
+      } else {
+        store.set(internalThemeAtom, theme => ({
+          ...theme,
+          mode: config?.defaultMode ?? ThemeMode.Dark
+        }))
+      }
+      const callback = (e: MediaQueryListEvent) => {
+        store.set(internalThemeAtom, theme => ({
+          ...theme,
+          mode: e.matches ? ThemeMode.Dark : ThemeMode.Light
+        }))
+      }
+      darkThemeMediaQuery.addEventListener('change', callback)
+      return () => {
+        darkThemeMediaQuery.removeEventListener('change', callback)
+      }
+    }
+    return () => void 0
+  },
   middleware: (
     store: Store
   ) => {
-    store.set(internalThemeAtom, {
+    store.set(internalThemeAtom, theme => ({
+      ...theme,
       mode: config?.defaultMode ?? ThemeMode.Light
-    })
+    }))
     return {
       setTheme: (mode: ThemeMode) => {
         store.set(internalThemeAtom, theme => ({ ...theme, mode }))

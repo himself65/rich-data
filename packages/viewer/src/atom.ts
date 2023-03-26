@@ -8,6 +8,11 @@ import type { Block, Context, ViewerProps } from './vanilla'
 /**
  * @internal
  */
+export const internalRootValueAtom = atom<unknown>(null as unknown)
+
+/**
+ * @internal
+ */
 export const internalBlocksAtom = atom<Block[]>([])
 
 /**

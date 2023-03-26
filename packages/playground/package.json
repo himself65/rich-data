@@ -10,6 +10,7 @@
     "@rich-data/viewer": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "swr": "^2.1.1",
     "vite": "^4.2.0"
   },
   "devDependencies": {
