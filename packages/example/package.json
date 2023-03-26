@@ -1,0 +1,7 @@
+{
+  "name": "@rich-data/example",
+  "private": true,
+  "dependencies": {
+    "@rich-data/viewer": "workspace:*"
+  }
+}

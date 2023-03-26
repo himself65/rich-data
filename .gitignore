@@ -1,0 +1,24 @@
+.DS_Store
+.idea
+node_modules
+*.tgz
+
+# playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+# code coverage
+/.nyc_output
+/.coverage
+
+# Build out
+dist/
+build
+tsconfig.tsbuildinfo
+tsconfig.*.tsbuildinfo
+.next
+next-env.d.ts
+
+# Cache
+.eslintcache

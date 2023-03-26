@@ -1,0 +1,53 @@
+{
+  "name": "@rich-data/viewer",
+  "private": true,
+  "version": "3.0.0-preview.0",
+  "author": "himself65 <himself65@outlook.com>",
+  "keywords": [
+    "react",
+    "data-viewer"
+  ],
+  "main": "./src/index.tsx",
+  "module": "./src/index.mjs",
+  "exports": {
+    ".": "./src/index.tsx",
+    "./package.json": "./package.json",
+    "./theme/*.css": "./theme/*.css"
+  },
+  "publishConfig": {
+    "access": "public",
+    "types": "dist/index.d.ts",
+    "jsdelivr": "dist/browser.js",
+    "browser": {
+      "vanilla": "dist/browser.js"
+    },
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "exports": {
+      "./package.json": "./package.json",
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.js"
+      },
+      "./theme/*": "./theme/*"
+    }
+  },
+  "files": [
+    "dist",
+    "theme"
+  ],
+  "dependencies": {
+    "clsx": "^1.2.1",
+    "copy-to-clipboard": "^3.3.3",
+    "jotai": "^2.0.3"
+  },
+  "peerDependencies": {
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11"
+  }
+}
