@@ -3,4 +3,4 @@ npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
 
 yarn build
 
-npm publish
+yarn npm publish --tolerate-republish
