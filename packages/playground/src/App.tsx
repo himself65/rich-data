@@ -1,37 +1,53 @@
 import type { Plugin } from '@rich-data/viewer'
-import { createViewerHook } from '@rich-data/viewer'
+import { createViewerHook, defineBlock } from '@rich-data/viewer'
 import { StringBlockPlugin } from '@rich-data/viewer/blocks/string-block'
 import { Metadata } from '@rich-data/viewer/components/metadata'
 import { useContext } from '@rich-data/viewer/hooks/use-context'
+import { ThemePlugin } from '@rich-data/viewer/middleware/theme'
 
 declare module '@rich-data/viewer' {
   interface FlavourRegistry {
     my_number: number
     my_array: unknown[]
   }
+
+  interface Context {
+    ping: () => void
+  }
 }
 
-const MyNumberPlugin = {
-  flavour: 'my_number',
-  typeRenderer: {
-    flavour: 'my_number',
-    is: value => typeof value === 'number',
-    Component: function MyString ({ value }) {
+const MyNumberPlugin: Plugin = {
+  block: defineBlock(
+    'my_number',
+    value => typeof value === 'number',
+    function MyNumber ({ value }) {
+      const context = useContext()
+      const theme = context.useTheme()
       return (
         <Metadata flavour="my_number">
-          <span> this is number {value}</span>
+          <span>
+            this is number {value}
+            <br/>
+            theme: {theme.mode}
+            <button
+              onClick={() => {
+                context.ping()
+              }}
+            >
+              click me
+            </button>
+          </span>
         </Metadata>
       )
     }
-  }
-} satisfies Plugin<'my_number'>
+  )
+}
 
-const MyArrayPlugin = {
-  flavour: 'my_array',
-  typeRenderer: {
-    flavour: 'my_array',
-    is: value => Array.isArray(value),
-    Component: function MyArray ({ value }) {
+const MyArrayPlugin: Plugin = {
+  block: defineBlock(
+    'my_array',
+    value => Array.isArray(value),
+    function MyArray ({ value }) {
       const context = useContext()
       const Viewer = context.getViewer()
       return (
@@ -46,20 +62,39 @@ const MyArrayPlugin = {
         </ul>
       )
     }
+  )
+}
+
+const TestPlugin: Plugin = {
+  middleware: (_store) => {
+    return {
+      ping: () => {
+        console.log('ping')
+      }
+    }
   }
-} satisfies Plugin<'my_array'>
+}
 
 const useViewer = createViewerHook({
   plugins: [
     StringBlockPlugin,
     MyNumberPlugin,
-    MyArrayPlugin
+    MyArrayPlugin,
+    TestPlugin,
+    ThemePlugin
   ]
 })
 
 export function App () {
-  const { Viewer } = useViewer()
+  const { Viewer, context } = useViewer()
   return (
-    <Viewer value={[1, '2']}/>
+    <>
+      <button
+        onClick={() => {
+          context.setTheme(context.getTheme().mode === 'light' ? 'dark' : 'light')
+        }}
+      >change theme</button>
+      <Viewer value={[1, '2']}/>
+    </>
   )
 }

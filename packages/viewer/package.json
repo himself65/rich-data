@@ -16,6 +16,7 @@
     "./blocks/*": "./src/blocks/*.tsx",
     "./hooks/*": "./src/hooks/*.ts",
     "./components/*": "./src/components/*.tsx",
+    "./middleware/*": "./src/middleware/*.ts",
     "./package.json": "./package.json"
   },
   "publishConfig": {
@@ -53,6 +54,11 @@
         "types": "./dist/hooks/*.d.ts",
         "import": "./dist/hooks/*.mjs",
         "require": "./dist/hooks/*.js"
+      },
+      "./middleware/*": {
+        "types": "./dist/middleware/*.d.ts",
+        "import": "./dist/middleware/*.mjs",
+        "require": "./dist/middleware/*.js"
       },
       "./components/*": {
         "types": "./dist/components/*.d.ts",
