@@ -1,27 +1,28 @@
 import type { createStore } from 'jotai'
-import type {
-  ComponentType
-} from 'react'
+import type { FC } from 'react'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface FlavourRegistry {
   // [flavour]: Value
 }
 
-export interface DataValueProps<ValueType = unknown> {
-  value: ValueType
+export interface DataValueProps<Value = unknown> {
+  value: Value
 }
 
-export type TypeRenderer<Flavour extends keyof FlavourRegistry = keyof FlavourRegistry> = {
+export type TypeRenderer<Flavour extends string = string> = {
   flavour: Flavour
   is: (value: unknown) => boolean
-  Component: ComponentType<DataValueProps<FlavourRegistry[Flavour]>>
+  Component:
+    Flavour extends keyof FlavourRegistry
+      ? FC<DataValueProps<FlavourRegistry[Flavour]>>
+      : FC<DataValueProps>
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type Context = {}
 
-export type Plugin<Flavour extends keyof FlavourRegistry = keyof FlavourRegistry> = {
+export type Plugin<Flavour extends string> = {
   flavour: Flavour
   typeRenderer: TypeRenderer<Flavour>
 }

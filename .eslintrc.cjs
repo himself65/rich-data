@@ -68,6 +68,7 @@ module.exports = {
       'error',
       { prefer: 'type-imports', disallowTypeAnnotations: false }
     ],
+    'react/prop-types': 'off',
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
     '@typescript-eslint/no-restricted-imports': [

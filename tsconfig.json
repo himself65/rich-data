@@ -21,7 +21,11 @@
     "noUnusedLocals": true,
     "noImplicitReturns": true,
     "skipLibCheck": true,
-    "incremental": true
+    "incremental": true,
+    "paths": {
+      "@rich-data/viewer": ["./packages/viewer/src/index"],
+      "@rich-data/viewer/blocks/*": ["./packages/viewer/src/blocks/*"]
+    }
   },
   "files": [],
   "references": [

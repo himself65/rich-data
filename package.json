@@ -22,7 +22,6 @@
     "@vitest/coverage-istanbul": "^0.28.5",
     "@vitest/ui": "^0.28.5",
     "eslint": "^8.36.0",
-    "eslint-plugin-lit": "^1.8.2",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",

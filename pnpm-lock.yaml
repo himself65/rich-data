@@ -16,7 +16,6 @@ importers:
       '@vitest/coverage-istanbul': ^0.28.5
       '@vitest/ui': ^0.28.5
       eslint: ^8.36.0
-      eslint-plugin-lit: ^1.8.2
       eslint-plugin-react: ^7.32.2
       eslint-plugin-react-hooks: ^4.6.0
       eslint-plugin-simple-import-sort: ^10.0.0
@@ -44,7 +43,6 @@ importers:
       '@vitest/coverage-istanbul': 0.28.5_@vitest+ui@0.28.5
       '@vitest/ui': 0.28.5
       eslint: 8.36.0
-      eslint-plugin-lit: 1.8.2_eslint@8.36.0
       eslint-plugin-react: 7.32.2_eslint@8.36.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.36.0
       eslint-plugin-simple-import-sort: 10.0.0_eslint@8.36.0
@@ -1838,18 +1836,6 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /eslint-plugin-lit/1.8.2_eslint@8.36.0:
-    resolution: {integrity: sha512-4mOGcSRNEPMh7AN2F7Iy6no36nuFgyYOsnTRhFw1k8xyy1Zm6QOp788ywDvJqy+eelFbLPBhq20Qr55a887Dmw==}
-    engines: {node: '>= 12'}
-    peerDependencies:
-      eslint: '>= 5'
-    dependencies:
-      eslint: 8.36.0
-      parse5: 6.0.1
-      parse5-htmlparser2-tree-adapter: 6.0.1
-      requireindex: 1.2.0
-    dev: true
-
   /eslint-plugin-react-hooks/4.6.0_eslint@8.36.0:
     resolution: {integrity: sha512-oFc7Itz9Qxh2x4gNHStv3BqJq54ExXmfC+a1NjAta66IAN87Wu0R/QArgIS9qKzX3dXKPI9H5crl9QchNMY9+g==}
     engines: {node: '>=10'}
@@ -3363,16 +3349,6 @@ packages:
       lines-and-columns: 1.2.4
     dev: true
 
-  /parse5-htmlparser2-tree-adapter/6.0.1:
-    resolution: {integrity: sha512-qPuWvbLgvDGilKc5BoicRovlT4MtYT6JfJyBOMDsKoiT+GiuP5qyrPCnR9HcPECIJJmZh5jRndyNThnhhb/vlA==}
-    dependencies:
-      parse5: 6.0.1
-    dev: true
-
-  /parse5/6.0.1:
-    resolution: {integrity: sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==}
-    dev: true
-
   /path-exists/4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}
     engines: {node: '>=8'}
@@ -3645,11 +3621,6 @@ packages:
 
   /require-main-filename/2.0.0:
     resolution: {integrity: sha512-NKN5kMDylKuldxYLSUfrbo5Tuzh4hd+2E8NPPX02mZtn1VuREQToYe/ZdlJy+J3uCpfaiGF05e7B8W0iXbQHmg==}
-    dev: true
-
-  /requireindex/1.2.0:
-    resolution: {integrity: sha512-L9jEkOi3ASd9PYit2cwRfyppc9NoABujTP8/5gFcbERmo5jUoAKovIC3fsF17pkTnGsrByysqX+Kxd2OTNI1ww==}
-    engines: {node: '>=0.10.5'}
     dev: true
 
   /resolve-from/4.0.0:

@@ -13,6 +13,7 @@
     ".": "./src/index.ts",
     "./vanilla": "./src/index.ts",
     "./react": "./src/index.tsx",
+    "./blocks/*": "./src/blocks/*.tsx",
     "./package.json": "./package.json"
   },
   "publishConfig": {
@@ -40,6 +41,11 @@
         "types": "./dist/vanilla.d.ts",
         "import": "./dist/vanilla.mjs",
         "require": "./dist/vanilla.js"
+      },
+      "./blocks/*": {
+        "types": "./dist/blocks/*.d.ts",
+        "import": "./dist/blocks/*.mjs",
+        "require": "./dist/blocks/*.js"
       }
     }
   },

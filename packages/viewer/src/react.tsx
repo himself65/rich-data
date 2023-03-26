@@ -56,7 +56,9 @@ interface ViewerHookConfig<Value = unknown> {
 }
 
 interface CreateViewerHookConfig<Value = unknown> {
-  plugins?: Plugin[]
+  // fixme: remove any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  plugins?: Plugin<any>[]
 }
 
 export function createViewerHook (config: CreateViewerHookConfig) {
@@ -76,7 +78,7 @@ export function createViewerHook (config: CreateViewerHookConfig) {
   }
 }
 
-export function useBlankViewer<Value = unknown> (config?: ViewerHookConfig<Value>) {
+export function useBlankViewer<Value = unknown> (config: ViewerHookConfig<Value>) {
 
   const Viewer = useMemo(() =>
       function Viewer (props: ViewerProps<Value>): ReactElement {
