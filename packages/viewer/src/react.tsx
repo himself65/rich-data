@@ -1,4 +1,4 @@
-import { getDefaultStore, Provider, useAtomValue } from 'jotai'
+import { createStore, Provider, useAtomValue } from 'jotai'
 import type {
   ComponentType, FC,
   PropsWithChildren,
@@ -54,13 +54,11 @@ function ViewerImpl<Value = unknown> (props: ViewerProps<Value>): ReactElement {
 
 ViewerImpl.displayName = 'Viewer'
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ViewerHookConfig<
   Value,
   Plugins extends readonly Plugin[]
-> {
-  store: Store
-  context: InterPluginContext<Context, Plugins>
-}
+> {}
 
 export type InterPluginContext<
   C,
@@ -90,43 +88,12 @@ export function createViewerHook<
   plugins: Plugins
   store?: Store
 }) {
-  const store = config.store ?? getDefaultStore()
-  let context = createContext(store) as InterPluginContext<Context, Plugins>
-  if (config.plugins) {
-    const plugins = [...config.plugins].reverse()
-    const blocks = plugins.map(
-      (plugin) => {
-        if ('flavour' in plugin) {
-          return plugin satisfies Block
-        }
-        return null
-      }
-    ).filter(Boolean) as Block[]
-    store.set(typeRenderersAtom, blocks)
-
-    const middleware = plugins.map(
-      (plugin) => {
-        if ('id' in plugin) {
-          return plugin.middleware
-        }
-        return null
-      }
-    ).filter(Boolean) as Middleware['middleware'][]
-    context = middleware.reduce(
-      (context, middleware) => ({ ...context, ...middleware(store) }), context)
-  }
-
-  store.set(contextAtom, context)
 
   return {
     useViewer: function useViewer<
       Value
-    > (config?: Omit<ViewerHookConfig<Value, Plugins>, 'context' | 'store'>) {
-      return useBlankViewer<Value, Plugins>({
-        context,
-        store,
-        ...config
-      } as const)
+    > (config: ViewerHookConfig<Value, Plugins> = {}) {
+      return useBlankViewer<Value, Plugins>(config)
     },
     useContext: function useContext(): InterPluginContext<Context, Plugins> {
       const context = useAtomValue(contextAtom)
@@ -134,23 +101,44 @@ export function createViewerHook<
         throw new Error('Context is not set')
       }
       return context
+    },
+    createStore: () => {
+      const store = createStore()
+      let context = createContext(store) as InterPluginContext<Context, Plugins>
+      if (config.plugins) {
+        const plugins = [...config.plugins].reverse()
+        const blocks = plugins.map(
+          (plugin) => {
+            if ('flavour' in plugin) {
+              return plugin satisfies Block
+            }
+            return null
+          }
+        ).filter(Boolean) as Block[]
+        store.set(typeRenderersAtom, blocks)
+
+        const middleware = plugins.map(
+          (plugin) => {
+            if ('id' in plugin) {
+              return plugin.middleware
+            }
+            return null
+          }
+        ).filter(Boolean) as Middleware['middleware'][]
+        context = middleware.reduce(
+          (context, middleware) => ({ ...context, ...middleware(store) }), context)
+      }
+
+      store.set(contextAtom, context)
+      return store
     }
-  }
+  } as const
 }
 
 export function useBlankViewer<
   Value,
   Plugins extends readonly Plugin[],
-> (config: ViewerHookConfig<Value, Plugins>) {
-  const store = config.store
-  const Provider = useMemo(() => function Provider (props: PropsWithChildren) {
-    return (
-      <ViewerProvider store={store}>
-        {props.children}
-      </ViewerProvider>
-    )
-  }, [store])
-
+> (_config: ViewerHookConfig<Value, Plugins>) {
   const Viewer = useMemo(() =>
       function Viewer (props: ViewerProps<Value>): ReactElement {
         return (
@@ -162,19 +150,28 @@ export function useBlankViewer<
     , []
   )
 
+  const Provider = useMemo(() => function Provider (props: PropsWithChildren<{
+    store: Store
+  }>) {
+    const store = props.store
+    if (store.get(viewerAtom) !== Viewer) {
+      store.set(viewerAtom, () => ViewerImpl as FC<ViewerProps>)
+    }
+    return (
+      <ViewerProvider store={store}>
+        {props.children}
+      </ViewerProvider>
+    )
+  }, [Viewer])
+
   if (!Object.prototype.hasOwnProperty.call(Viewer, 'displayName')) {
     Object.assign(Viewer, {
       displayName: 'RichDataViewer'
     })
   }
 
-  if (store.get(viewerAtom) !== Viewer) {
-    store.set(viewerAtom, () => ViewerImpl as FC<ViewerProps>)
-  }
-
   return useMemo(() => ({
     Viewer,
     Provider,
-    getContext: () => (config.context as InterPluginContext<Context, Plugins>)
-  } as const), [Provider, Viewer, config.context])
+  } as const), [Provider, Viewer])
 }

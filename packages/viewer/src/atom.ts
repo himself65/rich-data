@@ -9,4 +9,4 @@ export const typeRenderersAtom = atom<Block[]>([])
 export const viewerAtom = atom<FC<ViewerProps>>(null! as FC<ViewerProps>)
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const contextAtom = atom<any>(null)
+export const contextAtom = atom<any>(null as any)

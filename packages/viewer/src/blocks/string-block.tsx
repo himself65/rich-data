@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 
 import { Metadata } from '../components/metadata'
-import type { Block, DataValueProps } from '../vanilla'
+import type { DataValueProps } from '../vanilla'
 import { defineBlock } from '../vanilla'
 
 export function StringBlock (props: DataValueProps<string>): ReactElement {
@@ -15,14 +15,14 @@ export function StringBlock (props: DataValueProps<string>): ReactElement {
 }
 
 
-export const StringBlockPlugin: Block = defineBlock(
+export const StringBlockPlugin = defineBlock(
   'official:string',
   (value): value is string => typeof value === 'string',
   StringBlock
 )
 
 declare module '../vanilla' {
-  interface FlavourRegistry {
-    'official:string': string
+  interface BlockFlavourMap {
+    'official:string': typeof StringBlockPlugin
   }
 }

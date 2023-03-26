@@ -14,7 +14,7 @@ type ThemePluginMiddleware<C, A> = {
 
 declare module '../vanilla' {
   interface ContextMutators<C, A> {
-    ['rich-data/theme']: ThemePluginMiddleware<C, A>
+    'rich-data/theme': ThemePluginMiddleware<C, A>
   }
 }
 

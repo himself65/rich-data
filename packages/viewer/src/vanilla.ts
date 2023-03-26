@@ -4,30 +4,23 @@ import type { FC } from 'react'
 import { viewerAtom } from './atom'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface FlavourRegistry {
-  // [flavour]: Value
-}
+export interface BlockFlavourMap {}
 
 export interface DataValueProps<Value = unknown> {
   value: Value
 }
 
-// fixme: remove any
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Block<Flavour extends string = any> = {
+export type Block<Value = unknown, Flavour extends string = string> = {
   flavour: Flavour
-  is: (value: unknown) => boolean
-  Component:
-    Flavour extends keyof FlavourRegistry
-      ? FC<DataValueProps<FlavourRegistry[Flavour]>>
-      : FC<DataValueProps>
+  is: (value: unknown) => value is Value
+  Component: FC<DataValueProps<Value>>
 }
 
-export function defineBlock<Flavour extends string> (
+export function defineBlock<Value, Flavour extends string> (
   flavour: Flavour,
-  is: (value: unknown) => boolean,
-  Component: Block<Flavour>['Component']
-): Block<Flavour> {
+  is: (value: unknown) => value is Value,
+  Component: Block<Value, Flavour>['Component']
+): Block<Value, Flavour> {
   return {
     flavour,
     is,
@@ -70,10 +63,13 @@ export interface Middleware<
   Id extends ContextMutatorIdentifier = ContextMutatorIdentifier
 > {
   id: Id
-  middleware(store: Store): ContextMutators<Context, unknown>[Id]
+
+  middleware (store: Store): ContextMutators<Context, unknown>[Id]
 }
 
-export type Plugin = Block | Middleware
+// I think we cannot remove any here forever.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Plugin = Block<any> | Middleware
 
 export type ViewerProps<Value = unknown> = {
   value: Value

@@ -12,19 +12,19 @@ type MyPluginMiddleware<C, A> = {
 }
 
 declare module '@rich-data/viewer' {
-  interface FlavourRegistry {
-    my_number: number
-    my_array: unknown[]
+  interface BlockFlavourMap {
+    my_number: typeof MyNumberPlugin
+    my_array: typeof MyArrayPlugin
   }
 
   interface ContextMutators<C, A> {
-    ['my-plugin']: MyPluginMiddleware<C, A>
+    'my-plugin': MyPluginMiddleware<C, A>
   }
 }
 
-const MyNumberPlugin: Plugin = defineBlock(
+const MyNumberPlugin = defineBlock(
   'my_number',
-  value => typeof value === 'number',
+  (value): value is number => typeof value === 'number',
   function MyNumber ({ value }) {
     const context = useContext()
     const theme = context.useTheme()
@@ -47,9 +47,9 @@ const MyNumberPlugin: Plugin = defineBlock(
   }
 )
 
-const MyArrayPlugin: Plugin = defineBlock(
+const MyArrayPlugin = defineBlock(
   'my_array',
-  value => Array.isArray(value),
+  (value): value is unknown[] => Array.isArray(value),
   function MyArray ({ value }) {
     const context = useContext()
     const Viewer = context.getViewer()
@@ -80,7 +80,8 @@ const TestPlugin = {
 
 const {
   useViewer,
-  useContext
+  useContext,
+  createStore
 } = createViewerHook({
   plugins: [
     StringBlockPlugin,
@@ -91,21 +92,37 @@ const {
   ] as const
 })
 
-export function App () {
-  const { Viewer, getContext } = useViewer<
-    (string | number)[]
-  >()
+function Example () {
+  const { Viewer } = useViewer()
+  const context = useContext()
   return (
     <>
       <button
         onClick={() => {
-          const context = getContext()
           context.setTheme(
             context.getTheme().mode === 'light' ? 'dark' : 'light')
         }}
       >change theme
       </button>
       <Viewer value={[1, '2']}/>
+    </>
+  )
+}
+
+const store1 = createStore()
+const store2 = createStore()
+
+export function App () {
+  const { Provider } = useViewer()
+
+  return (
+    <>
+      <Provider store={store1}>
+        <Example/>
+      </Provider>
+      <Provider store={store2}>
+        <Example/>
+      </Provider>
     </>
   )
 }
