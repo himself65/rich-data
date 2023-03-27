@@ -1,5 +1,7 @@
 # Rich Data
 
+[![minified size](https://badgen.net/bundlephobia/minzip/@rich-data/viewer)](https://bundlephobia.com/package/@rich-data/viewer@nightly)
+
 ## Usage
 
 ### Basic
