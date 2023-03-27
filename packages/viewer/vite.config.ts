@@ -8,13 +8,14 @@ const root = fileURLToPath(new URL('.', import.meta.url))
 
 export default defineConfig({
   esbuild: {
-    minifySyntax: false
+    minifySyntax: true
   },
   build: {
+    emptyOutDir: true,
     terserOptions: {
       ecma: 2020
     },
-    minify: false,
+    minify: 'esbuild',
     lib: {
       entry: {
         index: resolve(root, 'src/index.ts'),
