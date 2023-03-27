@@ -1,0 +1,53 @@
+# Rich Data
+
+## `@rich-data/viewer`
+
+`@rich-data/viewer` is a React component that inspects a rich data object.
+
+You can use it to inspects
+a JSON object,
+a JSX element,
+or a Yjs Document or any other data structure that you want.
+
+### Usage
+
+```tsx
+import { createViewerHook } from '@rich-data/viewer';
+import { createJsonPlugins } from '@rich-data/json';
+import { createJsxPlugins } from '@rich-data/jsx';
+import { createYjsPlugins } from '@rich-data/yjs';
+
+const {
+  useViewer,
+  Provider,
+} = createViewerHook({
+  plugins: [
+    ...createJsonPlugins(),
+    ...createJsxPlugins(),
+    ...createYjsPlugins(),
+  ]
+})
+
+import * as Y from 'yjs'
+
+const doc = new Y.Doc()
+const json = JSON.parse('{"foo": "bar"}')
+const jsx = <div>foo</div>
+
+export const App = () => {
+  const { Viewer } = useViewer()
+  return (
+    <>
+      <Provider>
+        <Viewer value={json}/>
+      </Provider>
+      <Provider>
+        <Viewer value={jsx}/>
+      </Provider>
+      <Provider>
+        <Viewer value={doc}/>
+      </Provider>
+    </>
+  )
+}
+```
