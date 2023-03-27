@@ -3,13 +3,13 @@ name: Lint Check
 on:
   push:
     branches:
-      - main
+      - v2
     paths:
       - '**.tsx?'
       - '**.jsx?'
   pull_request:
     branches:
-      - main
+      - v2
     paths:
       - '**.tsx?'
       - '**.jsx?'
