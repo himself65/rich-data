@@ -15,12 +15,16 @@
   --viewer-base0D: #8fa1b3;
   --viewer-base0E: #b48ead;
   --viewer-base0F: #ab7967;
+  --viewer-font: 14px;
 
   --viewer-font-family: monospace;
 
   color: var(--viewer-base07);
+  font-size: var(--viewer-font);
   font-family: var(--viewer-font-family);
   background-color: var(--viewer-base00);
+
+  overflow: auto;
 }
 
 [data-theme='dark'] {
@@ -42,6 +46,29 @@
   --viewer-base0F: #a16946;
 }
 
+.rich-data--viewer .rich-data--viewer-tag {
+  margin-left: 4px;
+  margin-right: 4px;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
 .rich-data--viewer .string-block {
   color: var(--viewer-base0B)
+}
+
+.rich-data--viewer .number-block {
+  color: var(--viewer-base0F)
+}
+
+.rich-data--viewer .boolean-block {
+  color: var(--viewer-base0E)
+}
+
+.rich-data--viewer .null-block {
+  color: var(--viewer-base0A)
+}
+
+.rich-data--viewer .undefined-block {
+  color: var(--viewer-base05)
 }

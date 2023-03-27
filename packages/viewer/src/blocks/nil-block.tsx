@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import type { ReactElement } from 'react'
 
 import { Metadata } from '../components/metadata'
@@ -7,7 +8,9 @@ import { defineBlock } from '../vanilla'
 export function NilBlock (props: DataValueProps<null | undefined>): ReactElement {
   return (
     <Metadata flavour="official:nil">
-      <span className="nil-block">
+      <span className={clsx(
+        props.value === undefined ? 'undefined-block' : 'null-block')}
+      >
         {props.value}
       </span>
     </Metadata>

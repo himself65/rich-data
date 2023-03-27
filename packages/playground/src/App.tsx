@@ -3,6 +3,9 @@ import {
   createViewerHook,
   defineBlock
 } from '@rich-data/viewer'
+import { BooleanBlockPlugin } from '@rich-data/viewer/blocks/boolean-block'
+import { NilBlockPlugin } from '@rich-data/viewer/blocks/nil-block'
+import { NumberBlockPlugin } from '@rich-data/viewer/blocks/number-block'
 import { StringBlockPlugin } from '@rich-data/viewer/blocks/string-block'
 import { Metadata } from '@rich-data/viewer/components/metadata'
 import { usePath } from '@rich-data/viewer/hooks/use-path'
@@ -86,7 +89,6 @@ const MyObjectBlock = defineBlock(
     const context = useContext()
     const Viewer = context.getViewer()
     const currentPath = usePath(value)
-    console.log('currentPath', currentPath)
     return (
       <ul>
         {Object.entries(value).map(([key, item]) => {
@@ -142,7 +144,9 @@ const {
   plugins: [
     MyImageBlock,
     StringBlockPlugin,
-    MyNumberPlugin,
+    NumberBlockPlugin,
+    NilBlockPlugin,
+    BooleanBlockPlugin,
     MyArrayBlock,
     MyObjectBlock,
     TestPlugin,
@@ -152,7 +156,7 @@ const {
   ] as const
 })
 
-function Example () {
+function Full () {
   const { Viewer } = useViewer()
   const context = useContext()
   return (
@@ -183,17 +187,34 @@ function Example () {
   )
 }
 
+function Basic () {
+  const { Viewer } = useViewer()
+  return (
+    <>
+      <Provider>
+        <Viewer value={114514}/>
+      </Provider>
+      <Provider>
+        <Viewer value="hello, world!"/>
+      </Provider>
+      <Provider>
+        <Viewer value={true}/>
+      </Provider>
+    </>
+  )
+}
+
 export function App () {
   return (
-    <SWRConfig value={{
-      suspense: true
-    }}>
-      <Provider>
-        <Example/>
-      </Provider>
-      <Provider>
-        <Example/>
-      </Provider>
-    </SWRConfig>
+    <>
+      <SWRConfig value={{
+        suspense: true
+      }}>
+        <Provider>
+          <Full/>
+        </Provider>
+      </SWRConfig>
+      <Basic/>
+    </>
   )
 }

@@ -16,7 +16,7 @@ export function BooleanBlock (props: DataValueProps<boolean>): ReactElement {
 
 export const BooleanBlockPlugin = defineBlock(
   'official:boolean',
-  (value): value is boolean => value === null,
+  (value): value is boolean => typeof value === 'boolean',
   BooleanBlock
 )
 

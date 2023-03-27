@@ -37,7 +37,6 @@ export const ThemePlugin = (
           ...theme,
           mode: ThemeMode.Dark
         }))
-        console.log('theme', store.get(internalThemeAtom))
       } else {
         store.set(internalThemeAtom, theme => ({
           ...theme,
@@ -67,7 +66,6 @@ export const ThemePlugin = (
     return {
       setTheme: (mode: ThemeMode) => {
         store.set(internalThemeAtom, theme => ({ ...theme, mode }))
-        console.log('theme', store.get(internalThemeAtom))
       },
       getTheme (): Theme {
         return store.get(internalThemeAtom)

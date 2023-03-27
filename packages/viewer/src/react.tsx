@@ -12,8 +12,8 @@ import type {
 import {
   Suspense,
   useDebugValue,
-  useEffect,
-  useMemo,
+  useEffect, useId,
+  useMemo
 } from 'react'
 
 import {
@@ -90,6 +90,8 @@ interface ViewerHookConfig<
   getStore: () => Store,
 }
 
+const map = new Map<string, Store>()
+
 export function createViewerHook<
   Plugins extends readonly Plugin[]
 > (config: { plugins: Plugins }) {
@@ -148,12 +150,19 @@ export function createViewerHook<
     Provider: function Provider (props: PropsWithChildren<{
       store?: Store
     }>): ReactElement {
-      if (storeRef.current === null) {
-        storeRef.current = props.store ?? createStoreImpl()
-        storeRef.current.set(internalViewerAtom, () => ViewerImpl)
+      const id = useId()
+      if (!props.store) {
+        if (!map.has(id)) {
+          const store = props.store ?? createStoreImpl()
+          store.set(internalViewerAtom, () => ViewerImpl)
+          map.set(id, store)
+        }
+      } else if (!map.has(id)) {
+        map.set(id, props.store)
+        props.store.set(internalViewerAtom, () => ViewerImpl)
       }
       return (
-        <ViewerProvider store={storeRef.current}>
+        <ViewerProvider store={map.get(id) as Store}>
           {props.children}
         </ViewerProvider>
       )
