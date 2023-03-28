@@ -22,11 +22,13 @@
     "skipLibCheck": true,
     "incremental": true,
     "paths": {
+      "@rich-data/json-plugin": ["./packages/json-plugin/src"],
+      "@rich-data/json-plugin/theme/*": ["./packages/json-plugin/theme/*"],
+      "@rich-data/viewer/theme/*": ["./packages/viewer/theme/*"],
       "@rich-data/viewer": ["./packages/viewer/src"],
       "@rich-data/viewer/components/*": ["./packages/viewer/src/components/*"],
       "@rich-data/viewer/hooks/*": ["./packages/viewer/src/hooks/*"],
-      "@rich-data/viewer/middleware/*": ["./packages/viewer/src/middleware/*"],
-      "@rich-data/viewer/theme/*": ["./packages/viewer/src/theme/*"]
+      "@rich-data/viewer/middleware/*": ["./packages/viewer/src/middleware/*"]
     }
   },
   "files": [],

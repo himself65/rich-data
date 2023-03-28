@@ -1,6 +1,7 @@
 // ALL_PACKAGES
 const allPackages = [
-  'viewer'
+  'viewer',
+  'json-plugin'
 ]
 
 const createPattern = () => [

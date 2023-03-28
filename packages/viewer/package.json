@@ -60,7 +60,7 @@
         "import": "./dist/components/*.mjs",
         "require": "./dist/components/*.js"
       },
-      "./theme/*": "./src/theme/*"
+      "./theme/*": "./theme/*"
     }
   },
   "scripts": {

@@ -2,6 +2,7 @@
 
 packages=(
   "viewer"
+  "json-plugin"
 )
 
 replace() {
