@@ -1,6 +1,5 @@
 import { createJsonPlugins } from '@rich-data/json-plugin'
 import type {
-  Middleware,
   Plugin
 } from '@rich-data/viewer'
 import {
@@ -9,21 +8,31 @@ import {
 } from '@rich-data/viewer'
 import { ThemeMode, ThemePlugin } from '@rich-data/viewer/middleware/theme'
 import { DevTools } from 'jotai-devtools'
+import type { FC } from 'react'
+import { Suspense } from 'react'
 import useSWR, { SWRConfig } from 'swr'
 
 type MyPluginMiddleware<C, A> = {
   ping: () => void
 }
 
-type MyAsyncPluginMiddleware<C, A> = {
-  pong: () => void
-}
-
 declare module '@rich-data/viewer' {
   interface ContextMutators<C, A> {
     'my_image': typeof MyImageBlock;
     'my-plugin': MyPluginMiddleware<C, A>
-    'my-async-plugin': MyAsyncPluginMiddleware<C, A>
+  }
+}
+
+function createSuspenseWrapper <Props>(
+  Component: FC<Props>
+) {
+  return function SuspenseWrapper (props: Props) {
+    return (
+      <Suspense fallback={<div>Loading...</div>}>
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+        <Component {...props as any}/>
+      </Suspense>
+    )
   }
 }
 
@@ -40,7 +49,7 @@ const MyImageBlock = defineBlock(
     }
     return false
   },
-  function MyImage ({ value }) {
+  createSuspenseWrapper(function MyImage ({ value }) {
     const { data } = useSWR(value, {
       fetcher: url => fetch(url).then(res => res.blob()),
       suspense: true
@@ -49,7 +58,7 @@ const MyImageBlock = defineBlock(
     return (
       <img alt={value} height={50} width={50} src={url}/>
     )
-  }
+  })
 )
 
 const TestPlugin = {
@@ -64,24 +73,6 @@ const TestPlugin = {
   }
 } satisfies Plugin
 
-const TestAsyncPlugin: Promise<Middleware<'my-async-plugin'>> = (async () => {
-  return new Promise(
-    resolve => setTimeout(() => {
-      resolve({
-        id: 'my-async-plugin',
-        effect: () => () => void 0,
-        middleware: (_store) => {
-          return {
-            pong: () => {
-              console.log('pong')
-            }
-          }
-        }
-      })
-    }, 1000)
-  )
-})()
-
 const {
   useViewer,
   useContext,
@@ -92,16 +83,11 @@ const {
     MyImageBlock,
     ...createJsonPlugins(),
     TestPlugin,
-    TestAsyncPlugin,
+    // TestAsyncPlugin,
     ThemePlugin({
       defaultMode: ThemeMode.Light
     })
-  ] as const,
-  loading: () => (
-    <>
-      I am loading... Do not worry.
-    </>
-  ),
+  ] as const
 })
 
 function Full () {
