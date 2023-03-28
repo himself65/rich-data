@@ -28,7 +28,7 @@ import {
 import type {
   Block,
   Context,
-ContextMutatorIdentifier,  ContextMutators,
+  ContextMutatorIdentifier, ContextMutators,
   DataValueProps, Middleware,
   Plugin,
   Store,
@@ -101,13 +101,17 @@ interface ViewerHookConfig<
   Plugins extends readonly Plugin[]
 > {
   getStore: () => Store,
+  Loading: ComponentType | undefined
 }
 
 const map = new Map<string, Store>()
 
 export function createViewerHook<
   Plugins extends readonly Plugin[]
-> (config: { plugins: Plugins }) {
+> (config: {
+  plugins: Plugins
+  loading?: ComponentType
+}) {
   const plugins = new Array<Plugin>(...config.plugins) as unknown as Plugins
   const storeRef = {
     current: null as Store | null
@@ -142,7 +146,9 @@ export function createViewerHook<
       }
     ).filter(Boolean) as Middleware[]
 
-    const middlewarePromises = plugins.map((plugin) => plugin instanceof Promise ? plugin : null).filter(Boolean) as Promise<Middleware>[]
+    const middlewarePromises = plugins.map(
+      (plugin) => plugin instanceof Promise ? plugin : null).
+      filter(Boolean) as Promise<Middleware>[]
     context = middleware.reduce(
       (context, { middleware }) => ({ ...context, ...middleware(store) }),
       context)
@@ -160,13 +166,15 @@ export function createViewerHook<
     return store
   }
 
+  const Loading = config.loading
   return {
     useViewer: function useViewer<
       Value
-    > (config: Omit<ViewerHookConfig<Value, Plugins>, 'getStore'> = {}) {
+    > (config: Omit<ViewerHookConfig<Value, Plugins>, 'getStore' | 'Loading'> = {}) {
       return useBlankViewer<Value, Plugins>({
         ...config,
-        getStore
+        getStore,
+        Loading
       })
     },
     Provider: function Provider (props: PropsWithChildren<{
@@ -185,9 +193,7 @@ export function createViewerHook<
       }
       return (
         <ViewerProvider store={map.get(id) as Store}>
-          <Suspense>
-            {props.children}
-          </Suspense>
+          {props.children}
         </ViewerProvider>
       )
     },
@@ -206,44 +212,53 @@ export function createViewerHook<
 export function useBlankViewer<
   Value,
   Plugins extends readonly Plugin[],
-> ({ getStore }: ViewerHookConfig<Value, Plugins>) {
+> ({ getStore, Loading }: ViewerHookConfig<Value, Plugins>) {
+  const ViewerInner = useMemo(() =>
+    function ViewerInner (props: ViewerProps<Value>): ReactElement {
+      const [root, setRoot] = useAtom(internalRootValueAtom)
+      const middlewares = useAtomValue(internalMiddlewarePromiseAtom)
+      useEffect(() => {
+        const store = getStore()
+        const effects = middlewares.map(
+          (plugin) => {
+            if ('id' in plugin) {
+              return plugin.effect
+            }
+            return null
+          }
+        ).filter(Boolean) as Middleware['effect'][]
+
+        const disposes = effects.map(effect => effect(store))
+        return () => {
+          disposes.map(dispose => dispose())
+        }
+      }, [middlewares])
+      if (root !== props.value) {
+        setRoot(props.value)
+      }
+      return (
+        <div
+          data-is-root="true"
+          className="rich-data--viewer"
+        >
+          <ViewerImpl {...props}/>
+        </div>
+      )
+    }, [getStore])
   const Viewer = useMemo(() =>
       function Viewer (props: ViewerProps<Value>): ReactElement {
-        const [root, setRoot] = useAtom(internalRootValueAtom)
-        const middlewares = useAtomValue(internalMiddlewarePromiseAtom)
-        useEffect(() => {
-          const store = getStore()
-          const effects = middlewares.map(
-            (plugin) => {
-              if ('id' in plugin) {
-                return plugin.effect
-              }
-              return null
-            }
-          ).filter(Boolean) as Middleware['effect'][]
-
-          const disposes = effects.map(effect => effect(store))
-          return () => {
-            disposes.map(dispose => dispose())
-          }
-        }, [middlewares])
         const setElement = useSetAtom(internalElementAtom)
-        if (root !== props.value) {
-          setRoot(props.value)
-        }
         return (
           <div
-            data-is-root="true"
-            className="rich-data--viewer"
             ref={setElement}
           >
-            <Suspense fallback="loading...">
-              <ViewerImpl {...props}/>
+            <Suspense fallback={Loading ? <Loading/> : undefined}>
+              <ViewerInner {...props}/>
             </Suspense>
           </div>
         )
       }
-    , [getStore]
+    , [ViewerInner, Loading]
   )
   if (!Object.prototype.hasOwnProperty.call(Viewer, 'displayName')) {
     Object.assign(Viewer, {

@@ -96,7 +96,12 @@ const {
     ThemePlugin({
       defaultMode: ThemeMode.Light
     })
-  ] as const
+  ] as const,
+  loading: () => (
+    <>
+      I am loading... Do not worry.
+    </>
+  ),
 })
 
 function Full () {
