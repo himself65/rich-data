@@ -16,6 +16,7 @@
   --viewer-base0E: #b48ead;
   --viewer-base0F: #ab7967;
   --viewer-font: 14px;
+  --viewer-icon-size: 16px;
 
   --viewer-font-family: monospace;
 
@@ -51,4 +52,9 @@
   margin-right: 4px;
   font-size: 0.85rem;
   opacity: 0.8;
+}
+
+.rich-data--viewer-icon {
+  height: var(--viewer-icon-size);
+  width: var(--viewer-icon-size);
 }
