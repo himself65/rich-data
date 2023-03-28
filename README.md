@@ -1,24 +1,12 @@
-# Rich Data
+# `@rich-data/viewer`
 
 [![minified size](https://badgen.net/bundlephobia/minzip/@rich-data/viewer)](https://bundlephobia.com/package/@rich-data/viewer@nightly)
 
-## Usage
+> Rich Data provides a powerful and flexible way to display data in your React.
 
-### Basic
-
-```tsx
-import '@rich-data/viewer/theme/basic.css'
-
-import { createViewerHook } from '@rich-data/viewer'
-
-const useViewer = createViewerHook()
-export const App = () => {
-  const { Viewer } = useViewer()
-  return (
-    <Viewer data={data}/>
-  )
-}
-```
+- Minimal core (3Kb)
+- Rich data structure preview support (object, JSON, JSX, `Y.Doc`...)
+- React 18 Suspense
 
 ## LICENSE
 
