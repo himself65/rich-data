@@ -1,5 +1,8 @@
 import { createJsonPlugins } from '@rich-data/json-plugin'
-import type { Plugin } from '@rich-data/viewer'
+import type {
+  Middleware,
+  Plugin
+} from '@rich-data/viewer'
 import {
   createViewerHook,
   defineBlock
@@ -12,11 +15,15 @@ type MyPluginMiddleware<C, A> = {
   ping: () => void
 }
 
-declare module '@rich-data/viewer' {
+type MyAsyncPluginMiddleware<C, A> = {
+  pong: () => void
+}
 
+declare module '@rich-data/viewer' {
   interface ContextMutators<C, A> {
     'my_image': typeof MyImageBlock;
     'my-plugin': MyPluginMiddleware<C, A>
+    'my-async-plugin': MyAsyncPluginMiddleware<C, A>
   }
 }
 
@@ -57,6 +64,18 @@ const TestPlugin = {
   }
 } satisfies Plugin
 
+const TestAsyncPlugin = (async () => ({
+  id: 'my-async-plugin',
+  effect: () => () => void 0,
+  middleware: (_store) => {
+    return {
+      ping: () => {
+        console.log('ping')
+      }
+    }
+  }
+} satisfies Middleware))()
+
 const {
   useViewer,
   useContext,
@@ -67,6 +86,7 @@ const {
     MyImageBlock,
     ...createJsonPlugins(),
     TestPlugin,
+    TestAsyncPlugin,
     ThemePlugin({
       defaultMode: ThemeMode.Light
     })

@@ -18,19 +18,22 @@ import {
 
 import {
   internalBlocksAtom,
-  internalContextAtom, internalElementAtom,
+  internalContextAtom,
+  internalElementAtom,
+  internalMiddlewareAtom,
+  internalMiddlewarePromiseAtom,
   internalRootValueAtom,
   internalViewerAtom
 } from './atom.js'
 import type {
   Block,
   Context,
-  ContextMutators,
-DataValueProps,  Middleware,
+ContextMutatorIdentifier,  ContextMutators,
+  DataValueProps, Middleware,
   Plugin,
   Store,
   ViewerProps, Write
- } from './vanilla.js'
+} from './vanilla.js'
 import { createContext } from './vanilla.js'
 
 function ViewerProvider (props: PropsWithChildren<{
@@ -61,7 +64,7 @@ function ViewerImpl<Value = unknown> (props: ViewerProps<Value>): ReactElement {
   useDebugValue(typeRenderer.flavour, type => `type: ${type}`)
   const Component = typeRenderer.Component as ComponentType<DataValueProps<Value>>
   return (
-    <Suspense fallback='loading...'>
+    <Suspense fallback="loading...">
       <Component value={props.value} context={context}/>
     </Suspense>
   )
@@ -78,16 +81,25 @@ export type InterPluginContext<
       ? Rest extends Plugin[]
         ? InterPluginContext<Write<C, ContextMutators<C, unknown>[Id]>, Rest>
         : Write<C, ContextMutators<C, unknown>[Id]>
-      : Rest extends Plugin[]
-        ? InterPluginContext<C, Rest>
-        : never
-    : Plugins extends [] ? C : C
+      : Current extends Promise<infer AsyncCurrent>
+        ? AsyncCurrent extends { id: infer Id }
+          ? Id extends ContextMutatorIdentifier
+            ? Rest extends Plugin[]
+              ? InterPluginContext<Write<C, ContextMutators<C, unknown>[Id]>, Rest>
+              : Write<C, ContextMutators<C, unknown>[Id]>
+            : C
+          : Rest extends Plugin[]
+            ? InterPluginContext<C, Rest>
+            : C
+        : Rest extends Plugin[]
+          ? InterPluginContext<C, Rest>
+          : C
+    : C
 
 interface ViewerHookConfig<
   Value,
   Plugins extends readonly Plugin[]
 > {
-  plugins: Plugins,
   getStore: () => Store,
 }
 
@@ -124,16 +136,26 @@ export function createViewerHook<
     const middleware = plugins.map(
       (plugin) => {
         if ('id' in plugin) {
-          return plugin.middleware
+          return plugin
         }
         return null
       }
-    ).filter(Boolean) as Middleware['middleware'][]
+    ).filter(Boolean) as Middleware[]
+
+    const middlewarePromises = plugins.map((plugin) => plugin instanceof Promise ? plugin : null).filter(Boolean) as Promise<Middleware>[]
     context = middleware.reduce(
-      (context, middleware) => ({ ...context, ...middleware(store) }),
+      (context, { middleware }) => ({ ...context, ...middleware(store) }),
       context)
 
+    Promise.all(middlewarePromises).then(
+      (middlewares) => store.set(internalContextAtom, (context) =>
+        middlewares.reduce(
+          (context, { middleware }) => ({ ...context, ...middleware(store) }),
+          context)
+      )
+    )
 
+    store.set(internalMiddlewareAtom, [...middleware, ...middlewarePromises])
     store.set(internalContextAtom, context)
     return store
   }
@@ -141,10 +163,9 @@ export function createViewerHook<
   return {
     useViewer: function useViewer<
       Value
-    > (config: Omit<ViewerHookConfig<Value, Plugins>, 'plugins' | 'getStore'> = {}) {
+    > (config: Omit<ViewerHookConfig<Value, Plugins>, 'getStore'> = {}) {
       return useBlankViewer<Value, Plugins>({
         ...config,
-        plugins,
         getStore
       })
     },
@@ -164,7 +185,9 @@ export function createViewerHook<
       }
       return (
         <ViewerProvider store={map.get(id) as Store}>
-          {props.children}
+          <Suspense>
+            {props.children}
+          </Suspense>
         </ViewerProvider>
       )
     },
@@ -183,13 +206,14 @@ export function createViewerHook<
 export function useBlankViewer<
   Value,
   Plugins extends readonly Plugin[],
-> ({ plugins, getStore }: ViewerHookConfig<Value, Plugins>) {
+> ({ getStore }: ViewerHookConfig<Value, Plugins>) {
   const Viewer = useMemo(() =>
       function Viewer (props: ViewerProps<Value>): ReactElement {
         const [root, setRoot] = useAtom(internalRootValueAtom)
+        const middlewares = useAtomValue(internalMiddlewarePromiseAtom)
         useEffect(() => {
           const store = getStore()
-          const effects = plugins.map(
+          const effects = middlewares.map(
             (plugin) => {
               if ('id' in plugin) {
                 return plugin.effect
@@ -202,7 +226,7 @@ export function useBlankViewer<
           return () => {
             disposes.map(dispose => dispose())
           }
-        }, [])
+        }, [middlewares])
         const setElement = useSetAtom(internalElementAtom)
         if (root !== props.value) {
           setRoot(props.value)
@@ -210,16 +234,16 @@ export function useBlankViewer<
         return (
           <div
             data-is-root="true"
-            className='rich-data--viewer'
+            className="rich-data--viewer"
             ref={setElement}
           >
-            <Suspense fallback='loading...'>
+            <Suspense fallback="loading...">
               <ViewerImpl {...props}/>
             </Suspense>
           </div>
         )
       }
-    , [getStore, plugins]
+    , [getStore]
   )
   if (!Object.prototype.hasOwnProperty.call(Viewer, 'displayName')) {
     Object.assign(Viewer, {
@@ -228,6 +252,6 @@ export function useBlankViewer<
   }
 
   return useMemo(() => ({
-    Viewer,
+    Viewer
   } as const), [Viewer])
 }

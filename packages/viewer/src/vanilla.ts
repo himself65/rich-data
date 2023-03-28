@@ -75,7 +75,7 @@ export interface Middleware<
 
 // I think we cannot remove any here forever.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Plugin = Block<any> | Middleware
+export type Plugin = Block<any> | Middleware | Promise<Middleware>
 
 export type ViewerProps<Value = unknown> = {
   value: Value
