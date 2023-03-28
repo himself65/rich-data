@@ -16,7 +16,7 @@
     "./hooks/*": "./src/hooks/*.ts",
     "./components/*": "./src/components/*.tsx",
     "./middleware/*": "./src/middleware/*.ts",
-    "./theme/*": "./src/theme/*",
+    "./theme/*": "./theme/*",
     "./package.json": "./package.json"
   },
   "publishConfig": {

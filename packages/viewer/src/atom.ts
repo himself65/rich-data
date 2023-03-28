@@ -23,6 +23,11 @@ export const internalViewerAtom = atom<FC<ViewerProps>>(null as unknown as FC<Vi
 /**
  * @internal
  */
+export const internalElementAtom = atom<HTMLElement | null>(null)
+
+/**
+ * @internal
+ */
 export const internalThemeAtom = atom<Theme>({
   mode: ThemeMode.Light
 })

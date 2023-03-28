@@ -1,4 +1,7 @@
-import { internalThemeAtom } from '../atom'
+import {
+  internalElementAtom,
+  internalThemeAtom
+} from '../atom'
 import type { Plugin, Store } from '../vanilla'
 
 export const enum ThemeMode {
@@ -31,7 +34,14 @@ export const ThemePlugin = (
   effect: (store) => {
     const preferSystem = config?.preferSystem ?? true
     if (preferSystem) {
-      const darkThemeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      const darkThemeMediaQuery = window.matchMedia(
+        '(prefers-color-scheme: dark)')
+      const element = store.get(internalElementAtom)
+      console.assert(element != null, 'element should not be null')
+      if (element) {
+        element.setAttribute('data-theme',
+          darkThemeMediaQuery.matches ? ThemeMode.Dark : ThemeMode.Light)
+      }
       if (darkThemeMediaQuery.matches) {
         store.set(internalThemeAtom, theme => ({
           ...theme,
@@ -44,6 +54,12 @@ export const ThemePlugin = (
         }))
       }
       const callback = (e: MediaQueryListEvent) => {
+        const element = store.get(internalElementAtom)
+        console.assert(element != null, 'element should not be null')
+        if (element) {
+          element.setAttribute('data-theme',
+            darkThemeMediaQuery.matches ? ThemeMode.Dark : ThemeMode.Light)
+        }
         store.set(internalThemeAtom, theme => ({
           ...theme,
           mode: e.matches ? ThemeMode.Dark : ThemeMode.Light
@@ -65,6 +81,10 @@ export const ThemePlugin = (
     }))
     return {
       setTheme: (mode: ThemeMode) => {
+        const element = store.get(internalElementAtom)
+        if (element) {
+          element.setAttribute('data-theme', mode)
+        }
         store.set(internalThemeAtom, theme => ({ ...theme, mode }))
       },
       getTheme (): Theme {

@@ -2,7 +2,7 @@ import {
   createStore as createJotaiStore,
   Provider,
   useAtom,
-  useAtomValue
+  useAtomValue, useSetAtom
 } from 'jotai'
 import type {
   ComponentType,
@@ -18,7 +18,7 @@ import {
 
 import {
   internalBlocksAtom,
-  internalContextAtom,
+  internalContextAtom, internalElementAtom,
   internalRootValueAtom,
   internalViewerAtom
 } from './atom'
@@ -26,11 +26,11 @@ import type {
   Block,
   Context,
   ContextMutators,
-  Middleware,
+DataValueProps,  Middleware,
   Plugin,
   Store,
   ViewerProps, Write
-} from './vanilla'
+ } from './vanilla'
 import { createContext } from './vanilla'
 
 function ViewerProvider (props: PropsWithChildren<{
@@ -57,11 +57,12 @@ function ViewerImpl<Value = unknown> (props: ViewerProps<Value>): ReactElement {
   if (!typeRenderer) {
     throw new Error('no type renderer found: ' + props.value)
   }
+  const context = useAtomValue(internalContextAtom)
   useDebugValue(typeRenderer.flavour, type => `type: ${type}`)
-  const Component = typeRenderer.Component as ComponentType<ViewerProps<Value>>
+  const Component = typeRenderer.Component as ComponentType<DataValueProps<Value>>
   return (
     <Suspense fallback='loading...'>
-      <Component value={props.value}/>
+      <Component value={props.value} context={context}/>
     </Suspense>
   )
 }
@@ -202,11 +203,16 @@ export function useBlankViewer<
             disposes.map(dispose => dispose())
           }
         }, [])
+        const setElement = useSetAtom(internalElementAtom)
         if (root !== props.value) {
           setRoot(props.value)
         }
         return (
-          <div data-is-root="true" className='rich-data--viewer'>
+          <div
+            data-is-root="true"
+            className='rich-data--viewer'
+            ref={setElement}
+          >
             <Suspense fallback='loading...'>
               <ViewerImpl {...props}/>
             </Suspense>

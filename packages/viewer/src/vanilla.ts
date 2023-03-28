@@ -1,13 +1,14 @@
 import type { createStore } from 'jotai'
 import type { FC } from 'react'
 
-import { internalViewerAtom } from './atom'
+import { internalElementAtom, internalViewerAtom } from './atom'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface BlockFlavourMap {}
 
 export interface DataValueProps<Value = unknown> {
   value: Value
+  context: Context
 }
 
 export type Block<Value = unknown, Flavour extends string = string> = {
@@ -45,6 +46,7 @@ export type ContextMutatorIdentifier = keyof ContextMutators<unknown, unknown>
 
 export interface Context {
   getViewer: () => FC<ViewerProps>
+  getElement: () => Element | null
 }
 
 export function createContext (store: Store) {
@@ -55,8 +57,11 @@ export function createContext (store: Store) {
         throw new Error('no viewer found')
       }
       return Viewer
-    }
-  } as Context
+    },
+    getElement: (): Element | null => {
+      return store.get(internalElementAtom)
+    },
+  } satisfies Context
 }
 
 export interface Middleware<

@@ -1,6 +1,8 @@
+import { ArrayBlockPlugin } from './blocks/array-block'
 import { BooleanBlockPlugin } from './blocks/boolean-block'
 import { NilBlockPlugin } from './blocks/nil-block'
 import { NumberBlockPlugin } from './blocks/number-block'
+import { ObjectBlockPlugin } from './blocks/object-block'
 import { StringBlockPlugin } from './blocks/string-block'
 
 export function createJsonPlugins () {
@@ -8,6 +10,8 @@ export function createJsonPlugins () {
     BooleanBlockPlugin,
     NilBlockPlugin,
     NumberBlockPlugin,
-    StringBlockPlugin
+    StringBlockPlugin,
+    ArrayBlockPlugin,
+    ObjectBlockPlugin
   ] as const
 }

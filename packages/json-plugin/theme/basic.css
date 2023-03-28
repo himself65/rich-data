@@ -17,3 +17,14 @@
 .rich-data--viewer .undefined-block {
   color: var(--viewer-base05)
 }
+
+.rich-data--viewer .object-block .array-block, ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rich-data--viewer .object-block, .array-block {
+  padding-left: 1.4rem;
+  border-left: 1px solid var(--viewer-base02);
+}
