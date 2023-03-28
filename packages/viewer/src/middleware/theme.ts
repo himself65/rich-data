@@ -1,8 +1,8 @@
 import {
   internalElementAtom,
   internalThemeAtom
-} from '../atom'
-import type { Plugin, Store } from '../vanilla'
+} from '../atom.js'
+import type { Plugin, Store } from '../vanilla.js'
 
 export const enum ThemeMode {
   Dark = 'dark',
@@ -18,7 +18,7 @@ type ThemePluginMiddleware<C, A> = {
   getTheme (): Theme
 }
 
-declare module '../vanilla' {
+declare module '../vanilla.js' {
   interface ContextMutators<C, A> {
     'rich-data/theme': ThemePluginMiddleware<C, A>
   }

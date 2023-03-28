@@ -21,7 +21,7 @@ import {
   internalContextAtom, internalElementAtom,
   internalRootValueAtom,
   internalViewerAtom
-} from './atom'
+} from './atom.js'
 import type {
   Block,
   Context,
@@ -30,8 +30,8 @@ DataValueProps,  Middleware,
   Plugin,
   Store,
   ViewerProps, Write
- } from './vanilla'
-import { createContext } from './vanilla'
+ } from './vanilla.js'
+import { createContext } from './vanilla.js'
 
 function ViewerProvider (props: PropsWithChildren<{
   store: Store

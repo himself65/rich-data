@@ -1,9 +1,9 @@
 import { atom } from 'jotai'
 import type { FC } from 'react'
 
-import type { Theme } from './middleware/theme'
-import { ThemeMode } from './middleware/theme'
-import type { Block, Context, ViewerProps } from './vanilla'
+import type { Theme } from './middleware/theme.js'
+import { ThemeMode } from './middleware/theme.js'
+import type { Block, Context, ViewerProps } from './vanilla.js'
 
 /**
  * @internal

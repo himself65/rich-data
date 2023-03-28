@@ -2,6 +2,7 @@
   "name": "@rich-data/viewer",
   "version": "3.0.0-preview.0",
   "author": "himself65 <himself65@outlook.com>",
+  "type": "module",
   "license": "MPL-2.0",
   "keywords": [
     "react",
@@ -22,39 +23,39 @@
   "publishConfig": {
     "access": "public",
     "types": "dist/index.d.ts",
-    "main": "dist/index.js",
-    "module": "dist/index.mjs",
+    "main": "dist/index.cjs",
+    "module": "dist/index.js",
     "exports": {
       "./package.json": "./package.json",
       ".": {
         "types": "./dist/index.d.ts",
-        "import": "./dist/index.mjs",
-        "require": "./dist/index.js"
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs"
       },
       "./react": {
         "types": "./dist/react.d.ts",
-        "import": "./dist/react.mjs",
-        "require": "./dist/react.js"
+        "import": "./dist/react.js",
+        "require": "./dist/react.cjs"
       },
       "./vanilla": {
         "types": "./dist/vanilla.d.ts",
-        "import": "./dist/vanilla.mjs",
-        "require": "./dist/vanilla.js"
+        "import": "./dist/vanilla.js",
+        "require": "./dist/vanilla.cjs"
       },
       "./hooks/*": {
         "types": "./dist/hooks/*.d.ts",
-        "import": "./dist/hooks/*.mjs",
-        "require": "./dist/hooks/*.js"
+        "import": "./dist/hooks/*.js",
+        "require": "./dist/hooks/*.cjs"
       },
       "./middleware/*": {
         "types": "./dist/middleware/*.d.ts",
-        "import": "./dist/middleware/*.mjs",
-        "require": "./dist/middleware/*.js"
+        "import": "./dist/middleware/*.js",
+        "require": "./dist/middleware/*.cjs"
       },
       "./components/*": {
         "types": "./dist/components/*.d.ts",
-        "import": "./dist/components/*.mjs",
-        "require": "./dist/components/*.js"
+        "import": "./dist/components/*.js",
+        "require": "./dist/components/*.cjs"
       },
       "./theme/*": "./theme/*"
     }

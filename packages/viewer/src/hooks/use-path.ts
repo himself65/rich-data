@@ -1,7 +1,7 @@
 import { atom, useAtomValue } from 'jotai'
 import { useMemo } from 'react'
 
-import { internalRootValueAtom } from '../atom'
+import { internalRootValueAtom } from '../atom.js'
 
 export type Path = string | number;
 
