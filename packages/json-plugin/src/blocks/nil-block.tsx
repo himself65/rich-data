@@ -1,7 +1,7 @@
 import type { DataValueProps } from '@rich-data/viewer'
 import { defineBlock } from '@rich-data/viewer'
 import { Metadata } from '@rich-data/viewer/components/metadata'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import type { ReactElement } from 'react'
 
 export function NilBlock (props: DataValueProps<null | undefined>): ReactElement {

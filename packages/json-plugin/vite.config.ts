@@ -18,7 +18,13 @@ export default defineConfig({
     minify: 'esbuild',
     lib: {
       entry: {
-        index: resolve(root, 'src/index.ts')
+        index: resolve(root, 'src/index.ts'),
+        'blocks/array-block': resolve(root, 'src/blocks/array-block.tsx'),
+        'blocks/boolean-block': resolve(root, 'src/blocks/boolean-block.tsx'),
+        'blocks/number-block': resolve(root, 'src/blocks/number-block.tsx'),
+        'blocks/object-block': resolve(root, 'src/blocks/object-block.tsx'),
+        'blocks/string-block': resolve(root, 'src/blocks/string-block.tsx'),
+        'blocks/nil-block': resolve(root, 'src/blocks/nil-block.tsx'),
       },
       name: 'RichDataJsonPlugin',
     },

@@ -1,9 +1,9 @@
-import { ArrayBlockPlugin } from './blocks/array-block'
-import { BooleanBlockPlugin } from './blocks/boolean-block'
-import { NilBlockPlugin } from './blocks/nil-block'
-import { NumberBlockPlugin } from './blocks/number-block'
-import { ObjectBlockPlugin } from './blocks/object-block'
-import { StringBlockPlugin } from './blocks/string-block'
+import { ArrayBlockPlugin } from './blocks/array-block.js'
+import { BooleanBlockPlugin } from './blocks/boolean-block.js'
+import { NilBlockPlugin } from './blocks/nil-block.js'
+import { NumberBlockPlugin } from './blocks/number-block.js'
+import { ObjectBlockPlugin } from './blocks/object-block.js'
+import { StringBlockPlugin } from './blocks/string-block.js'
 
 export function createJsonPlugins () {
   return [
