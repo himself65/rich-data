@@ -1,6 +1,6 @@
 {
   "name": "@rich-data/json-plugin",
-  "version": "1.0.0",
+  "version": "3.0.0-preview.0",
   "type": "module",
   "module": "./src/index.ts",
   "main": "./src/index.ts",
