@@ -2,9 +2,10 @@ import type { DataValueProps } from '@rich-data/viewer'
 import { defineBlock } from '@rich-data/viewer'
 import { Metadata } from '@rich-data/viewer/components/metadata'
 import { usePath } from '@rich-data/viewer/hooks/use-path'
-import { IconChevronDown } from '@tabler/icons-react'
 import type { Dispatch, ReactElement, SetStateAction } from 'react'
 import React, { useState } from 'react'
+
+import { ExpandIcon } from '../components/ExpandIcon.js'
 
 type ArrayBlockHeaderProps = {
   expand: boolean
@@ -19,11 +20,7 @@ const ArrayBlockHeader: React.FC<ArrayBlockHeaderProps> = ({
     <div className="array-block-header" onClick={
       () => setExpand(expand => !expand)
     }>
-      <IconChevronDown
-        className="rich-data--viewer-icon interactive"
-        transform={
-          expand ? 'rotate(0)' : 'rotate(-90)'
-        }/>
+      <ExpandIcon expand={expand}/>
       {!expand && (
         <span>[...]</span>
       )}
