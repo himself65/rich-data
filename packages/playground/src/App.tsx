@@ -64,17 +64,23 @@ const TestPlugin = {
   }
 } satisfies Plugin
 
-const TestAsyncPlugin = (async () => ({
-  id: 'my-async-plugin',
-  effect: () => () => void 0,
-  middleware: (_store) => {
-    return {
-      ping: () => {
-        console.log('ping')
-      }
-    }
-  }
-} satisfies Middleware))()
+const TestAsyncPlugin: Promise<Middleware<'my-async-plugin'>> = (async () => {
+  return new Promise(
+    resolve => setTimeout(() => {
+      resolve({
+        id: 'my-async-plugin',
+        effect: () => () => void 0,
+        middleware: (_store) => {
+          return {
+            pong: () => {
+              console.log('pong')
+            }
+          }
+        }
+      })
+    }, 1000)
+  )
+})()
 
 const {
   useViewer,
