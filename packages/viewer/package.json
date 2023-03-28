@@ -13,7 +13,6 @@
     ".": "./src/index.ts",
     "./vanilla": "./src/index.ts",
     "./react": "./src/index.tsx",
-    "./blocks/*": "./src/blocks/*.tsx",
     "./hooks/*": "./src/hooks/*.ts",
     "./components/*": "./src/components/*.tsx",
     "./middleware/*": "./src/middleware/*.ts",
@@ -45,11 +44,6 @@
         "types": "./dist/vanilla.d.ts",
         "import": "./dist/vanilla.mjs",
         "require": "./dist/vanilla.js"
-      },
-      "./blocks/*": {
-        "types": "./dist/blocks/*.d.ts",
-        "import": "./dist/blocks/*.mjs",
-        "require": "./dist/blocks/*.js"
       },
       "./hooks/*": {
         "types": "./dist/hooks/*.d.ts",
@@ -83,11 +77,5 @@
   "peerDependencies": {
     "react": "^18",
     "react-dom": "^18"
-  },
-  "devDependencies": {
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "vite": "^4.2.0",
-    "vite-plugin-dts": "^2.1.0"
   }
 }

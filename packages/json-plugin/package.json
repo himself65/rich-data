@@ -1,0 +1,39 @@
+{
+  "name": "@rich-data/json-plugin",
+  "version": "1.0.0",
+  "module": "./src/index.ts",
+  "main": "./src/index.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./src/index.ts",
+    "./theme/*": "./theme/*"
+  },
+  "publishConfig": {
+    "access": "public",
+    "types": "dist/index.d.ts",
+    "jsdelivr": "dist/browser.js",
+    "browser": {
+      "vanilla": "dist/browser.js"
+    },
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "exports": {
+      "./package.json": "./package.json",
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.js"
+      },
+      "./theme/*": "./theme/*"
+    }
+  },
+  "scripts": {
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@rich-data/viewer": "workspace:^",
+    "clsx": "^1.2.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

@@ -52,23 +52,3 @@
   font-size: 0.85rem;
   opacity: 0.8;
 }
-
-.rich-data--viewer .string-block {
-  color: var(--viewer-base0B)
-}
-
-.rich-data--viewer .number-block {
-  color: var(--viewer-base0F)
-}
-
-.rich-data--viewer .boolean-block {
-  color: var(--viewer-base0E)
-}
-
-.rich-data--viewer .null-block {
-  color: var(--viewer-base0A)
-}
-
-.rich-data--viewer .undefined-block {
-  color: var(--viewer-base05)
-}

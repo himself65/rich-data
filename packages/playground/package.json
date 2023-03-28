@@ -7,6 +7,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@rich-data/json-plugin": "workspace:^",
     "@rich-data/viewer": "workspace:*",
     "jotai": "^2.0.3",
     "jotai-devtools": "^0.3.1",

@@ -1,12 +1,9 @@
+import { createJsonPlugins } from '@rich-data/json-plugin'
 import type { Plugin } from '@rich-data/viewer'
 import {
   createViewerHook,
   defineBlock
 } from '@rich-data/viewer'
-import { BooleanBlockPlugin } from '@rich-data/viewer/blocks/boolean-block'
-import { NilBlockPlugin } from '@rich-data/viewer/blocks/nil-block'
-import { NumberBlockPlugin } from '@rich-data/viewer/blocks/number-block'
-import { StringBlockPlugin } from '@rich-data/viewer/blocks/string-block'
 import { Metadata } from '@rich-data/viewer/components/metadata'
 import { usePath } from '@rich-data/viewer/hooks/use-path'
 import { useTheme } from '@rich-data/viewer/hooks/use-theme'
@@ -143,10 +140,7 @@ const {
 } = createViewerHook({
   plugins: [
     MyImageBlock,
-    StringBlockPlugin,
-    NumberBlockPlugin,
-    NilBlockPlugin,
-    BooleanBlockPlugin,
+    ...createJsonPlugins(),
     MyArrayBlock,
     MyObjectBlock,
     TestPlugin,
