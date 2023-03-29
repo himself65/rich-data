@@ -1,9 +1,12 @@
 import type { DataValueProps } from '@rich-data/viewer'
 import { defineBlock } from '@rich-data/viewer'
 import { Metadata } from '@rich-data/viewer/components/metadata'
+import {
+  useCachedBooleanState
+} from '@rich-data/viewer/hooks/use-cached-boolean-state'
 import { usePath } from '@rich-data/viewer/hooks/use-path'
 import type { Dispatch, ReactElement, SetStateAction } from 'react'
-import React, { useState } from 'react'
+import React from 'react'
 
 import { ExpandIcon } from '../components/ExpandIcon.js'
 
@@ -49,8 +52,8 @@ const ArrayBlockBody: React.FC<React.PropsWithChildren<ArrayBlockBodyProps>> = (
 export function ArrayBlock (props: DataValueProps<unknown[]>): ReactElement {
   const value = props.value
   const Viewer = props.context.getViewer()
-  const [expand, setExpand] = useState(true)
   const currentPath = usePath(value).join('.')
+  const [expand, setExpand] = useCachedBooleanState(currentPath, true)
   return (
     <Metadata flavour="official:array">
       <div className="array-block" data-object-path={currentPath}>

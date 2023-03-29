@@ -64,9 +64,7 @@ function ViewerImpl<Value = unknown> (props: ViewerProps<Value>): ReactElement {
   useDebugValue(typeRenderer.flavour, type => `type: ${type}`)
   const Component = typeRenderer.Component as ComponentType<DataValueProps<Value>>
   return (
-    <Suspense fallback="loading...">
-      <Component value={props.value} context={context}/>
-    </Suspense>
+    <Component value={props.value} context={context}/>
   )
 }
 

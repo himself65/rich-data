@@ -1,10 +1,13 @@
 import type { DataValueProps } from '@rich-data/viewer'
 import { defineBlock } from '@rich-data/viewer'
 import { Metadata } from '@rich-data/viewer/components/metadata'
+import {
+  useCachedBooleanState
+} from '@rich-data/viewer/hooks/use-cached-boolean-state'
 import { usePath } from '@rich-data/viewer/hooks/use-path'
 import type { ReactElement } from 'react'
 import type { Dispatch, SetStateAction } from 'react'
-import React, { useState } from 'react'
+import React from 'react'
 
 import { ExpandIcon } from '../components/ExpandIcon.js'
 
@@ -49,7 +52,7 @@ export function ObjectBlock (props: DataValueProps<object>): ReactElement {
   const value = props.value
   const Viewer = props.context.getViewer()
   const currentPath = usePath(value).join('.')
-  const [expand, setExpand] = useState(true)
+  const [expand, setExpand] = useCachedBooleanState(currentPath, true)
   return (
     <Metadata flavour="official:object">
       <div

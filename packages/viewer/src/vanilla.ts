@@ -45,12 +45,18 @@ export interface ContextMutators<C, A> {}
 export type ContextMutatorIdentifier = keyof ContextMutators<unknown, unknown>
 
 export interface Context {
+  cache: {
+    [key: string]: {
+      expand: boolean
+    }
+  }
   getViewer: () => FC<ViewerProps>
   getElement: () => Element | null
 }
 
 export function createContext (store: Store) {
   return {
+    cache: {},
     getViewer: () => {
       const Viewer = store.get(internalViewerAtom)
       if (!Viewer) {

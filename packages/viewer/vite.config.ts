@@ -23,6 +23,7 @@ export default defineConfig({
         react: resolve(root, 'src/react.tsx'),
         'components/metadata': resolve(root, 'src/components/metadata.tsx'),
         'components/tag': resolve(root, 'src/components/tag.tsx'),
+        'hooks/use-context': resolve(root, 'src/hooks/use-context.ts'),
         'hooks/use-path': resolve(root, 'src/hooks/use-path.ts'),
         'hooks/use-theme': resolve(root, 'src/hooks/use-theme.ts'),
         'middleware/theme': resolve(root, 'src/middleware/theme.ts'),
