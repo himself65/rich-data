@@ -30,7 +30,7 @@ const {
 } = createViewerHook({
   plugins: [
     // ...
-  ] as const
+  ]
 })
 ```
 

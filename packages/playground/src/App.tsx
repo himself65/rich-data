@@ -86,7 +86,7 @@ const {
     ThemePlugin({
       defaultMode: ThemeMode.Light
     })
-  ] as const
+  ]
 })
 
 function Full () {
