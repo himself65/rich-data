@@ -95,10 +95,10 @@ importers:
   packages/docs:
     dependencies:
       '@rich-data/json-plugin':
-        specifier: workspace:3.0.0-preview.0
+        specifier: workspace:^
         version: link:../json-plugin
       '@rich-data/viewer':
-        specifier: workspace:3.0.0-preview.0
+        specifier: workspace:^
         version: link:../viewer
       next:
         specifier: ^13.2.4
