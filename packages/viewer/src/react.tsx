@@ -25,6 +25,7 @@ import {
   internalRootValueAtom,
   internalViewerAtom
 } from './atom.js'
+import type { Narrow } from './utils.js'
 import type {
   Block,
   Context,
@@ -106,10 +107,10 @@ const map = new Map<string, Store>()
 export function createViewerHook<
   Plugins extends readonly Plugin[]
 > (config: {
-  plugins: Plugins
+  plugins: Narrow<Plugins>
   loading?: ComponentType
 }) {
-  const plugins = new Array<Plugin>(...config.plugins) as unknown as Plugins
+  const plugins = new Array<Plugin>(...(config.plugins as Plugins)) as unknown as Plugins
   const blocks = plugins.map(
     (plugin) => {
       if ('flavour' in plugin) {
