@@ -242,6 +242,7 @@ function useViewer<
         const setElement = useSetAtom(internalElementAtom)
         return (
           <div
+            className='rich-data--viewer'
             ref={setElement}
           >
             <Suspense fallback={Loading ? <Loading/> : undefined}>
@@ -291,7 +292,6 @@ export function useBlankViewer<
       return (
         <div
           data-is-root="true"
-          className="rich-data--viewer"
         >
           <ViewerImpl {...props}/>
         </div>
@@ -319,7 +319,6 @@ export function useBlankSuspenseViewer<
       return (
         <div
           data-is-root="true"
-          className="rich-data--viewer"
         >
           <ViewerImpl {...props}/>
         </div>
