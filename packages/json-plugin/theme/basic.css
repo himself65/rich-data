@@ -18,18 +18,24 @@
   color: var(--viewer-base05)
 }
 
-.rich-data--viewer .object-block .array-block, ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.rich-data--viewer .object-block, .array-block .interactive {
+.rich-data--viewer > .object-block, .array-block > .interactive {
   cursor: pointer;
   transition: transform 100ms ease-in-out;
 }
 
-.rich-data--viewer .object-block, .array-block .array-block-body {
-  padding-left: 1.4rem;
+.rich-data--viewer > .object-block, .array-block > .array-block-header, .object-block-header {
+  display: inline-block;
+  align-items: center;
+}
+
+.rich-data--viewer > .object-block, .array-block > .array-block-body, .object-block-body {
+  margin-left: 0.5rem;
+  padding-left: 0.7rem;
   border-left: 1px solid var(--viewer-base02);
+}
+
+.rich-data--viewer ul {
+  list-style-type: none;
+  margin-top: 0;
+  margin-bottom: 0;
 }

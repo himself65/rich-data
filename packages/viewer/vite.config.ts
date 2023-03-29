@@ -23,6 +23,8 @@ export default defineConfig({
         react: resolve(root, 'src/react.tsx'),
         'components/metadata': resolve(root, 'src/components/metadata.tsx'),
         'components/tag': resolve(root, 'src/components/tag.tsx'),
+        'components/colon': resolve(root, 'src/components/colon.tsx'),
+        'hooks/use-cached-boolean-state': resolve(root, 'src/hooks/use-cached-boolean-state.ts'),
         'hooks/use-context': resolve(root, 'src/hooks/use-context.ts'),
         'hooks/use-path': resolve(root, 'src/hooks/use-path.ts'),
         'hooks/use-theme': resolve(root, 'src/hooks/use-theme.ts'),

@@ -113,7 +113,15 @@ function Full () {
           foo: 'bar',
           baz: 123,
           nested: {
-            qux: -1
+            qux: -1,
+            quux: true,
+            1: {
+              2: {
+                3: {
+                  4: 5
+                }
+              }
+            }
           }
         }
       ]}/>

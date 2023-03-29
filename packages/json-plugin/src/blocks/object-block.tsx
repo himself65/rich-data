@@ -1,9 +1,13 @@
 import type { DataValueProps } from '@rich-data/viewer'
 import { defineBlock } from '@rich-data/viewer'
+import { Colon } from '@rich-data/viewer/components/colon'
 import { Metadata } from '@rich-data/viewer/components/metadata'
 import {
   useCachedBooleanState
 } from '@rich-data/viewer/hooks/use-cached-boolean-state'
+import {
+  useContext
+} from '@rich-data/viewer/hooks/use-context'
 import { usePath } from '@rich-data/viewer/hooks/use-path'
 import type { ReactElement } from 'react'
 import type { Dispatch, SetStateAction } from 'react'
@@ -21,10 +25,14 @@ const ObjectBlockHeader: React.FC<ObjectBlockHeaderProps> = ({
   setExpand
 }) => {
   return (
-    <div onClick={() => setExpand(expand => !expand)}>
+    <div className="object-block-header"
+         onClick={() => setExpand(expand => !expand)}>
       <ExpandIcon expand={expand}/>
       {!expand && (
         <span>&#123;...&#125;</span>
+      )}
+      {expand && (
+        <span>&#123;</span>
       )}
     </div>
   )
@@ -42,17 +50,75 @@ const ObjectBlockBody: React.FC<React.PropsWithChildren<ObjectBlockBodyProps>> =
     return null
   }
   return (
-    <ul>
+    <ul className="object-block-body">
       {children}
     </ul>
   )
 }
 
-export function ObjectBlock (props: DataValueProps<object>): ReactElement {
+type ObjectBlockFooterProps = {
+  expand: boolean
+}
+
+const ObjectBlockFooter: React.FC<ObjectBlockFooterProps> = ({
+  expand
+}) => {
+  if (!expand) {
+    return null
+  }
+  return (
+    <div className="object-block-footer">
+      <span>&#125;</span>
+    </div>
+  )
+}
+
+type ObjectBlockProps = DataValueProps<object> & {
+  nested?: boolean
+}
+
+export function ObjectBlock (props: ObjectBlockProps): ReactElement {
   const value = props.value
-  const Viewer = props.context.getViewer()
+  const Viewer = useContext().getViewer()
   const currentPath = usePath(value).join('.')
   const [expand, setExpand] = useCachedBooleanState(currentPath, true)
+  if (props.nested) {
+    return (
+      <Metadata flavour="official:object">
+        <span
+          className="object-block"
+          data-object-path={currentPath}
+        >
+          <span>
+            &#123;
+          </span>
+          <ObjectBlockBody expand={true}>
+            {Object.entries(value).map(([key, item]) => {
+              if (typeof item === 'object') {
+                return (
+                  <li key={key}>
+                    <span>{key}</span>
+                    <Colon/>
+                    <ObjectBlock value={item} nested={true}/>
+                  </li>
+                )
+              }
+              return (
+                <li key={key}>
+                  <span>{key}</span>
+                  <Colon/>
+                  <Viewer value={item}/>
+                </li>
+              )
+            })}
+          </ObjectBlockBody>
+          <span>
+            &#125;
+          </span>
+        </span>
+      </Metadata>
+    )
+  }
   return (
     <Metadata flavour="official:object">
       <div
@@ -65,13 +131,25 @@ export function ObjectBlock (props: DataValueProps<object>): ReactElement {
         />
         <ObjectBlockBody expand={expand}>
           {Object.entries(value).map(([key, item]) => {
+            if (typeof item === 'object') {
+              return (
+                <li key={key}>
+                  <span>{key}</span>
+                  <Colon/>
+                  <ObjectBlock value={item} nested={true}/>
+                </li>
+              )
+            }
             return (
               <li key={key}>
-                <span>{key}</span> : <Viewer value={item}/>
+                <span>{key}</span>
+                <Colon/>
+                <Viewer value={item}/>
               </li>
             )
           })}
         </ObjectBlockBody>
+        <ObjectBlockFooter expand={expand}/>
       </div>
     </Metadata>
   )

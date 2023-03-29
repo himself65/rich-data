@@ -58,3 +58,8 @@
   height: var(--viewer-icon-size);
   width: var(--viewer-icon-size);
 }
+
+.rich-data--viewer .colon {
+  margin-left: 0.125rem;
+  margin-right: 0.125rem;
+}

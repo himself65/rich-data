@@ -1,9 +1,13 @@
 import type { DataValueProps } from '@rich-data/viewer'
 import { defineBlock } from '@rich-data/viewer'
+import { Colon } from '@rich-data/viewer/components/colon'
 import { Metadata } from '@rich-data/viewer/components/metadata'
 import {
   useCachedBooleanState
 } from '@rich-data/viewer/hooks/use-cached-boolean-state'
+import {
+  useContext
+} from '@rich-data/viewer/hooks/use-context'
 import { usePath } from '@rich-data/viewer/hooks/use-path'
 import type { Dispatch, ReactElement, SetStateAction } from 'react'
 import React from 'react'
@@ -27,6 +31,9 @@ const ArrayBlockHeader: React.FC<ArrayBlockHeaderProps> = ({
       {!expand && (
         <span>[...]</span>
       )}
+      {expand && (
+        <span>[</span>
+      )}
     </div>
   )
 }
@@ -49,9 +56,26 @@ const ArrayBlockBody: React.FC<React.PropsWithChildren<ArrayBlockBodyProps>> = (
   )
 }
 
+type ArrayBlockFooterProps = {
+  expand: boolean
+}
+
+const ArrayBlockFooter: React.FC<ArrayBlockFooterProps> = ({
+  expand
+}) => {
+  if (!expand) {
+    return null
+  }
+  return (
+    <div className="array-block-footer">
+      <span>]</span>
+    </div>
+  )
+}
+
 export function ArrayBlock (props: DataValueProps<unknown[]>): ReactElement {
   const value = props.value
-  const Viewer = props.context.getViewer()
+  const Viewer = useContext().getViewer()
   const currentPath = usePath(value).join('.')
   const [expand, setExpand] = useCachedBooleanState(currentPath, true)
   return (
@@ -62,11 +86,14 @@ export function ArrayBlock (props: DataValueProps<unknown[]>): ReactElement {
           {value.map((item, index) => {
             return (
               <li key={index}>
-                <span>{index}</span> : <Viewer value={item}/>
+                <span>{index}</span>
+                <Colon/>
+                <Viewer value={item}/>
               </li>
             )
           })}
         </ArrayBlockBody>
+        <ArrayBlockFooter expand={expand}/>
       </div>
     </Metadata>
   )

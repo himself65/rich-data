@@ -8,7 +8,6 @@ export interface BlockFlavourMap {}
 
 export interface DataValueProps<Value = unknown> {
   value: Value
-  context: Context
 }
 
 export type Block<Value = unknown, Flavour extends string = string> = {

@@ -1,5 +1,5 @@
 /**
- * @internal
+ * @internal atoms are not exported from the package, please use the hooks instead
  */
 import { atom } from 'jotai'
 import type { FC } from 'react'
