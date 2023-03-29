@@ -101,8 +101,7 @@ export function ArrayBlock (props: DataValueProps<unknown[]>): ReactElement {
 
 export const ArrayBlockPlugin = defineBlock(
   'official:array',
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (value): value is any[] => Array.isArray(value),
+  (value): value is unknown[] => Array.isArray(value),
   ArrayBlock
 )
 
