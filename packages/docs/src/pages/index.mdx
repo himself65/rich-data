@@ -11,41 +11,28 @@ or a Yjs Document or any other data structure that you want.
 
 ### Usage
 
+import { HelloWorld } from '../components/HelloWorld'
+
+<HelloWorld/>
+
 ```tsx
 import { createViewerHook } from '@rich-data/viewer';
-import { createJsonPlugins } from '@rich-data/json';
-import { createJsxPlugins } from '@rich-data/jsx';
-import { createYjsPlugins } from '@rich-data/yjs';
+import { createJsonPlugins } from '@rich-data/json-plugin';
 
 const {
-  useViewer,
+  Viewer,
   Provider,
 } = createViewerHook({
   plugins: [
     ...createJsonPlugins(),
-    ...createJsxPlugins(),
-    ...createYjsPlugins(),
   ]
 })
 
-import * as Y from 'yjs'
-
-const doc = new Y.Doc()
-const json = JSON.parse('{"foo": "bar"}')
-const jsx = <div>foo</div>
-
 export const App = () => {
-  const { Viewer } = useViewer()
   return (
     <>
       <Provider>
-        <Viewer value={json}/>
-      </Provider>
-      <Provider>
-        <Viewer value={jsx}/>
-      </Provider>
-      <Provider>
-        <Viewer value={doc}/>
+        <Viewer value={/* your data here */}/>
       </Provider>
     </>
   )
