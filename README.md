@@ -41,7 +41,7 @@ Plugin is the basic unit of Viewer. Which connect the viewer between data struct
 You can inject function into whole Viewer by using `middleware`.
   
 ```tsx
-const TestPlugin = {
+const TestPlugin = defineMiddleware({
   id: 'my-plugin',
   middleware: (_store) => {
     return {
@@ -50,7 +50,7 @@ const TestPlugin = {
       }
     }
   }
-} satisfies Plugin
+})
 
 const data = {/* your data here */}
 

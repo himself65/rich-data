@@ -1,10 +1,7 @@
 import { createJsonPlugins } from '@rich-data/json-plugin'
-import type {
-  Plugin
-} from '@rich-data/viewer'
 import {
   createViewerHook,
-  defineBlock
+  defineBlock, defineMiddleware
 } from '@rich-data/viewer'
 import { ThemeMode, ThemePlugin } from '@rich-data/viewer/middleware/theme'
 import type { FC } from 'react'
@@ -61,7 +58,7 @@ const MyImageBlock = defineBlock(
   })
 )
 
-const TestPlugin = {
+const TestPlugin = defineMiddleware({
   id: 'my-plugin',
   effect: () => () => void 0,
   middleware: (_store) => {
@@ -71,7 +68,7 @@ const TestPlugin = {
       }
     }
   }
-} satisfies Plugin
+})
 
 const {
   Viewer,

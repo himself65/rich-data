@@ -2,6 +2,7 @@ import type { createStore } from 'jotai'
 import type { FC } from 'react'
 
 import { internalElementAtom, internalViewerAtom } from './atom.js'
+import type { Narrow } from './utils.js'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface BlockFlavourMap {}
@@ -76,6 +77,10 @@ export interface Middleware<
   effect: (store: Store) => () => void
 
   middleware (store: Store): ContextMutators<Context, unknown>[Id]
+}
+
+export function defineMiddleware<T extends Middleware> (middleware: Narrow<T>) {
+  return middleware
 }
 
 // I think we cannot remove any here forever.
