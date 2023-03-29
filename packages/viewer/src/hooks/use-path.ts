@@ -7,7 +7,7 @@ export type Path = string | number;
 
 export const internalPathCacheAtom = atom<WeakMap<object, Path[]>>(new WeakMap())
 
-function findPath (cache: WeakMap<object, Path[]>, root: object, target: object): Path[] {
+function findPath (cache: WeakMap<object, Path[]>, root: object, target: object): Path[] | null  {
   if (root === target) {
     return []
   }
@@ -15,8 +15,7 @@ function findPath (cache: WeakMap<object, Path[]>, root: object, target: object)
   if (path) {
     return path
   }
-  for (const key of Object.keys(root)) {
-    const value = root[key as keyof typeof root]
+  for (const [key, value] of Object.entries(root)) {
     if (value === target) {
       cache.set(root, [key])
       return [key]
@@ -29,7 +28,7 @@ function findPath (cache: WeakMap<object, Path[]>, root: object, target: object)
       }
     }
   }
-  throw new Error('unreachable')
+  return null
 }
 
 export function usePath (currentValue: object): Path[] {
@@ -44,6 +43,10 @@ export function usePath (currentValue: object): Path[] {
     if (typeof root !== 'object' || root === null) {
       throw new Error('root is not an object')
     }
-    return findPath(cache, root, currentValue)
+    const path = findPath(cache, root, currentValue)
+    if (!path) {
+      throw new Error('path not found')
+    }
+    return path
   }, [cache, currentValue, root])
 }

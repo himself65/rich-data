@@ -60,11 +60,10 @@ function ViewerImpl<Value = unknown> (props: ViewerProps<Value>): ReactElement {
   if (!typeRenderer) {
     throw new Error('no type renderer found: ' + props.value)
   }
-  const context = useAtomValue(internalContextAtom)
   useDebugValue(typeRenderer.flavour, type => `type: ${type}`)
   const Component = typeRenderer.Component as ComponentType<DataValueProps<Value>>
   return (
-    <Component value={props.value} context={context}/>
+    <Component value={props.value}/>
   )
 }
 
