@@ -36,6 +36,7 @@ export default defineConfig({
         'react-dom/client',
         'jotai',
         /^@rich-data\/viewer/,
+        /^@tabler\/icons/
       ]
     }
   },
