@@ -52,6 +52,8 @@ const TestPlugin = {
   }
 } satisfies Plugin
 
+const data = {/* your data here */}
+
 const Component = () => {
   const { Viewer } = useViewer()
   const context = useContext()
@@ -62,7 +64,7 @@ const Component = () => {
         Ping
       </button>
       <Viewer
-        data={{}}
+        data={data}
       />
     </>
   )
