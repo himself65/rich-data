@@ -7,10 +7,10 @@ import {
   defineBlock
 } from '@rich-data/viewer'
 import { ThemeMode, ThemePlugin } from '@rich-data/viewer/middleware/theme'
-import { DevTools } from 'jotai-devtools'
 import type { FC } from 'react'
 import { Suspense } from 'react'
 import useSWR, { SWRConfig } from 'swr'
+
 
 type MyPluginMiddleware<C, A> = {
   ping: () => void
@@ -77,7 +77,6 @@ const {
   useViewer,
   useContext,
   Provider,
-  getStore
 } = createViewerHook({
   plugins: [
     MyImageBlock,
@@ -95,7 +94,6 @@ function Full () {
   const context = useContext()
   return (
     <>
-      <DevTools store={getStore()}/>
       <button
         onClick={() => {
           context.setTheme(

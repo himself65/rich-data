@@ -1,10 +1,10 @@
 import '@rich-data/viewer/theme/basic.css'
 import '@rich-data/json-plugin/theme/basic.css'
 
-import { StrictMode } from 'react'
+import { lazy,StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import { App } from './App'
+const App = lazy(() => import('./App').then(({ App }) => ({ default: App })))
 
 const root = createRoot(document.getElementById('app') as HTMLElement)
 

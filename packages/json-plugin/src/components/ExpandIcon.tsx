@@ -1,7 +1,9 @@
+import type { ReactElement } from 'react'
+import { lazy } from 'react'
+
 // @ts-ignore
 // eslint-disable-next-line @typescript-eslint/no-restricted-imports
-import IconChevronDown from '@tabler/icons-react/dist/esm/icons/IconChevronDown.js'
-import type { ReactElement } from 'react'
+const IconChevronDown = lazy(() => import('@tabler/icons-react/dist/esm/icons/IconChevronDown.js'))
 
 export type ExpandIconProps = {
   expand: boolean

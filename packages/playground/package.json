@@ -10,7 +10,6 @@
     "@rich-data/json-plugin": "workspace:^",
     "@rich-data/viewer": "workspace:*",
     "jotai": "^2.0.3",
-    "jotai-devtools": "^0.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "swr": "^2.1.1",
