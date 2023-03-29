@@ -5,9 +5,6 @@
   "author": "himself65 <himself65@outlook.com>",
   "bugs": "https://github.com/himself65/data-viewer/issues",
   "homepage": "https://github.com/himself65/data-viewer#readme",
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
     "lint": "eslint --cache --cache-location=node_modules/.cache/.eslintcache/ ./ --max-warnings=0"
   },
