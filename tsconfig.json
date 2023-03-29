@@ -37,7 +37,10 @@
       "path": "./packages/viewer"
     },
     {
-      "path": "./packages/example"
+      "path": "./packages/playground"
+    },
+    {
+      "path": "./packages/docs"
     },
     {
       "path": "./packages/json-plugin"

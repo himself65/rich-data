@@ -1,6 +1,7 @@
 {
   "name": "@rich-data/docs",
   "private": true,
+  "license": "MPL-2.0",
   "scripts": {
     "dev": "next",
     "build": "next build",

@@ -1,6 +1,7 @@
 {
   "name": "@rich-data/playground",
   "private": true,
+  "license": "MPL-2.0",
   "scripts": {
     "dev": "vite --host",
     "build": "tsc && vite build",

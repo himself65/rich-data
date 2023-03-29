@@ -1,0 +1,8 @@
+{
+  "name": "@rich-data/scripts",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./vitest.config": "./vitest.config.mjs"
+  }
+}
