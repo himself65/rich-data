@@ -74,7 +74,7 @@ const TestPlugin = {
 } satisfies Plugin
 
 const {
-  useViewer,
+  Viewer,
   useContext,
   Provider,
 } = createViewerHook({
@@ -90,7 +90,6 @@ const {
 })
 
 function Full () {
-  const { Viewer } = useViewer()
   const context = useContext()
   return (
     <>
@@ -128,7 +127,6 @@ function Full () {
 }
 
 function Basic () {
-  const { Viewer } = useViewer()
   return (
     <>
       <Provider>

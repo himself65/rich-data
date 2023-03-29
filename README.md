@@ -24,7 +24,7 @@ It is a React component that can render any data structure you provider.
 
 ```tsx
 const {
-  useViewer,
+  Viewer,
   useContext,
   Provider,
 } = createViewerHook({
@@ -55,7 +55,6 @@ const TestPlugin = {
 const data = {/* your data here */}
 
 const Component = () => {
-  const { Viewer } = useViewer()
   const context = useContext()
 
   return (
@@ -109,7 +108,7 @@ We builtin some basic plugins for you to use.
 import { createJsonPlugins } from '@rich-data/json-plugin'
 
 const {
-  useViewer,
+  Viewer,
   useContext,
   Provider,
 } = createViewerHook({

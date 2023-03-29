@@ -199,34 +199,26 @@ export function createViewerHook<
   if (!requireSuspense) {
     return {
       ...hooks,
-      useViewer: function useViewer<
-        Value
-      > (config: Omit<ViewerHookConfig<Value, Plugins>, 'getStore' | 'Loading'> = {}) {
-        return useBlankSuspenseViewer<Value, Plugins>({
-          ...config,
-          getStore,
-          Loading: undefined
-        })
-      }
+      Viewer: createBlankSuspenseViewer({
+        ...config,
+        getStore,
+        Loading: undefined
+      })
     } as const
   } else {
     const Loading = config.loading
     return {
       ...hooks,
-      useViewer: function useViewer<
-        Value
-      > (config: Omit<ViewerHookConfig<Value, Plugins>, 'getStore' | 'Loading'> = {}) {
-        return useBlankViewer<Value, Plugins>({
-          ...config,
-          getStore,
-          Loading
-        })
-      }
+      Viewer: createBlankViewer({
+        ...config,
+        getStore,
+        Loading
+      })
     } as const
   }
 }
 
-function useViewer<
+function createViewer<
   Value,
   Plugins extends readonly Plugin[]
 > (
@@ -237,34 +229,30 @@ function useViewer<
     ViewerInner: ComponentType<ViewerProps<Value>>
   }
 ) {
-  const Viewer = useMemo(() =>
-      function Viewer (props: ViewerProps<Value>): ReactElement {
-        const setElement = useSetAtom(internalElementAtom)
-        return (
-          <div
-            className='rich-data--viewer'
-            ref={setElement}
-          >
-            <Suspense fallback={Loading ? <Loading/> : undefined}>
-              <ViewerInner {...props}/>
-            </Suspense>
-          </div>
-        )
-      }
-    , [ViewerInner, Loading]
-  )
+  const Viewer = function Viewer (props: ViewerProps<Value>): ReactElement {
+    const setElement = useSetAtom(internalElementAtom)
+    return (
+      <div
+        className="rich-data--viewer"
+        ref={setElement}
+      >
+        <Suspense fallback={Loading ? <Loading/> : undefined}>
+          <ViewerInner {...props}/>
+        </Suspense>
+      </div>
+    )
+  }
+
   if (!Object.prototype.hasOwnProperty.call(Viewer, 'displayName')) {
     Object.assign(Viewer, {
       displayName: 'RichDataViewer'
     })
   }
 
-  return useMemo(() => ({
-    Viewer
-  } as const), [Viewer])
+  return Viewer
 }
 
-function useMiddlewaresEffect(
+function useMiddlewaresEffect (
   store: Store,
   middlewares: Middleware[]
 ) {
@@ -277,55 +265,53 @@ function useMiddlewaresEffect(
   }, [middlewares, store])
 }
 
-export function useBlankViewer<
+export function createBlankViewer<
   Value,
   Plugins extends readonly Plugin[]
 > ({ getStore, Loading }: ViewerHookConfig<Value, Plugins>) {
-  const ViewerInner = useMemo(() =>
-    function ViewerInner (props: ViewerProps<Value>): ReactElement {
-      const [root, setRoot] = useAtom(internalRootValueAtom)
-      const middlewares = useAtomValue(internalMiddlewareAtom) as Middleware[]
-      useMiddlewaresEffect(getStore(), middlewares)
-      if (root !== props.value) {
-        setRoot(props.value)
-      }
-      return (
-        <div
-          data-is-root="true"
-        >
-          <ViewerImpl {...props}/>
-        </div>
-      )
-    }, [getStore])
+  const ViewerInner = function ViewerInner (props: ViewerProps<Value>): ReactElement {
+    const [root, setRoot] = useAtom(internalRootValueAtom)
+    const middlewares = useAtomValue(internalMiddlewareAtom) as Middleware[]
+    useMiddlewaresEffect(getStore(), middlewares)
+    if (root !== props.value) {
+      setRoot(props.value)
+    }
+    return (
+      <div
+        data-is-root="true"
+      >
+        <ViewerImpl {...props}/>
+      </div>
+    )
+  }
 
-  return useViewer({
+  return createViewer({
     Loading,
     ViewerInner
   })
 }
 
-export function useBlankSuspenseViewer<
+export function createBlankSuspenseViewer<
   Value,
   Plugins extends readonly Plugin[],
 > ({ getStore, Loading }: ViewerHookConfig<Value, Plugins>) {
-  const ViewerInner = useMemo(() =>
-    function ViewerInner (props: ViewerProps<Value>): ReactElement {
-      const [root, setRoot] = useAtom(internalRootValueAtom)
-      const middlewares = useAtomValue(internalMiddlewarePromiseAtom)
-      useMiddlewaresEffect(getStore(), middlewares)
-      if (root !== props.value) {
-        setRoot(props.value)
-      }
-      return (
-        <div
-          data-is-root="true"
-        >
-          <ViewerImpl {...props}/>
-        </div>
-      )
-    }, [getStore])
+  const ViewerInner = function ViewerInner (props: ViewerProps<Value>): ReactElement {
+    const [root, setRoot] = useAtom(internalRootValueAtom)
+    const middlewares = useAtomValue(internalMiddlewarePromiseAtom)
+    useMiddlewaresEffect(getStore(), middlewares)
+    if (root !== props.value) {
+      setRoot(props.value)
+    }
+    return (
+      <div
+        data-is-root="true"
+      >
+        <ViewerImpl {...props}/>
+      </div>
+    )
+  }
 
-  return useViewer({
+  return createViewer({
     Loading,
     ViewerInner
   })
