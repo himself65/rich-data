@@ -16,7 +16,7 @@ export const internalMiddlewarePromiseAtom = atom<Promise<Middleware[]>>(async (
   return Promise.all(middlewares)
 })
 export const internalViewerAtom = atom<FC<ViewerProps>>(null as unknown as FC<ViewerProps>)
-export const internalElementAtom = atom<HTMLElement | null>(null)
+export const internalElementAtom = atom<HTMLElement | null>(null as unknown as HTMLElement)
 export const internalThemeAtom = atom<Theme>({
   mode: ThemeMode.Light
 })
