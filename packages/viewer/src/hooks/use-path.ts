@@ -38,6 +38,8 @@ export function usePath (currentValue: object): Path[] {
   return useMemo(() => {
     if (currentValue === root) {
       return []
+    } if (currentValue === null) {
+      return []
     }
     if (typeof root !== 'object' || root === null) {
       throw new Error('root is not an object')
