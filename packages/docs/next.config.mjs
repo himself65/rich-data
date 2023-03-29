@@ -11,5 +11,14 @@ const withNextra = nextra({
 })
 
 export default withNextra({
-  reactStrictMode: true
+  reactStrictMode: true,
+  transpilePackages: [
+    '@rich-data/viewer',
+    '@rich-data/json-plugins',
+  ],
+  webpack: (config) => {
+    config.resolve.extensionAlias = {
+      '.js': ['.js', '.ts', '.tsx'],
+    }
+  }
 })

@@ -1,6 +1,7 @@
 {
   "name": "@rich-data/docs",
   "private": true,
+  "type": "module",
   "license": "MPL-2.0",
   "scripts": {
     "dev": "next",
@@ -8,6 +9,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@rich-data/json-plugin": "workspace:^",
+    "@rich-data/viewer": "workspace:^",
     "next": "^13.2.4",
     "nextra": "^2.2.20",
     "nextra-theme-docs": "^2.2.20",

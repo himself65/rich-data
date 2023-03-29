@@ -94,6 +94,12 @@ importers:
 
   packages/docs:
     dependencies:
+      '@rich-data/json-plugin':
+        specifier: workspace:3.0.0-preview.0
+        version: link:../json-plugin
+      '@rich-data/viewer':
+        specifier: workspace:3.0.0-preview.0
+        version: link:../viewer
       next:
         specifier: ^13.2.4
         version: 13.2.4(@babel/core@7.21.3)(react-dom@18.2.0)(react@18.2.0)
