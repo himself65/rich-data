@@ -13,7 +13,6 @@ export default mergeConfig(defineConfig({
     minifySyntax: true
   },
   build: {
-    emptyOutDir: true,
     terserOptions: {
       ecma: 2020
     },
