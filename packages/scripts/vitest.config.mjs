@@ -17,7 +17,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@rich-data/viewer': resolve(__dirname, '../viewer')
+      '@rich-data/viewer': resolve(__dirname, '../viewer', 'src'),
     }
   }
 })

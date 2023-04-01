@@ -11,7 +11,7 @@ import {
 import { usePath } from '@rich-data/viewer/hooks/use-path'
 import type { ReactElement } from 'react'
 import type { Dispatch, SetStateAction } from 'react'
-import React from 'react'
+import React, { useCallback } from 'react'
 
 import { ExpandIcon } from '../components/ExpandIcon.js'
 
@@ -77,22 +77,26 @@ type ObjectBlockProps = DataValueProps<object> & {
   nested?: boolean
 }
 
-export function ObjectBlock (props: ObjectBlockProps): ReactElement {
+function NestedObject (props: ObjectBlockProps): ReactElement {
   const value = props.value
   const Viewer = useContext().getViewer()
   const currentPath = usePath(value).join('.')
   const [expand, setExpand] = useCachedBooleanState(currentPath, true)
-  if (props.nested) {
-    return (
-      <Metadata flavour="official:object">
+  return (
+    <Metadata flavour="official:object">
         <span
           className="object-block"
           data-object-path={currentPath}
         >
-          <span>
+          <span
+            onClick={useCallback(() => {
+              setExpand(expand => !expand)
+            }, [setExpand])}
+          >
+            <ExpandIcon expand={expand}/>
             &#123;
           </span>
-          <ObjectBlockBody expand={true}>
+          <ObjectBlockBody expand={expand}>
             {Object.entries(value).map(([key, item]) => {
               if (typeof item === 'object') {
                 return (
@@ -116,7 +120,18 @@ export function ObjectBlock (props: ObjectBlockProps): ReactElement {
             &#125;
           </span>
         </span>
-      </Metadata>
+    </Metadata>
+  )
+}
+
+export function ObjectBlock (props: ObjectBlockProps): ReactElement {
+  const value = props.value
+  const Viewer = useContext().getViewer()
+  const currentPath = usePath(value).join('.')
+  const [expand, setExpand] = useCachedBooleanState(currentPath, true)
+  if (props.nested) {
+    return (
+      <NestedObject {...props}/>
     )
   }
   return (

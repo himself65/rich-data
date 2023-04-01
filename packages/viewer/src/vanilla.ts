@@ -92,3 +92,7 @@ export type ViewerProps<Value = unknown> = {
 }
 
 export type Store = ReturnType<typeof createStore>
+
+export {
+  Narrow
+}
