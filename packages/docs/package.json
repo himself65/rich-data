@@ -12,13 +12,13 @@
     "@rich-data/json-plugin": "workspace:^",
     "@rich-data/viewer": "workspace:^",
     "next": "^13.2.4",
-    "nextra": "^2.2.20",
-    "nextra-theme-docs": "^2.2.20",
+    "nextra": "^2.3.0",
+    "nextra-theme-docs": "^2.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.28",
+    "@types/react": "^18.0.31",
     "@types/react-dom": "^18.0.11"
   }
 }
