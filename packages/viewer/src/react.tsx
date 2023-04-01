@@ -19,6 +19,7 @@ import {
 import {
   internalBlocksAtom,
   internalContextAtom,
+  internalCopyCallbackAtom,
   internalElementAtom,
   internalMiddlewareAtom,
   internalMiddlewarePromiseAtom,
@@ -26,6 +27,7 @@ import {
   internalViewerAtom
 } from './atom.js'
 import type { Narrow } from './utils.js'
+import { defaultHandleCopy } from './utils.js'
 import type {
   Block,
   Context,
@@ -146,6 +148,7 @@ export function createViewerHook<
     const store = createJotaiStore()
     storeRef.current = store
     let context = createContext(store) as InterPluginContext<Context, Plugins>
+    store.set(internalCopyCallbackAtom, () => defaultHandleCopy)
 
     context = middleware.reduce(
       (context, { middleware }) => ({ ...context, ...middleware(store) }),
@@ -167,19 +170,12 @@ export function createViewerHook<
 
   const requireSuspense = middlewarePromises.length > 0
   const hooks = {
-    Provider: function Provider (props: PropsWithChildren<{
-      store?: Store
-    }>): ReactElement {
+    Provider: function Provider (props: PropsWithChildren): ReactElement {
       const id = useId()
-      if (!props.store) {
-        if (!map.has(id)) {
-          const store = props.store ?? createStoreImpl()
-          store.set(internalViewerAtom, () => ViewerImpl)
-          map.set(id, store)
-        }
-      } else if (!map.has(id)) {
-        map.set(id, props.store)
-        props.store.set(internalViewerAtom, () => ViewerImpl)
+      if (!map.has(id)) {
+        const store = createStoreImpl()
+        store.set(internalViewerAtom, () => ViewerImpl)
+        map.set(id, store)
       }
       return (
         <ViewerProvider store={map.get(id) as Store}>
