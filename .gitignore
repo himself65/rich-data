@@ -19,6 +19,7 @@ tsconfig.tsbuildinfo
 tsconfig.*.tsbuildinfo
 .next
 next-env.d.ts
+storybook-static
 
 # Cache
 .eslintcache

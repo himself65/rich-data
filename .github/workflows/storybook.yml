@@ -57,4 +57,7 @@ jobs:
           name: storybook
           path: packages/storybook/storybook-static
       - name: Run btorybook tests
-        run: pnpm --filter @rich-data/storybook test-storybook
+        run: |
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "pnpm exec serve packages/storybook/storybook-static -l 6006" \
+            "pnpm --filter @rich-data/storybook test-storybook"
