@@ -1,0 +1,60 @@
+name: Storybook
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**.tsx?'
+      - '**.jsx?'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-storybook:
+    name: Build storybook
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build storybook
+        run: pnpm --filter @rich-data/storybook build-storybook
+
+      - name: Upload storybook
+        uses: actions/upload-artifact@v2
+        with:
+          name: storybook
+          path: packages/storybook/storybook-static
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    needs: build-storybook
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Download storybook
+        uses: actions/download-artifact@v2
+        with:
+          name: storybook
+          path: packages/storybook/storybook-static
+      - name: Run btorybook tests
+        run: pnpm --filter @rich-data/storybook test-storybook
