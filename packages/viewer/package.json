@@ -12,6 +12,7 @@
   "module": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
+    "./atom": "./src/atom.ts",
     "./vanilla": "./src/index.ts",
     "./react": "./src/index.tsx",
     "./hooks/*": "./src/hooks/*.ts",

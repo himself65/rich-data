@@ -28,7 +28,8 @@
       "@rich-data/viewer": ["./packages/viewer/src"],
       "@rich-data/viewer/components/*": ["./packages/viewer/src/components/*"],
       "@rich-data/viewer/hooks/*": ["./packages/viewer/src/hooks/*"],
-      "@rich-data/viewer/middleware/*": ["./packages/viewer/src/middleware/*"]
+      "@rich-data/viewer/middleware/*": ["./packages/viewer/src/middleware/*"],
+      "@rich-data/viewer/*": ["./packages/viewer/src/*"]
     }
   },
   "files": [],
