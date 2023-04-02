@@ -66,8 +66,4 @@ describe('hooks', () => {
       expect(current()).toEqual('pong')
     }
   })
-
-  test('use-copy', () => {
-    
-  })
 })
