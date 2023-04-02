@@ -33,3 +33,11 @@ jobs:
 
       - name: Run unit test
         run: pnpm test:unit:coverage
+
+      - name: Upload unit test coverage results
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: .coverage/lcov.info
+          flags: unittest
+          fail_ci_if_error: true
