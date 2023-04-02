@@ -20,4 +20,5 @@ export const internalElementAtom = atom<HTMLElement | null>(null as unknown as H
 export const internalThemeAtom = atom<Theme>({
   mode: ThemeMode.Light
 })
+export const internalCopyCallbackAtom = atom<(value: unknown) => ClipboardItem[]>(null as unknown as (value: unknown) => ClipboardItem[])
 export const internalContextAtom = atom<Context>(null as unknown as Context)

@@ -19,6 +19,7 @@ import {
 import {
   internalBlocksAtom,
   internalContextAtom,
+  internalCopyCallbackAtom,
   internalElementAtom,
   internalMiddlewareAtom,
   internalMiddlewarePromiseAtom,
@@ -26,6 +27,7 @@ import {
   internalViewerAtom
 } from './atom.js'
 import type { Narrow } from './utils.js'
+import { defaultHandleCopy } from './utils.js'
 import type {
   Block,
   Context,
@@ -146,6 +148,7 @@ export function createViewerHook<
     const store = createJotaiStore()
     storeRef.current = store
     let context = createContext(store) as InterPluginContext<Context, Plugins>
+    store.set(internalCopyCallbackAtom, () => defaultHandleCopy)
 
     context = middleware.reduce(
       (context, { middleware }) => ({ ...context, ...middleware(store) }),
