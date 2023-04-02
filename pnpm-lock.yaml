@@ -141,8 +141,8 @@ importers:
         specifier: workspace:^
         version: link:../viewer
       '@tabler/icons-react':
-        specifier: ^2.13.0
-        version: 2.13.0(react@18.2.0)
+        specifier: ^2.13.1
+        version: 2.13.1(react@18.2.0)
       clsx:
         specifier: ^1.2.1
         version: 1.2.1
@@ -4262,18 +4262,18 @@ packages:
       tslib: 2.5.0
     dev: false
 
-  /@tabler/icons-react@2.13.0(react@18.2.0):
-    resolution: {integrity: sha512-d1eAnD4+JhFxLnRFwE1h0ukt7el0/KnbqTZ4acSvtZ8yuHuqff266yZU587aCU3ovaX/6zxkgaxJsDnBXiLTEw==}
+  /@tabler/icons-react@2.13.1(react@18.2.0):
+    resolution: {integrity: sha512-YPqwdEj5T/ld5Ub00yY96rbJbys5IrmssG8f+mzSUaj3zic4DEezZhRRslRk/9gnVeUW3Qfi4p16tiBdBMdxFQ==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@tabler/icons': 2.13.0
+      '@tabler/icons': 2.13.1
       prop-types: 15.8.1
       react: 18.2.0
     dev: false
 
-  /@tabler/icons@2.13.0:
-    resolution: {integrity: sha512-YF1cl17cdhaAHQayv3zDRzYLT6AX49gm6RGTNkIfFiEcefMsJtyCt1qXbI/mxzFCugrb3LdlPmZPLceYl9kn8A==}
+  /@tabler/icons@2.13.1:
+    resolution: {integrity: sha512-hQkYW9+tnRUlnm3WDpNGLEB2FS6gyMdDb7eubmGjaWOtc9SK4CdBus465UGfx3M8FahlcOoS5BdzuaABrl/OMw==}
     dev: false
 
   /@testing-library/dom@8.20.0:
