@@ -170,12 +170,19 @@ export function createViewerHook<
 
   const requireSuspense = middlewarePromises.length > 0
   const hooks = {
-    Provider: function Provider (props: PropsWithChildren): ReactElement {
+    Provider: function Provider (props: PropsWithChildren<{
+      store?: Store
+    }>): ReactElement {
       const id = useId()
-      if (!map.has(id)) {
-        const store = createStoreImpl()
-        store.set(internalViewerAtom, () => ViewerImpl)
-        map.set(id, store)
+      if (!props.store) {
+        if (!map.has(id)) {
+          const store = props.store ?? createStoreImpl()
+          store.set(internalViewerAtom, () => ViewerImpl)
+          map.set(id, store)
+        }
+      } else if (!map.has(id)) {
+        map.set(id, props.store)
+        props.store.set(internalViewerAtom, () => ViewerImpl)
       }
       return (
         <ViewerProvider store={map.get(id) as Store}>
