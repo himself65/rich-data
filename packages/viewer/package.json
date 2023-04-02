@@ -4,6 +4,7 @@
   "author": "himself65 <himself65@outlook.com>",
   "type": "module",
   "license": "MPL-2.0",
+  "sideEffects": false,
   "keywords": [
     "react",
     "data-viewer"
