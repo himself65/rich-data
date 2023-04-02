@@ -4,7 +4,7 @@ export default {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
     '@storybook/addon-links',
-    '@storybook/addon-interactions',
+    '@storybook/addon-interactions'
   ],
   core: {
     builder: '@storybook/builder-vite',
@@ -15,9 +15,10 @@ export default {
       builder: {
         viteConfigPath: '.storybook/vite.config.ts',
       },
-    },
+      strictMode: true
+    }
   },
   typescript: {
     reactDocgen: 'react-docgen',
   },
-} as StorybookConfig;
+} satisfies StorybookConfig;
