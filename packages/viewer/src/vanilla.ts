@@ -79,7 +79,7 @@ export interface Middleware<
   middleware (store: Store): ContextMutators<Context, unknown>[Id]
 }
 
-export function defineMiddleware<T extends Middleware> (middleware: Narrow<T>) {
+export function defineMiddleware<T extends Middleware> (middleware: Narrow<T>): Narrow<T> {
   return middleware
 }
 
