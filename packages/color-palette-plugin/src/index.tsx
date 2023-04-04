@@ -12,7 +12,7 @@ export function createColorPaletteBlock () {
     'official:color-palette',
     (value): value is string => {
       if (typeof value === 'string') {
-        if (/^#[0-9a-f]{6}$/i.test(value)) {
+        if (/^#[0-9a-f]{6}$/i.test(value) || /^#[0-9a-f]{3}$/i.test(value)) {
           return true
         } else if (/^rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*(,\s*\d+(?:\.\d+)?)?\s*\)$/i.test(
           value)) {
