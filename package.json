@@ -2,7 +2,7 @@
   "name": "@rich-data/root",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@8.0.0",
+  "packageManager": "pnpm@8.1.1",
   "author": "himself65 <himself65@outlook.com>",
   "bugs": "https://github.com/himself65/data-viewer/issues",
   "homepage": "https://github.com/himself65/data-viewer#readme",
