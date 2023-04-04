@@ -76,8 +76,5 @@
   "peerDependencies": {
     "react": "^18",
     "react-dom": "^18"
-  },
-  "devDependencies": {
-    "vite": "^4.2.1"
   }
 }
