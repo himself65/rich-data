@@ -1,12 +1,14 @@
 import { style } from '@vanilla-extract/css'
 
 export const colorPaletteRootStyle = style({
-  display: 'flex'
+  display: 'inline-flex',
+  flexDirection: 'row',
+  alignItems: 'center',
 })
 
 export const colorPaletteCircleStyle = style({
-  width: '1rem',
-  height: '1rem',
+  width: '0.75rem',
+  height: '0.75rem',
   borderRadius: '50%',
 })
 

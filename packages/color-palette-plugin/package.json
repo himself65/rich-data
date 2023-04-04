@@ -26,6 +26,7 @@
     "@rich-data/viewer": "workspace:*"
   },
   "devDependencies": {
-    "@rich-data/viewer": "workspace:*"
+    "@rich-data/viewer": "workspace:*",
+    "@vanilla-extract/css": "^1.11.0"
   }
 }

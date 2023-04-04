@@ -9,6 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@rich-data/color-palette-plugin": "workspace:3.0.0-preview.0",
     "@rich-data/json-plugin": "workspace:^",
     "@rich-data/viewer": "workspace:^",
     "next": "=13.2.3",
@@ -19,6 +20,8 @@
   },
   "devDependencies": {
     "@types/react": "^18.0.31",
-    "@types/react-dom": "^18.0.11"
+    "@types/react-dom": "^18.0.11",
+    "@vanilla-extract/css": "^1.11.0",
+    "@vanilla-extract/next-plugin": "^2.1.1"
   }
 }
