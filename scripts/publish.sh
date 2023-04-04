@@ -3,6 +3,7 @@
 packages=(
   "viewer"
   "json-plugin"
+  "color-palette-plugin"
 )
 
 npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"

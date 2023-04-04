@@ -1,4 +1,6 @@
 import type { StorybookConfig } from '@storybook/react-vite';
+import { mergeConfig } from 'vite'
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 
 export default {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
@@ -12,11 +14,13 @@ export default {
   framework: {
     name: '@storybook/react-vite',
     options: {
-      builder: {
-        viteConfigPath: '.storybook/vite.config.ts',
-      },
       strictMode: true
     }
+  },
+  viteFinal: async (config) => {
+    return mergeConfig(config, {
+      plugins: [vanillaExtractPlugin()]
+    })
   },
   typescript: {
     reactDocgen: 'react-docgen',

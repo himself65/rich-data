@@ -3,6 +3,7 @@
 packages=(
   "viewer"
   "json-plugin"
+  "color-palette-plugin"
 )
 
 replace() {

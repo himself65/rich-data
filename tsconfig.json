@@ -22,6 +22,7 @@
     "skipLibCheck": true,
     "incremental": true,
     "paths": {
+      "@rich-data/color-palette-plugin": ["./packages/color-palette-plugin/src"],
       "@rich-data/json-plugin": ["./packages/json-plugin/src"],
       "@rich-data/json-plugin/theme/*": ["./packages/json-plugin/theme/*"],
       "@rich-data/viewer/theme/*": ["./packages/viewer/theme/*"],

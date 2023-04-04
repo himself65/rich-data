@@ -9,7 +9,7 @@ a JSON object,
 a JSX element,
 or a Yjs Document or any other data structure that you want.
 
-### Usage
+## Usage
 
 import { HelloWorld } from '../components/HelloWorld'
 
@@ -37,4 +37,21 @@ export const App = () => {
     </>
   )
 }
+```
+
+## `@rich-data/color-palette-plugin`
+
+import { ColorPalette } from '../components/ColorPalette.js'
+
+<ColorPalette/>
+
+```tsx
+import { createColorPaletteBlock } from '@rich-data/color-palette-plugin'
+
+const { Viewer, Provider } = createViewerHook({
+  plugins: [
+    createColorPaletteBlock()
+    // ...
+  ]
+})
 ```

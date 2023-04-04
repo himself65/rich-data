@@ -1,0 +1,32 @@
+{
+  "name": "@rich-data/color-palette-plugin",
+  "type": "module",
+  "version": "3.0.0-preview.0",
+  "module": "./src/index.tsx",
+  "main": "./src/index.tsx",
+  "scripts": {
+    "build": "vite build"
+  },
+  "publishConfig": {
+    "access": "public",
+    "types": "dist/index.d.ts",
+    "main": "dist/index.cjs",
+    "module": "dist/index.js",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js",
+        "require": "./dist/index.umd.cjs"
+      },
+      "./styles.css": "./dist/styles.css",
+      "./package.json": "./package.json"
+    }
+  },
+  "peerDependencies": {
+    "@rich-data/viewer": "workspace:*"
+  },
+  "devDependencies": {
+    "@rich-data/viewer": "workspace:*",
+    "@vanilla-extract/css": "^1.11.0"
+  }
+}
