@@ -22,10 +22,10 @@
       "./package.json": "./package.json"
     }
   },
-  "dependencies": {
+  "peerDependencies": {
     "@rich-data/viewer": "workspace:*"
   },
   "devDependencies": {
-    "@vanilla-extract/css": "^1.11.0"
+    "@rich-data/viewer": "workspace:*"
   }
 }
