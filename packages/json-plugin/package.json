@@ -36,7 +36,6 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@tabler/icons-react": "^2.14.0",
     "clsx": "^1.2.1"
   },
   "peerDependencies": {
