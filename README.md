@@ -1,26 +1,30 @@
 # Rich Data
 
-> v3 version is on heavy development. Please use v2 for stable version.
+> v3 version is heavily under development. Please use v2 as the current stable version.
 
 [![npm version](https://badgen.net/npm/v/@rich-data/viewer/latest)](https://www.npmjs.com/package/@rich-data/viewer)
 [![npm version](https://badgen.net/npm/v/@rich-data/viewer/nightly)](https://www.npmjs.com/package/@rich-data/viewer)
 [![minified size](https://badgen.net/bundlephobia/minzip/@rich-data/viewer)](https://bundlephobia.com/package/@rich-data/viewer@nightly)
 
-> Rich Data provides a powerful and flexible way to display data in your React.
+> Rich Data provides a powerful and flexible way to display "raw" data in your React UI.
 
 - Minimal core (3Kb), full featured (20Kb)
 - Rich data structure preview support (object, JSON, JSX, `Y.Doc`...)
-- React 18 Suspense
-- Headless UI
+- Supports React 18 Suspense
+- Offers a "headless UI"
 - Customizable UI / Logic
-- 100% Strong typed
+- 100% Strongly typed
 
-## Core Concept
+## Demos and Examples
+
+See the [rich-data.dev website](https://rich-data.dev/) for running demos and code examples.
+
+## Core Concepts
 
 ### Viewer
 
 The `Viewer` component is the core of Rich Data. 
-It is a React component that can render any data structure you provider.
+It is a React component that can render any data structure you provide.
 
 ```tsx
 const {
@@ -36,9 +40,9 @@ const {
 
 ### Plugin
 
-Plugin is the basic unit of Viewer. Which connect the viewer between data structure, UI, and logic. 
+Plugin is the basic unit of Rich Data that connects the Viewer to your data structure, applying UI and logic. 
 
-You can inject function into whole Viewer by using `middleware`.
+You can inject arbitrary functionality into the Viewer by using `middleware`.
   
 ```tsx
 const TestPlugin = defineMiddleware({
@@ -78,8 +82,8 @@ const App = () => {
 }
 ```
 
-Or you can render your own data structure you like,
-by using `defineBlock` helper function.
+Or you can render your own data structure as you like,
+by using a `defineBlock` helper function.
 
 ```tsx
 const MyImageBlock = defineBlock(
@@ -100,7 +104,7 @@ const MyImageBlock = defineBlock(
 
 ## Ecosystem
 
-We builtin some basic plugins for you to use.
+Rich Data provides a number of builtin plugins.
 
 ### JSON
 
