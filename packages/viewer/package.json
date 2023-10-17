@@ -70,8 +70,8 @@
     "theme"
   ],
   "dependencies": {
-    "clsx": "^1.2.1",
-    "jotai": "^2.0.3"
+    "clsx": "^2.0.0",
+    "jotai": "^2.4.3"
   },
   "peerDependencies": {
     "react": "^18",
