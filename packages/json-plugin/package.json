@@ -36,7 +36,7 @@
     "build": "vite build"
   },
   "dependencies": {
-    "clsx": "^1.2.1"
+    "clsx": "^2.0.0"
   },
   "peerDependencies": {
     "@rich-data/viewer": "workspace:^",
