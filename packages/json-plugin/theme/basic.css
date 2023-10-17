@@ -23,8 +23,12 @@
   transition: transform 100ms ease-in-out;
 }
 
+.rich-data--viewer > .object-block, .object-block-expand {
+  display: flex;
+}
+
 .rich-data--viewer > .object-block, .array-block > .array-block-header, .object-block-header {
-  display: inline-block;
+  display: flex;
   align-items: center;
 }
 
