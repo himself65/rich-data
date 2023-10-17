@@ -89,12 +89,14 @@ function NestedObject (props: ObjectBlockProps): ReactElement {
           data-object-path={currentPath}
         >
           <span
+            className="object-block-expand"
             onClick={useCallback(() => {
               setExpand(expand => !expand)
             }, [setExpand])}
           >
             <ExpandIcon expand={expand}/>
             &#123;
+            {!expand ? <>&#125;</> : null}
           </span>
           <ObjectBlockBody expand={expand}>
             {Object.entries(value).map(([key, item]) => {
@@ -116,9 +118,11 @@ function NestedObject (props: ObjectBlockProps): ReactElement {
               )
             })}
           </ObjectBlockBody>
-          <span>
+          {expand ? (
+            <span>
             &#125;
           </span>
+          ) : null}
         </span>
     </Metadata>
   )
